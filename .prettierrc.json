@@ -1,0 +1,7 @@
+{
+	"_comment": "한 줄당 글자수, 세미콜론 여부, 탭 사용, 탭 넓이",
+	"printWidth": 80,
+	"semi": true,
+	"useTabs": true,
+	"tabWidth": 2
+}
