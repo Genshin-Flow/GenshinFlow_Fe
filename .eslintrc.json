@@ -1,3 +1,21 @@
 {
-  "extends": "next/core-web-vitals"
+	"extends": [
+		"next/core-web-vitals",
+		"plugin:@typescript-eslint/eslint-recommended",
+		"prettier",
+		"naver"
+	],
+	"parser": "@typescript-eslint/parser",
+	"plugins": ["@tanstack/query"],
+	"parserOptions": {
+		"project": ["tsconfig.json"], // 파싱 파일 설정
+		"tsconfigRootDir": true // genshin-flow 폴더를 담고 있는 다른 폴더를 열었을떄 parsing에러를 없에기 위한 루트 설정
+	},
+	"rules": {
+		"react/react-in-jsx-scope": "off", // 리엑트의 컴포넌트에 import React 안하면 오류 생기는 원인 제거
+		"@tanstack/query/exhaustive-deps": "error",
+		"eqeqeq": "error", // 일치연산자 사용
+		"no-var": "error",
+		"arraysInObjects": 0
+	}
 }
