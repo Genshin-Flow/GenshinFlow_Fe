@@ -1,9 +1,3 @@
-import { css } from "../../styled-system/css";
-
 export default function Home() {
-	return <div className={box}>asdasdsa</div>;
+	return <div></div>;
 }
-
-const box = css({
-	width: "100px",
-});
