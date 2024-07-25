@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import QueryProvider from "@/app/queryClientProvider/QueryProvider";
+import QueryProvider from "@/app/QueryProvider";
 import "./globals.css";
 import JenniperSet from "@/app/nextJenniper/JenniperSet";
 
