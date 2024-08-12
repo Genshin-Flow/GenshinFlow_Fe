@@ -36,8 +36,55 @@ export default defineConfig({
             '05': { value: '#E7E7E7' },
             '06': { value: '#F4F4F4' }
           }
-        }
-    }},
+        },
+        // 사용 예시 -> fontSize: 'md'
+        fontSizes: {
+          xs: { value: "12px" },
+          sm: { value: "14px" },
+          md: { value: "16px" },
+          lg: { value: "20px" },
+        },
+        // 사용 예시 -> fontWeight: 'bold'
+        fontWeights: {
+          regular: { value: "400" },
+          medium: { value: "500" },
+          bold: { value: "700" },
+        },
+      },
+      // 사용 예시 -> textStyle: 'xs'
+      textStyles: {
+        xs: {
+          value: {
+            fontSize: "12px",
+            fontWeight: "400",
+          }
+        },
+        sm: {
+          value: {
+            fontSize: "14px",
+            fontWeight: "500",
+          }
+        },
+        md: {
+          value: {
+            fontSize: "16px",
+            fontWeight: "500",
+          }
+        },
+        lg: {
+          value: {
+            fontSize: "20px",
+            fontWeight: "500",
+          }
+        },
+        xl: {
+          value: {
+            fontSize: "20px",
+            fontWeight: "700",
+          }
+        },
+      }
+    },
   },
 
   // The output directory for your css system
