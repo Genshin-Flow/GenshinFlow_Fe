@@ -3,17 +3,15 @@ import {
 	UserName,
 	ProfileImage,
 	UserInfo,
-	UserNameText,
 	UserIdButton,
 	QuestType,
 	QuestIcon,
-	QuestText,
 	WorldLevel,
-	WorldLevelText,
 	Message,
 	MessageText,
 	TimeAgo,
 	MoreOptions,
+	Text,
 } from "./styles";
 
 export default function MatchingPostItem() {
@@ -22,16 +20,16 @@ export default function MatchingPostItem() {
 			<UserName>
 				<ProfileImage />
 				<UserInfo>
-					<UserNameText>유저명</UserNameText>
+					<Text>유저명</Text>
 					<UserIdButton>UID 80102123</UserIdButton>
 				</UserInfo>
 			</UserName>
 			<QuestType>
 				<QuestIcon />
-				<QuestText>나선 비경</QuestText>
+				<Text>나선 비경</Text>
 			</QuestType>
 			<WorldLevel>
-				<WorldLevelText>7</WorldLevelText>
+				<Text>7</Text>
 			</WorldLevel>
 			<Message>
 				<MessageText>
@@ -39,7 +37,9 @@ export default function MatchingPostItem() {
 					가나다라마바사아자차카타파하
 				</MessageText>
 			</Message>
-			<TimeAgo>1분 전</TimeAgo>
+			<TimeAgo>
+				<Text>1분 전</Text>
+			</TimeAgo>
 			<MoreOptions>...</MoreOptions>
 		</ItemContainer>
 	);
