@@ -42,3 +42,10 @@ styled-system-studio
 
 ## build
 .next
+
+
+## pwa
+
+sw.js
+sw.js.map
+workbox*
