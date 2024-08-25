@@ -1,13 +1,15 @@
-import LoginDefaultInfo from "@/components/loginSignUp/template/LoginTemplateDefaultInfo";
-import Login from "@/components/loginSignUp/Login";
 import SelectButton from "@/components/loginSignUp/SelectButton";
+import { Dispatch, SetStateAction } from "react";
+import { stateType } from "@/app/page";
 
-export default function Select() {
+type propsType = {
+	SetSelectBtn: Dispatch<SetStateAction<stateType>>;
+};
+
+export default function Select(props: propsType) {
 	return (
 		<>
-			<LoginDefaultInfo />
-			{/* <SelectButton /> */}
-			<Login />
+			<SelectButton SetSelectBtn={props.SetSelectBtn} />
 		</>
 	);
 }
