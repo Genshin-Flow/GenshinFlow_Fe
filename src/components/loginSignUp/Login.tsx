@@ -17,7 +17,7 @@ export default function Login(props: propsType) {
 		"/svg/oauth/discord.svg",
 	];
 	return (
-		<LoginContainer>
+		<LoginContainer className="LoginContainer">
 			{svgURL.map((item, index) => (
 				<OauthButton
 					key={nanoid()}
@@ -27,7 +27,7 @@ export default function Login(props: propsType) {
 					mb={index !== svgURL.length - 1 ? "mb12" : "mb60"}
 				/>
 			))}
-			<Line></Line>
+			<Line />
 			<Input
 				type="text"
 				placeholder="메일주소"
@@ -46,6 +46,11 @@ export default function Login(props: propsType) {
 const LoginContainer = styled("article", {
 	base: {
 		width: "100%",
+		position: "absolute",
+		top: "253px",
+		transform: "translateX(200%)",
+		transition: "transform 0.5s",
+		padding: "60px 110px",
 	},
 });
 

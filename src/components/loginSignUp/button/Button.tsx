@@ -25,12 +25,17 @@ const ButtonCompo = styled("button", {
 		borderRadius: "98px",
 		fontWeight: "bold",
 		cursor: "pointer",
+		transition: "background 0.5s, color 0.5s",
 	},
 	variants: {
 		variant: {
 			login: {
 				bg: "primary.01",
 				color: "#ffffff",
+				"&:hover": {
+					bg: "#EFEFEF",
+					color: "black",
+				},
 			},
 			signUp: {
 				bg: "#EFEFEF",

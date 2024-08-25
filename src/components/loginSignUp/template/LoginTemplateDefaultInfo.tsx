@@ -2,14 +2,23 @@ import { styled } from "@/../styled-system/jsx";
 
 export default function LoginDefaultInfo() {
 	return (
-		<div>
+		<DefaultInfoContainer>
 			<LogoContainer>
 				<LogoSvg src="/svg/logo/GenshinFlowLogo.svg" alt="원신 플로우 로고" />
 			</LogoContainer>
 			<LoginText>더 나은 인연을 위해</LoginText>
-		</div>
+		</DefaultInfoContainer>
 	);
 }
+
+const DefaultInfoContainer = styled("div", {
+	base: {
+		position: "absolute",
+		top: "77.5px",
+		left: "50%",
+		transform: "translateX(-50%)",
+	},
+});
 
 const LogoContainer = styled("div", {
 	base: {
