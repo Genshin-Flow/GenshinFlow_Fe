@@ -1,0 +1,15 @@
+{
+	"name": "My awesome PWA app",
+	"short_name": "PWA App",
+	"icons": [
+		{
+			"src": "/icons/favi.png",
+			"sizes": "384x384",
+			"type": "image/png"
+		}
+	],
+	"background_color": "#FFFFFF",
+	"start_url": "/",
+	"display": "standalone",
+	"orientation": "portrait"
+}
