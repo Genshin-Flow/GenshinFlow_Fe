@@ -1,19 +1,47 @@
-import Select from "@/components/loginSignUp/Select";
-import { styled } from "@/../styled-system/jsx";
-import OauthButton from "@/components/loginSignUp/button/OauthButton";
+"use client";
+import MainTemplate from "@/features/loginSignUp/template/MainTemplate";
+import Select from "@/features/loginSignUp/Select";
+import SignUpSelect from "@/features/loginSignUp/SignUpSelect";
+import SignIn from "@/features/loginSignUp/SignIn";
+import SelectContainer from "@/features/loginSignUp/template/SelectContainer";
+import LoginDefaultInfo from "@/features/loginSignUp/template/LoginTemplateDefaultInfo";
+import Modal from "@/features/loginSignUp/components/modal/Modal";
+import loginState, { stateType } from "@/stores/loginStateStore";
+import GoBack from "@/features/loginSignUp/components/button/GoBack";
+import PrivacyPolicy from "@/features/loginSignUp/components/modal/PrivacyPolicy";
+import { useRef } from "react";
 
-export default function page() {
+export default function Login() {
+	const { modalText, selectBtn, policyModalState, setSelectBtn } = loginState();
+	const PolicyModalRef = useRef<HTMLElement>(null);
+	const RenderState = RenderBackButton(selectBtn);
+
 	return (
-		<LoginBackground>
-			<Select />
-		</LoginBackground>
+		<>
+			<MainTemplate>
+				{policyModalState && <PrivacyPolicy ModalRef={PolicyModalRef} />}
+				<SelectContainer>
+					<LoginDefaultInfo />
+					{RenderState && (
+						<GoBack currentPage={selectBtn} setSelectBtn={setSelectBtn} />
+					)}
+					<Select />
+					<SignIn />
+					<SignUpSelect />
+					{modalText && <Modal platform={"pc"}>{modalText}</Modal>}
+				</SelectContainer>
+			</MainTemplate>
+		</>
 	);
 }
 
-const LoginBackground = styled("section", {
-	base: {
-		width: "100%",
-		minHeight: "calc(100vh - 120px)",
-		maxHeight: "calc(100vh - 120px)",
-	},
-});
+function RenderBackButton(selectBtn: stateType) {
+	switch (selectBtn) {
+		case "login":
+			return true;
+		case "signUp":
+			return true;
+		case "signUpSelect":
+			return true;
+	}
+}

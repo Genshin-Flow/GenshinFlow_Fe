@@ -1,17 +1,13 @@
 "use client";
-import Button from "@/components/loginSignUp/button/Button";
+import Button from "@/features/loginSignUp/components/button/Button";
 import { styled } from "@/../styled-system/jsx";
-import { Dispatch, SetStateAction, useEffect, useRef } from "react";
-import { stateType } from "@/app/page";
+import { useEffect, useRef } from "react";
+import loginState, { stateType } from "@/stores/loginStateStore";
 
-type propsType = {
-	SetSelectBtn: Dispatch<SetStateAction<stateType>>;
-};
-
-export default function SelectButton(props: propsType) {
+export default function SelectButton() {
 	const EventTargetRef = useRef<HTMLDivElement>(null);
-	const clickFn = (event: MouseEvent) =>
-		clickHandler(event, props.SetSelectBtn);
+	const { setSelectBtn } = loginState();
+	const clickFn = (event: MouseEvent) => clickHandler(event, setSelectBtn);
 
 	useEffect(() => {
 		EventTargetRef.current?.addEventListener("click", clickFn);
@@ -39,12 +35,12 @@ const SelectBtnContainer = styled("div", {
 
 function clickHandler(
 	event: MouseEvent,
-	SetSelectBtn: Dispatch<SetStateAction<stateType>>,
+	SetSelectBtn: (state: stateType) => void,
 ) {
 	const target = event.target as HTMLElement;
 	if (target.innerText === "로그인") {
 		SetSelectBtn("login");
 	} else if (target.innerText === "회원가입") {
-		SetSelectBtn("signUp");
+		SetSelectBtn("signUpSelect");
 	}
 }

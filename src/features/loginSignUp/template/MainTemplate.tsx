@@ -12,8 +12,7 @@ export default function MainTemplate(props: propsType) {
 const TemplateContainer = styled("section", {
 	base: {
 		width: "100%",
-		minHeight: "100vh",
-		maxHeight: "100vh",
+		height: "100%",
 		display: "flex",
 		justifyContent: "center",
 		alignItems: "center",

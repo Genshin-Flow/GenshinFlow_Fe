@@ -1,24 +1,24 @@
 import { styled } from "@/../styled-system/jsx";
-import { stateType } from "@/app/page";
 import { ReactNode } from "react";
+import loginState from "@/stores/loginStateStore";
 
 type propsType = {
 	children: ReactNode;
-	SelectBtn: stateType;
 };
 
 export default function SelectContainer(props: propsType) {
+	const { selectBtn } = loginState();
 	return (
 		<SelectContainerStyle
-			{...(props.SelectBtn && { variant: props.SelectBtn })}
-			{...(props.SelectBtn && { defaultTransform: "default" })}
+			{...(selectBtn && { variant: selectBtn })}
+			{...(selectBtn && { defaultTransform: "default" })}
 		>
 			{props.children}
 		</SelectContainerStyle>
 	);
 }
 
-const SelectContainerStyle = styled("article", {
+const SelectContainerStyle = styled("div", {
 	base: {
 		width: "620px",
 		height: "548px",
@@ -26,7 +26,8 @@ const SelectContainerStyle = styled("article", {
 		display: "flex",
 		flexDirection: "column",
 		alignItems: "center",
-		transition: "0.3s height",
+		transition: "0.3s height, 0.3s width",
+		transform: "translateX(0%)",
 		borderRadius: "40px",
 		bg: "#ffffff",
 		zIndex: "10",
@@ -36,14 +37,25 @@ const SelectContainerStyle = styled("article", {
 	variants: {
 		variant: {
 			login: {
-				height: "938px",
+				width: "550px",
+				height: "800px",
 				"& .LoginContainer": {
-					transform: "translateX(-0%)",
+					transform: "translateX(0%)",
 				},
 			},
 
-			signUp: {
+			signUpSelect: {
 				height: "677px",
+				"& .SignUpSelectContainer": {
+					transform: "translateX(0%)",
+				},
+			},
+			signUp: {
+				height: "712px",
+
+				"& .SignUp": {
+					transform: "translateX(0%)",
+				},
 			},
 		},
 		defaultTransform: {
