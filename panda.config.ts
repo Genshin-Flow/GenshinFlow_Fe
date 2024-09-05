@@ -39,6 +39,7 @@ export default defineConfig({
 				},
 				borders: {
 					OauthBtn: { value: "1px solid {colors.gray.03}" },
+					CheckBox: { value: "1px solid {colors.gray.05}" },
 				},
 				// 사용 예시 -> fontSize: 'md'
 				fontSizes: {
@@ -47,6 +48,7 @@ export default defineConfig({
 					md: { value: "16px" },
 					lg: { value: "20px" },
 					xl: { value: "24px" },
+					"2xl": { value: "28px" },
 				},
 				// 사용 예시 -> fontWeight: 'bold'
 				fontWeights: {
