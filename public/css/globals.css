@@ -1,1 +1,8 @@
 @layer reset, base, tokens, recipes, utilities;
+
+@layer reset {
+	body,
+	html {
+		min-height: 100%;
+	}
+}
