@@ -10,35 +10,17 @@ type tokenType = {
 const withAuthList: string[] = ["/Mypage"];
 const withOutAuthList: string[] = ["/Login"];
 
-const withAuth = (req: NextRequest, token: tokenType) => {
-	const url = req.nextUrl.clone();
-
-	if (!token) {
-		url.pathname = "/Login";
-		return NextResponse.redirect(url);
-	}
-};
-
-const withOutAuth = (req: NextRequest, token: tokenType) => {
-	const url = req.nextUrl.clone();
-
-	if (token) {
-		url.pathname = "/";
-		return NextResponse.redirect(url);
-	}
-};
-
 export async function middleware(req: NextRequest) {
 	const token = (await cookies().get("data")) as tokenType;
 	const { pathname } = req.nextUrl;
 
-	const isWithAuth = withAuthList.includes(pathname);
-	const isWithOutAuth = withOutAuthList.includes(pathname);
-
-	if (isWithAuth) return withAuth(req, token);
-	else if (isWithOutAuth) return withOutAuth(req, token);
+	if (withOutAuthList.includes(pathname) && token) {
+		return NextResponse.redirect(new URL("/", req.url));
+	} else if (withAuthList.includes(pathname) && !token) {
+		return NextResponse.redirect(new URL("/Login", req.url));
+	}
 }
-
+// 스프레드 문법이 배포시 오류가 발생하여 수정했습니다.
 export const config = {
-	matcher: [...withAuthList, ...withOutAuthList],
+	matcher: ["/Mypage", "/Login"],
 };
