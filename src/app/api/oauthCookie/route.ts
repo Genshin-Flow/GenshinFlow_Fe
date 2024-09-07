@@ -3,7 +3,7 @@ export async function POST(req: Request) {
 	try {
 		// 받아온 이메일을 다시 전달
 		const { email } = await req.json();
-		const response = await fetch(`url`, {
+		const response = await fetch(`${process.env.login}`, {
 			method: "post",
 			headers: {
 				"Content-Type": "application/json",

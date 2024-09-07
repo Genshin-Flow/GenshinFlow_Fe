@@ -12,6 +12,9 @@ export async function forwardingMailFetch(
 			headers: {
 				"Content-Type": "application/json",
 			},
+			body: JSON.stringify({
+				email: emailValue,
+			}),
 		});
 		const data = response.json();
 		setModal("인증코드가 발송 되었습니다");
