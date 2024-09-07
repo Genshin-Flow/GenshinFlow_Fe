@@ -13,7 +13,7 @@ import { useRef } from "react";
 
 export default function Login() {
 	const { modalText, selectBtn, policyModalState, setSelectBtn } = loginState();
-	const PolicyModalRef = useRef<HTMLElement>(null);
+	const PolicyModalRef = useRef<HTMLDivElement>(null);
 	const RenderState = RenderBackButton(selectBtn);
 
 	return (

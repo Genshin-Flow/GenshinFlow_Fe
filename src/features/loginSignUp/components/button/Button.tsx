@@ -1,20 +1,42 @@
+"use client";
 import { styled } from "@/../styled-system/jsx";
+import { Dispatch, SetStateAction, useEffect } from "react";
+import { useRef } from "react";
 
 type propsType = {
 	children: string;
 	//  string 타입을 variants의 값으로 사용할 수 없어 타입 any 사용
-	clickFn?: () => void;
-	variable?: "login" | "signUp" | "deActive";
+	variable?: "login" | "signUp" | "deActive" | "lock";
 	margin?: "mb12" | "mb20";
 	platform?: "mobile";
+	setSignInButton?: Dispatch<SetStateAction<"login" | "lock">>;
 };
 
 export default function Button(props: propsType) {
+	const buttonRef = useRef<HTMLButtonElement>(null);
+	const intervalTime = 1000;
+	let buttonCount = 30;
+	// variable이 lock일때 버튼의 텍스트를 30초 부터 0초 까지 카운트로 변경
+	useEffect(() => {
+		if (props.variable === "lock") {
+			const timer = setInterval(() => {
+				buttonCount -= 1;
+				buttonRef.current!.innerText = `${buttonCount}s`;
+				if (buttonCount <= 0 && props.setSignInButton) {
+					buttonRef.current!.innerText = `로그인`;
+					clearInterval(timer);
+					props.setSignInButton("login");
+				}
+			}, intervalTime);
+		}
+	}, [props.variable]);
+
 	return (
 		<ButtonCompo
 			{...(props.margin && { margin: props.margin })}
 			{...(props.variable && { variant: props.variable })}
 			{...(props.platform && { placeItems: props.platform })}
+			ref={buttonRef}
 		>
 			{props.children}
 		</ButtonCompo>
@@ -43,6 +65,11 @@ const ButtonCompo = styled("button", {
 				bg: "#EFEFEF",
 			},
 			deActive: {
+				bg: "#dddee1",
+				color: "#ffffff",
+				pointerEvents: "none",
+			},
+			lock: {
 				bg: "#dddee1",
 				color: "#ffffff",
 				pointerEvents: "none",

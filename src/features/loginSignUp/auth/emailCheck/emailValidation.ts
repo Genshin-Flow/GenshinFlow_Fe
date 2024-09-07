@@ -1,12 +1,9 @@
-import { emailPattern } from "@/features/loginSignUp/regularExpression/emailregularExpression";
+import { emailPattern } from "@/features/loginSignUp/regularExpression/RegularExpression";
 
-export function checkMail(
-	emailValue: string,
-	setModal: (state: string) => void,
-) {
+export function checkMail(emailValue: string) {
 	if (emailPattern.test(emailValue)) {
 		return true;
 	} else {
-		setModal("이메일이 올바르게 입력 되었는지 확인해주십시오");
+		return false;
 	}
 }

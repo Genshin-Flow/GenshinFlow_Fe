@@ -3,24 +3,25 @@
 import Button from "@/features/loginSignUp/components/button/Button";
 import Input from "@/features/loginSignUp/components/Input/Input";
 import { propsType } from "@/features/loginSignUp/SignIn";
-import { FormEvent, useRef } from "react";
+import { Dispatch, FormEvent, SetStateAction, useRef, useState } from "react";
 import loginState from "@/stores/loginStateStore";
-import { emailPattern } from "@/features/loginSignUp/regularExpression/emailregularExpression";
-
-const loginApi = process.env.login as string;
+import { postLoginAuth } from "@/fetch/signIn/signIn";
 
 // return 타입 기입
-type fetchReturnType = {
-	state: number;
-};
 
 export default function SignInAuth(props: propsType) {
 	const { setModalState } = loginState();
 	const formRef = useRef<HTMLFormElement>(null);
+	const [loginButtonState, setLoginButtonState] = useState<"login" | "lock">(
+		"login",
+	);
+
 	return (
 		<form
 			ref={formRef}
-			onSubmit={(event) => submitHandler(event, setModalState)}
+			onSubmit={(event) =>
+				submitHandler(event, setModalState, setLoginButtonState)
+			}
 			method="post"
 			action={"#"}
 		>
@@ -31,7 +32,11 @@ export default function SignInAuth(props: propsType) {
 				margin="mb12"
 			/>
 			<Input type="password" placeholder="비밀번호" margin="mb40" />
-			<Button variable={"login"} margin={"mb12"}>
+			<Button
+				variable={loginButtonState}
+				margin={"mb12"}
+				setSignInButton={setLoginButtonState}
+			>
 				로그인
 			</Button>
 		</form>
@@ -39,9 +44,10 @@ export default function SignInAuth(props: propsType) {
 }
 
 // 로그인에 필요한 값을 추출하고 유효성 검사를 실시하는 함수
-function submitHandler(
+async function submitHandler(
 	event: FormEvent<HTMLFormElement>,
 	setModal: (state: string) => void,
+	setLoginButtonState: Dispatch<SetStateAction<"login" | "lock">>,
 ) {
 	event.preventDefault();
 	const target = event.target as HTMLFormElement;
@@ -49,10 +55,47 @@ function submitHandler(
 	const $password = target.children[1] as HTMLInputElement;
 	const emailValue = $email.value;
 	const passwordValue = $password.value;
-	if (emailPattern.test(emailValue) === true) {
-		postLoginAuth(emailValue, passwordValue, setModal);
+	const data = await postLoginAuth(emailValue, passwordValue);
+	const getLocal = Number(localStorage.getItem("loginCount")) + 1;
+
+	loginCount(setModal, setLoginButtonState);
+	if (data.count >= 10) {
+		setModal(
+			"10회 연속 오류로 계정이 보호 처리됩니다. 비밀번호를 변경해주세요",
+		);
+	}
+
+	if (getLocal !== 5 && getLocal !== 10) {
+		if (emailValue === "") {
+			setModal("이메일을 입력해주세요");
+			return;
+		} else {
+			setModal(
+				"메일주소 및 비밀번호가 틀렸습니다. 5회 틀릴 시 제한이 생깁니다",
+			);
+			return;
+		}
+	}
+}
+
+// data return 타입에 비밀번호 틀린 횟수를 이용해 일정이상 틀리면 setLoginButtonState lock으로 변경
+export function loginCount(
+	setModal: (state: string) => void,
+	setLoginButtonState: Dispatch<SetStateAction<"login" | "lock">>,
+) {
+	const localLoginCount = Number(localStorage.getItem("loginCount"));
+	if (localLoginCount) {
+		localStorage.setItem("loginCount", JSON.stringify(localLoginCount + 1));
+		const getLocal = Number(localStorage.getItem("loginCount"));
+		if (getLocal === 5) {
+			setLoginButtonState("lock");
+			setModal("5회 연속 오류로 30초 뒤 시도해주세요");
+		} else if (getLocal === 10) {
+			setModal("비밀번호를 10회 오류로 계정이 비활성화 됩니다.");
+			localStorage.setItem("loginCount", JSON.stringify(1));
+		}
 	} else {
-		setModal("메일주소 및 비밀번호가 틀렸습니다. 5회 틀릴 시 제한이 생깁니다");
+		localStorage.setItem("loginCount", JSON.stringify(0));
 	}
 }
 
@@ -64,27 +107,3 @@ function submitHandler(
  * 비밀번호 값을 담은 매개변수
  * @returns
  */
-
-async function postLoginAuth(
-	emailValue: string,
-	passwordValue: string,
-	setModal: (state: string) => void,
-): Promise<fetchReturnType> {
-	try {
-		const response = await fetch(loginApi, {
-			method: "post",
-			headers: {
-				"content-Type": "application/json",
-			},
-			body: JSON.stringify({
-				email: emailValue,
-				password: passwordValue,
-			}),
-		});
-		const data = await response.json();
-		return data;
-	} catch (error) {
-		setModal("메일주소 및 비밀번호가 틀렸습니다. 5회 틀릴 시 제한이 생깁니다");
-		return { state: 400 };
-	}
-}
