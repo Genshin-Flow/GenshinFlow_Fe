@@ -45,7 +45,9 @@ export default function Button(props: propsType) {
 
 const ButtonCompo = styled("button", {
 	base: {
-		width: "400px",
+		width: "100%",
+		maxWidth: "400px",
+		minWidth: "200px",
 		borderRadius: "98px",
 		fontWeight: "bold",
 		cursor: "pointer",
