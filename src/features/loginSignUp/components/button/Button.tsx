@@ -6,7 +6,7 @@ import { useRef } from "react";
 type propsType = {
 	children: string;
 	//  string 타입을 variants의 값으로 사용할 수 없어 타입 any 사용
-	variable?: "login" | "signUp" | "deActive" | "lock";
+	variable?: "login" | "signUp" | "forgotPassword" | "deActive" | "lock";
 	margin?: "mb12" | "mb20";
 	platform?: "mobile";
 	setSignInButton?: Dispatch<SetStateAction<"login" | "lock">>;
@@ -63,6 +63,11 @@ const ButtonCompo = styled("button", {
 			},
 			signUp: {
 				bg: "#EFEFEF",
+			},
+			forgotPassword: {
+				textStyle: "xs",
+				height: "auto",
+				color: "gray.03",
 			},
 			deActive: {
 				bg: "#dddee1",
