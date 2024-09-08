@@ -49,7 +49,7 @@ const ButtonCompo = styled("button", {
 		borderRadius: "98px",
 		fontWeight: "bold",
 		cursor: "pointer",
-		transition: "background 0.5s, color",
+		transition: "background 0.5s, color 0.5s",
 	},
 	variants: {
 		variant: {

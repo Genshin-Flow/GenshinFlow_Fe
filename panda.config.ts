@@ -37,10 +37,6 @@ export default defineConfig({
 						"06": { value: "#F4F4F4" },
 					},
 				},
-				borders: {
-					OauthBtn: { value: "1px solid {colors.gray.03}" },
-					CheckBox: { value: "1px solid {colors.gray.05}" },
-				},
 				// 사용 예시 -> fontSize: 'md'
 				fontSizes: {
 					xs: { value: "12px" },

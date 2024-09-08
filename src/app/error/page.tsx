@@ -1,5 +1,5 @@
 type propsType = {
-	[key: string]: string;
+	[key: string]: never;
 };
 
 export default function OauthErrorPage(props: propsType) {

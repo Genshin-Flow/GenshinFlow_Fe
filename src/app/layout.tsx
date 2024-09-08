@@ -3,11 +3,10 @@ import localfont from "next/font/local";
 import "/public/css/core.css";
 import JenniperSet from "@/app/nextJenniper/JenniperSet";
 import QueryProvider from "@/provider/QueryProvider";
-import SessionProvider from "@/provider/SessionProvider";
 
 export const metadata: Metadata = {
 	manifest: "/manifest.json",
-	title: "",
+	title: "Genshin Flow",
 	description: "",
 };
 
@@ -30,9 +29,7 @@ export default function RootLayout({
 		<html lang="ko">
 			<JenniperSet />
 			<body className={pretandard.className}>
-				<SessionProvider>
-					<QueryProvider>{children}</QueryProvider>
-				</SessionProvider>
+				<QueryProvider>{children}</QueryProvider>
 			</body>
 		</html>
 	);

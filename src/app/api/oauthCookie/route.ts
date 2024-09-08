@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-export async function POST(req: Request) {
+async function POST(req: Request) {
 	try {
 		// 받아온 이메일을 다시 전달
 		const { email } = await req.json();
@@ -22,3 +22,5 @@ export async function POST(req: Request) {
 		);
 	}
 }
+
+export { POST };
