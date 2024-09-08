@@ -7,8 +7,6 @@ import { Dispatch, FormEvent, SetStateAction, useRef, useState } from "react";
 import loginState from "@/stores/loginStateStore";
 import { postLoginAuth } from "@/fetch/signIn/signIn";
 
-// return 타입 기입
-
 export default function SignInAuth(props: propsType) {
 	const { setModalState } = loginState();
 	const formRef = useRef<HTMLFormElement>(null);
@@ -59,7 +57,8 @@ async function submitHandler(
 	const getLocal = Number(localStorage.getItem("loginCount")) + 1;
 
 	loginCount(setModal, setLoginButtonState);
-	if (data.count >= 10) {
+	// 데이터 fetch를 통한 유저의 로그인 틀린 횟수를 가져와 비교
+	if (data) {
 		setModal(
 			"10회 연속 오류로 계정이 보호 처리됩니다. 비밀번호를 변경해주세요",
 		);
@@ -98,12 +97,3 @@ export function loginCount(
 		localStorage.setItem("loginCount", JSON.stringify(0));
 	}
 }
-
-/**로그인 인증 함수
- *
- * @param emailValue
- * 이메일 값을 담은 매개변수
- * @param passwordValue
- * 비밀번호 값을 담은 매개변수
- * @returns
- */

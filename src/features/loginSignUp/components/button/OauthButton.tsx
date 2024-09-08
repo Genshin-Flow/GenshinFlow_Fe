@@ -61,7 +61,7 @@ const AuthButton = styled("button", {
 		padding: "0 20px",
 		boxSizing: "border-box",
 		borderRadius: "68px",
-		border: "OauthBtn",
+		border: "1px solid {colors.gray.03}",
 		cursor: "pointer",
 		textStyle: "lg",
 	},

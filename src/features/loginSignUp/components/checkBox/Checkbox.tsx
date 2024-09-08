@@ -61,7 +61,7 @@ const CheckBoxLabel = styled("label", {
 		borderRadius: "50%",
 		marginRight: "16px",
 		cursor: "pointer",
-		border: "CheckBox",
+		border: "1px solid {colors.gray.05}",
 		transition: "background-color 0.3s",
 		backgroundColor: "gray.06",
 		overflow: "hidden",
