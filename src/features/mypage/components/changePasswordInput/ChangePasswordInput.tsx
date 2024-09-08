@@ -1,12 +1,13 @@
+"use client";
 import { styled } from "@/../styled-system/jsx";
 import Button from "@/features/loginSignUp/components/button/Button";
-import RequestCode from "@/features/mypage/components/requestCode/requestCode";
-
-// 캐시 삭제해야 함
+import RequestCode from "@/features/mypage/components/requestCode/RequestCode";
+import { FormEvent } from "react";
 
 export default function ChangePasswordInput() {
 	return (
-		<MailAuthForm action="#">
+		<MailAuthForm action="#" onSubmit={submitHandler}>
+			<RequestCode />
 			<InputStyle
 				type="text"
 				placeholder={"메일로 전송된 코드를 입력하세요"}
@@ -24,6 +25,10 @@ export default function ChangePasswordInput() {
 			</ChangeButtonContainer>
 		</MailAuthForm>
 	);
+}
+
+function submitHandler(event: FormEvent<HTMLFormElement>) {
+	event.preventDefault();
 }
 
 const MailAuthForm = styled("form", {
