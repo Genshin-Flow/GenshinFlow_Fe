@@ -1,3 +1,13 @@
+import { styled } from "@/../styled-system/jsx";
+
 export default function ChangePassword() {
-	return <div>changePassword</div>;
+	return (
+		<ChangePasswordContainer className="MypageChangePass">
+			changePassword
+		</ChangePasswordContainer>
+	);
 }
+
+const ChangePasswordContainer = styled("article", {
+	base: {},
+});
