@@ -1,7 +1,7 @@
 "use client";
 import { InputStyle } from "@/features/mypage/components/changePasswordInput/ChangePasswordInput";
 import { styled } from "@/../styled-system/jsx";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function RequestCode() {
 	const [count, setCount] = useState(0);
