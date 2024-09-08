@@ -24,6 +24,8 @@ function changePage(currentPage: stateType) {
 			return null;
 		case "signUp":
 			return "signUpSelect";
+		case "forgotPassword":
+			return "login";
 	}
 }
 

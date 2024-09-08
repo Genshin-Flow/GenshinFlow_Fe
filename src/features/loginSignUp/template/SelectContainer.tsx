@@ -50,6 +50,12 @@ const SelectContainerStyle = styled("div", {
 					transform: "translateX(0%)",
 				},
 			},
+			forgotPassword: {
+				height: "625px",
+				"& .forgotPassword": {
+					transform: "translateX(0%)",
+				},
+			},
 			signUp: {
 				height: "712px",
 

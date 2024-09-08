@@ -1,6 +1,11 @@
 import { create } from "zustand";
 
-export type stateType = "login" | "signUpSelect" | "signUp" | null;
+export type stateType =
+	| "login"
+	| "signUpSelect"
+	| "signUp"
+	| "forgotPassword"
+	| null;
 
 type loginPageState = {
 	selectBtn: stateType;
