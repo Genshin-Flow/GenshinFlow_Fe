@@ -1,5 +1,5 @@
 import Script from "next/script";
-export default function JenniperSet() {
+function JenniperSet() {
 	return (
 		<>
 			<Script>
@@ -19,3 +19,5 @@ export default function JenniperSet() {
 		</>
 	);
 }
+
+export default JenniperSet;
