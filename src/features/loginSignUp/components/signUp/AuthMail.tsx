@@ -14,6 +14,8 @@ import { postAuthMail } from "@/features/loginSignUp/auth/mailAuth/mailAuth";
 type propsType = {
 	emailValue: string;
 	setEmailValue: Dispatch<SetStateAction<string>>;
+	mb: "mb12" | "mb20";
+	platform?: "mobile";
 };
 
 export default function AuthMail(props: propsType) {
@@ -34,12 +36,20 @@ export default function AuthMail(props: propsType) {
 		<AuthMailContainer
 			onChange={(event) => changeHandler(event, props.setEmailValue)}
 			{...(postCodeVariable && { variant: postCodeVariable })}
+			{...(props.mb && { marginBottom: props.mb })}
 		>
-			<Input type={"text"} placeholder={"메일주소"} margin={"mb12"} />
+			<Input
+				type={"text"}
+				placeholder={"메일주소"}
+				margin={"mb0"}
+				platform={props.platform}
+			/>
 			<SendMailCount className="mailAuthCount">{postCodeState}s</SendMailCount>
 			<SendMailButton
 				className="postMailAuth"
-				onClick={() => postAuthMail(props.emailValue, setModalState)}
+				onClick={() =>
+					postAuthMail(props.emailValue, setModalState, setPostCodeState)
+				}
 				type="button"
 			>
 				인증코드 받기
@@ -49,7 +59,7 @@ export default function AuthMail(props: propsType) {
 }
 
 function changeHandler(
-	event: FormEvent<HTMLFormElement>,
+	event: FormEvent<HTMLDivElement>,
 	setEmailValue: Dispatch<SetStateAction<string>>,
 ) {
 	const target = event.target as HTMLInputElement;
@@ -57,7 +67,7 @@ function changeHandler(
 	setEmailValue(emailValue);
 }
 
-const AuthMailContainer = styled("form", {
+const AuthMailContainer = styled("div", {
 	base: {
 		width: "100%",
 		position: "relative",
@@ -76,6 +86,14 @@ const AuthMailContainer = styled("form", {
 				},
 			},
 		},
+		marginBottom: {
+			mb12: {
+				marginBottom: "12px",
+			},
+			mb20: {
+				marginBottom: "20px",
+			},
+		},
 	},
 });
 
@@ -83,7 +101,7 @@ const SendMailCount = styled("span", {
 	base: {
 		textStyle: "sm",
 		position: "absolute",
-		top: "42%",
+		top: "50%",
 		right: "130px",
 		transform: "translateY(-50%)",
 		display: "none",
@@ -95,7 +113,7 @@ const SendMailButton = styled("button", {
 	base: {
 		textStyle: "md",
 		position: "absolute",
-		top: "42%",
+		top: "50%",
 		transform: "translateY(-50%)",
 		right: "30px",
 		cursor: "pointer",

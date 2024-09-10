@@ -84,6 +84,7 @@ const AuthButton = styled("button", {
 			},
 			mobile: {
 				height: "40px",
+				textStyle: "md",
 			},
 		},
 	},

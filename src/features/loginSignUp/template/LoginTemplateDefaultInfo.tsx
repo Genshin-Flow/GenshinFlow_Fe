@@ -1,16 +1,24 @@
+"use client";
 import { styled } from "@/../styled-system/jsx";
 import loginState from "@/stores/loginStateStore";
 
-export default function LoginDefaultInfo() {
+type propsType = {
+	mobile?: "mobile";
+};
+
+export default function LoginDefaultInfo(props: propsType) {
 	const { selectBtn } = loginState();
 	return (
 		<DefaultInfoContainer
 			{...(selectBtn === "login" ? { logoTop: "top49" } : { logoTop: "top60" })}
+			{...(props.mobile && { mobile: "top105" })}
 		>
-			<LogoContainer>
+			<LogoContainer {...(props.mobile && { platform: "mobile" })}>
 				<LogoSvg src="/icons/logo/GenshinFlowLogo.svg" alt="원신 플로우 로고" />
 			</LogoContainer>
-			<LoginText>더 나은 인연을 위해</LoginText>
+			<LoginText {...(props.mobile && { platform: "mobile" })}>
+				더 나은 인연을 위해
+			</LoginText>
 		</DefaultInfoContainer>
 	);
 }
@@ -32,12 +40,25 @@ const DefaultInfoContainer = styled("div", {
 				top: "49px",
 			},
 		},
+		mobile: {
+			top105: {
+				top: "152px",
+			},
+		},
 	},
 });
 
 const LogoContainer = styled("div", {
 	base: {
 		width: "274px",
+	},
+	variants: {
+		platform: {
+			mobile: {
+				width: "184.26px",
+				height: "84px",
+			},
+		},
 	},
 });
 
@@ -56,5 +77,13 @@ const LoginText = styled("p", {
 		textAlign: "center",
 		fontSize: "xl",
 		fontWeight: "medium",
+	},
+	variants: {
+		platform: {
+			mobile: {
+				fontSize: "md",
+				fontWeight: "medium",
+			},
+		},
 	},
 });
