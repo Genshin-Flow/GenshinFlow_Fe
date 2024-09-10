@@ -11,6 +11,7 @@ import SignIn from "@/features/loginSignUp/mobile/SignIn";
 import ForgotPass from "@/features/loginSignUp/mobile/ForgotPass";
 import { nanoid } from "nanoid";
 import loginState, { stateType } from "@/stores/loginStateStore";
+
 export default function SelectButton() {
 	const { selectBtn, setSelectBtn } = loginState();
 	const clickFn = (event: React.MouseEvent<HTMLElement, MouseEvent>) =>
@@ -82,7 +83,7 @@ const SelectContainer = styled("article", {
 		width: "100%",
 		height: "100%",
 		position: "absolute",
-		top: "295px",
+		top: "248px",
 		transition: "transform 0.5s",
 		padding: "0 20px",
 	},

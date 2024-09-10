@@ -49,7 +49,7 @@ const SignUpContainer = styled("article", {
 		position: "absolute",
 		transform: "translateX(200%)",
 		transition: "transform 0.5s",
-		top: "346px",
+		top: "308px",
 		left: "0",
 		padding: "0 20px",
 	},
