@@ -5,14 +5,27 @@ import {
 	UserInfo,
 	UserIdButton,
 	QuestType,
+	QuestIconWrapper,
 	QuestIcon,
+	CenteredImage,
 	WorldLevel,
 	Message,
 	MessageText,
 	TimeAgo,
 	MoreOptions,
+	MoreOptionsButton,
 	Text,
-} from "./styles";
+} from "./styles"
+
+// 퀘스트 종류 이미지
+export const questImage = {
+	domain: "/images/quests/domain.png",
+	event: "/images/quests/event.png",
+	explore: "/images/quests/explore.png",
+	gather: "/images/quests/gather.png",
+	mission: "/images/quests/mission.png",
+	mob: "/images/quests/mob.png",
+};
 
 export default function MatchingPostItem() {
 	return (
@@ -21,12 +34,15 @@ export default function MatchingPostItem() {
 				<ProfileImage />
 				<UserInfo>
 					<Text>유저명</Text>
-					<UserIdButton>UID 80102123</UserIdButton>
+					<UserIdButton>UID 80000000</UserIdButton>
 				</UserInfo>
 			</UserName>
 			<QuestType>
-				<QuestIcon />
-				<Text>나선 비경</Text>
+				<QuestIconWrapper>
+					<QuestIcon />
+					<CenteredImage src={questImage.domain} alt="Quest Type" />
+				</QuestIconWrapper>
+				<Text>비경</Text>
 			</QuestType>
 			<WorldLevel>
 				<Text>7</Text>
@@ -38,9 +54,11 @@ export default function MatchingPostItem() {
 				</MessageText>
 			</Message>
 			<TimeAgo>
-				<Text>1분 전</Text>
+				<Text color="gray02">1분 전</Text>
 			</TimeAgo>
-			<MoreOptions>...</MoreOptions>
+			<MoreOptions>
+				<MoreOptionsButton type="report" />
+			</MoreOptions>
 		</ItemContainer>
 	);
 }

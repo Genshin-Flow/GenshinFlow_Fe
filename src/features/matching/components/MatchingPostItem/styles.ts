@@ -44,7 +44,7 @@ export const ItemContainer = styled("div", {
     minWidth: "890px",
     width: "100%",
     height: "60px",
-    backgroundColor: 'secondary.03',
+    backgroundColor: '#F9F6F1',
     borderBottom: '1px solid {colors.gray.05}',
   },
 });
@@ -80,10 +80,28 @@ export const UserIdButton = styled("button", {
     cursor: "pointer",
     textStyle: 'xs',
     color: 'gray.03',
+    paddingLeft: '16px',
+    backgroundImage: 'url("/svgs/clarity_paste-line.svg")',
+    backgroundSize: '12px 12px',
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'left center',
   },
 });
 
-export const QuestType = styled(UserName);
+export const QuestType = styled(UserName, {
+  base: {
+    // backgroundColor: 'secondary.03',
+  }
+});
+
+export const QuestIconWrapper = styled('div', {
+  base: {
+    position: 'relative',
+    width: '30px',
+    height: '30px',
+    marginRight: '20px',
+  }
+});
 
 export const QuestIcon = styled('div', {
   base: {
@@ -91,7 +109,18 @@ export const QuestIcon = styled('div', {
     height: '30px',
     borderRadius: '50%',
     backgroundColor: 'white',
-    marginRight: '20px',
+    boxShadow: 'inset 1px 4px 2px 0 rgba(192, 192, 192, 0.25), inset -1px -4px 2px 0 rgba(229, 218, 218, 0.25)',
+  }
+});
+
+export const CenteredImage = styled('img', {
+  base: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: '28px', 
+    height: '28px', 
   }
 });
 
@@ -145,4 +174,28 @@ export const MoreOptions = styled('div', {
     ...flexItem,
     flex: '1 1 90px',
   }
+});
+
+export const MoreOptionsButton = styled('button', {
+  base: {
+    cursor: 'pointer',
+    width: '48px',
+    height: '48px',
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: 'auto',
+    backgroundPosition: 'center',
+  },
+  variants: {
+    type: {
+      report: {
+        backgroundImage: 'url("/svgs/report.svg")',
+      },
+      moreOption: {
+        backgroundImage: 'url("/svgs/moreoption.svg")',
+      },
+    },
+  },
+  defaultVariants: {
+    type: 'report',
+  },
 });
