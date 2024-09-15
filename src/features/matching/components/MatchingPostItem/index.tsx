@@ -1,3 +1,4 @@
+"use client";
 import {
 	ItemContainer,
 	UserName,
@@ -16,6 +17,8 @@ import {
 	MoreOptionsButton,
 	Text,
 } from "./styles"
+import Modal from "../Modal";
+import { useState } from "react";
 
 // 퀘스트 종류 이미지
 export const questImage = {
@@ -28,6 +31,11 @@ export const questImage = {
 };
 
 export default function MatchingPostItem() {
+	// 모달 상태 
+	const [isModalOpen, setIsModalOpen] = useState(true);
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
 	return (
 		<ItemContainer>
 			<UserName>
@@ -57,8 +65,9 @@ export default function MatchingPostItem() {
 				<Text color="gray02">1분 전</Text>
 			</TimeAgo>
 			<MoreOptions>
-				<MoreOptionsButton type="report" />
+				<MoreOptionsButton type="report" onClick={openModal}/>
 			</MoreOptions>
+			{isModalOpen && <Modal onClose={closeModal} type="report" />}
 		</ItemContainer>
 	);
 }
