@@ -124,3 +124,181 @@ export const ReportButton = styled("button", {
     cursor: "pointer",
   },
 });
+
+export const UserQuestContainer = styled("div", {
+  base: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    gap: "80px",
+    marginBottom: "16px",
+  },
+});
+
+export const UserInfo = styled("div", {
+  base: {
+    width: "360px",
+    display: "flex",
+    flexDirection: "column",
+    "& p": {
+      fontSize: "sm",
+      fontWeight: "bold",
+      color: "gray.01",
+      marginBottom: "20px",
+    },
+  },
+});
+
+export const InputContainer = styled("div", {
+  base: {
+    width: "360px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    textStyle: "sm",
+    color: "gray.01",
+  },
+});
+
+export const TextInput = styled("input", {
+  base: {
+    display: "flex",
+    alignItems: "center",
+    width: "240px",
+    height: "36px",
+    borderBottom: "1px solid",
+    borderColor: "gray.01",
+    textStyle: "xs",
+    color: "gray.03",
+    outline: "none",
+  },
+});
+
+export const QuestInfo = styled("div", {
+  base: {
+    display: "flex",
+    flexDirection: "column",
+    width: "360px",
+    "& p": {
+      fontSize: "sm",
+      fontWeight: "bold",
+      color: "gray.01",
+      marginBottom: "20px",
+    },
+  },
+});
+
+export const Content = styled("div", {
+  base: {
+    display: "flex",
+    flexDirection: "column",
+    marginBottom: "20px",
+    "& p": {
+      fontSize: "sm",
+      fontWeight: "bold",
+      color: "gray.01",
+      marginBottom: "20px",
+    },
+  },
+});
+
+export const ContentInput = styled("textarea", {
+  base: {
+    width: "100%",
+    height: "56px",
+    padding: "8px 10px",
+    borderRadius: "8px",
+    border: "1px solid",
+    borderColor: "gray.04",
+    backgroundColor: "gray.06",
+    resize: "none",
+    fontSize: "xs",
+    fontWeight: "medium",
+    color: "gray.01",
+    outline: "none",
+  },
+});
+
+export const Options = styled("div", {
+  base: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "20px",
+    "& p:first-child": {
+      fontSize: "sm",
+      fontWeight: "bold",
+      color: "gray.01",
+    },
+    "& div": {
+      display: "flex",
+      justifyContent: "space-between",
+    },
+  },
+});
+
+export const PasswordInput = styled("input", {
+  base: {
+    display: "flex",
+    alignItems: "center",
+    padding: "10px 8px",
+    width: "200px",
+    height: "40px",
+    border: "1px solid",
+    borderColor: "gray.04",
+    backgroundColor: "gray.06",
+    borderRadius: "8px",
+    textStyle: "xs",
+    color: "gray.03",
+    outline: "none",
+  },
+});
+
+export const WarningText = styled("p", {
+  base: {
+    display: "flex",
+    alignItems: "center",
+    paddingLeft: "46px",
+    fontSize: "xs",
+    fontWeight: "regular",
+    color: "secondary.01",
+    backgroundImage: "url('/svgs/warning.svg')",
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "auto",
+    backgroundPosition: "10px center",
+  },
+});
+
+export const Btns = styled("div", {
+  base: {
+    display: "flex",
+    justifyContent: "space-between",
+    "& div": {
+      display: "flex",
+      gap: "20px",
+    },
+  },
+});
+
+export const Button = styled("button", {
+  base: {
+    width: "80px",
+    height: "40px",
+    fontSize: "md",
+    fontWeight: "medium",
+    borderRadius: "8px",
+    cursor: "pointer",
+    color: "white",
+  },
+  variants: {
+    type: {
+      cancel: {
+        backgroundColor: "gray.04",
+      },
+      submit: {
+        backgroundColor: "secondary.01",
+      },
+    },
+  },
+  defaultVariants: {
+    type: "submit",
+  },
+});
