@@ -11,7 +11,7 @@ export const DropdownButton = styled("button", {
   base: {
     background: "gray.06",
     color: "gray.03",
-    padding: "10px 10px",
+    padding: "10px 8px",
     fontSize: "xs",
     fontWeight: "medium",
     border: "1px solid",
@@ -22,6 +22,8 @@ export const DropdownButton = styled("button", {
     alignItems: "center",
     justifyContent: "space-between",
     width: "100%",
+    minWidth: "200px",
+    height: "40px",
   },
 });
 
