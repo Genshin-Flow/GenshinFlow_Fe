@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import {
 	DropdownContainer,
 	DropdownButton,
@@ -15,37 +15,50 @@ type Option = {
 
 interface DropdownProps {
 	options: Option[];
-	placeholder: string;
+	placeholder?: string;
+	value: string;
+	setValue: (value: string) => void;
 }
 
-export default function Dropdown({ options, placeholder }: DropdownProps) {
+export default function Dropdown({
+	options,
+	placeholder = "",
+	value,
+	setValue,
+}: DropdownProps) {
 	const [isOpen, setIsOpen] = useState(false);
-	const [selectedOption, setSelectedOption] = useState("");
+	const dropdownRef = useRef<HTMLDivElement>(null);
 
 	const toggleDropdown = () => {
 		setIsOpen(!isOpen);
 	};
 
-	const blurContainer = () => {
-		setTimeout(() => {
-			setIsOpen(false);
-		}, 200);
-	};
-
 	const selectOption = (option: string) => {
-		setSelectedOption(option);
+		setValue(option);
 		setIsOpen(false);
 	};
 
+	const handleClickOutside = (e: MouseEvent) => {
+		if (
+			dropdownRef.current &&
+			!dropdownRef.current.contains(e.target as Node)
+		) {
+			setIsOpen(false);
+		}
+	};
+
+	useEffect(() => {
+		document.addEventListener("mousedown", handleClickOutside);
+		return () => {
+			document.removeEventListener("mousedown", handleClickOutside);
+		};
+	}, []);
+
 	return (
-		<DropdownContainer onBlur={blurContainer}>
+		<DropdownContainer ref={dropdownRef}>
 			<DropdownButton onClick={toggleDropdown}>
-				{selectedOption || placeholder}
-				{isOpen ? (
-					<Arrow direction="up" />
-				) : (
-					<Arrow direction="down" />
-				)}
+				{value || placeholder}
+				{isOpen ? <Arrow direction="up" /> : <Arrow direction="down" />}
 			</DropdownButton>
 			{isOpen && (
 				<DropdownList>
