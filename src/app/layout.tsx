@@ -3,7 +3,6 @@ import localfont from "next/font/local";
 import "/public/css/core.css";
 import JenniperSet from "@/app/nextJenniper/JenniperSet";
 import QueryProvider from "@/provider/QueryProvider";
-
 export const metadata: Metadata = {
 	manifest: "/manifest.json",
 	title: "Genshin Flow",

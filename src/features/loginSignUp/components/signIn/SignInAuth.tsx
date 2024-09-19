@@ -57,14 +57,15 @@ async function submitHandler(
 	const getLocal = Number(localStorage.getItem("loginCount")) + 1;
 
 	loginCount(setModal, setLoginButtonState);
-	// 데이터 fetch를 통한 유저의 로그인 틀린 횟수를 가져와 비교
-	if (data) {
-		setModal(
-			"10회 연속 오류로 계정이 보호 처리됩니다. 비밀번호를 변경해주세요",
-		);
-	}
+	// 데이터 fetch를 통한 유저의 로그인 틀린 횟수를 가져와 비교 ( 조건문 작성필요 )
+	// if (data) {
+	// 	setModal(
+	// 		"10회 연속 오류로 계정이 보호 처리됩니다. 비밀번호를 변경해주세요",
+	// 	);
+	// 	return;
+	// }
 
-	if (getLocal !== 5 && getLocal !== 10) {
+	if (getLocal !== 5) {
 		if (emailValue === "") {
 			setModal("이메일을 입력해주세요");
 			return;
@@ -83,14 +84,15 @@ export function loginCount(
 	setLoginButtonState: Dispatch<SetStateAction<"login" | "lock">>,
 ) {
 	const localLoginCount = Number(localStorage.getItem("loginCount"));
-	if (localLoginCount) {
+	console.log(localLoginCount);
+	if (Number.isInteger(localLoginCount)) {
 		localStorage.setItem("loginCount", JSON.stringify(localLoginCount + 1));
 		const getLocal = Number(localStorage.getItem("loginCount"));
+
 		if (getLocal === 5) {
 			setLoginButtonState("lock");
 			setModal("5회 연속 오류로 30초 뒤 시도해주세요");
-		} else if (getLocal === 10) {
-			setModal("비밀번호를 10회 오류로 계정이 비활성화 됩니다.");
+		} else if (getLocal >= 10) {
 			localStorage.setItem("loginCount", JSON.stringify(1));
 		}
 	} else {

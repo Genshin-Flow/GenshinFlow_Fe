@@ -54,7 +54,7 @@ const ButtonCompo = styled("button", {
 	variants: {
 		variant: {
 			login: {
-				bg: "{color.primary.01}",
+				bg: "primary.01",
 				color: "#ffffff",
 				"&:hover": {
 					bg: "gray.05",
@@ -62,7 +62,7 @@ const ButtonCompo = styled("button", {
 				},
 			},
 			signUp: {
-				bg: "{color.gray.05}",
+				bg: "gray.05",
 			},
 			forgotPassword: {
 				textStyle: "xs",
@@ -70,12 +70,12 @@ const ButtonCompo = styled("button", {
 				color: "gray.03",
 			},
 			deActive: {
-				bg: "{color.primary.01}",
+				bg: "gray.05",
 				color: "#ffffff",
 				pointerEvents: "none",
 			},
 			lock: {
-				bg: "{color.primary.01}",
+				bg: "gray.05",
 				color: "#ffffff",
 				pointerEvents: "none",
 			},

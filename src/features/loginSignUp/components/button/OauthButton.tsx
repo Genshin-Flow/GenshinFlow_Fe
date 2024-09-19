@@ -38,7 +38,6 @@ async function onClick(SignIn: SignInType, type: string) {
 			await SignIn(type, {
 				callbackUrl: "/",
 			});
-
 			break;
 		case "naver":
 			SignIn(type, {
