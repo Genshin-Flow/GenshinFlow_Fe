@@ -57,7 +57,7 @@ const SelectContainerStyle = styled("div", {
 				},
 			},
 			signUp: {
-				height: "712px",
+				height: "784px",
 
 				"& .SignUp": {
 					transform: "translateX(0%)",
