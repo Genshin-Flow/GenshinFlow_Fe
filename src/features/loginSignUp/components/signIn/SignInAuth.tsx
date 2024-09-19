@@ -93,7 +93,8 @@ export function loginCount(
 			setLoginButtonState("lock");
 			setModal("5회 연속 오류로 30초 뒤 시도해주세요");
 		} else if (getLocal >= 10) {
-			localStorage.setItem("loginCount", JSON.stringify(1));
+			setModal("10회 오류로 계정이 비활성화 됩니다.");
+			localStorage.setItem("loginCount", JSON.stringify(0));
 		}
 	} else {
 		localStorage.setItem("loginCount", JSON.stringify(0));

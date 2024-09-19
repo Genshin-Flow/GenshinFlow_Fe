@@ -38,6 +38,7 @@ export default function Modal(props: propsType) {
 
 const ModalContainer = styled("div", {
 	base: {
+		width: "100%",
 		maxWidth: "325px",
 		position: "absolute",
 		top: "46%",
@@ -56,6 +57,7 @@ const ModalContainer = styled("div", {
 				borderRadius: "100px",
 			},
 			mobile: {
+				maxWidth: "285px",
 				borderRadius: "8px",
 			},
 		},
