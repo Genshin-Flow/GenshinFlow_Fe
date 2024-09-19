@@ -38,7 +38,7 @@ export async function postLoginAuth(
 			});
 		}
 		router?.push("/");
-		return data;
+		return true;
 	} catch (error) {
 		return error;
 	}

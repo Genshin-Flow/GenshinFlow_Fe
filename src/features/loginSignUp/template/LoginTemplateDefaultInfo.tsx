@@ -42,7 +42,7 @@ const DefaultInfoContainer = styled("div", {
 		},
 		mobile: {
 			top105: {
-				top: "152px",
+				top: "105px",
 			},
 		},
 	},

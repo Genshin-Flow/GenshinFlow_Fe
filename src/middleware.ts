@@ -11,6 +11,7 @@ const withOutAuthList: string[] = ["/Login"];
 
 export async function middleware(req: NextRequest) {
 	const token = (await cookies().get("accessToken")) as tokenType;
+
 	const { pathname } = req.nextUrl;
 
 	if (withOutAuthList.includes(pathname) && token) {
