@@ -11,8 +11,10 @@ import SignIn from "@/features/loginSignUp/mobile/SignIn";
 import ForgotPass from "@/features/loginSignUp/mobile/ForgotPass";
 import { nanoid } from "nanoid";
 import loginState, { stateType } from "@/stores/loginStateStore";
+import Modal from "@/features/loginSignUp/components/modal/Modal";
 export default function SelectButton() {
 	const { selectBtn, setSelectBtn } = loginState();
+	const { modalText } = loginState();
 	const clickFn = (event: React.MouseEvent<HTMLElement, MouseEvent>) =>
 		clickHandler(event, setSelectBtn);
 	return (
@@ -45,6 +47,7 @@ export default function SelectButton() {
 			<SignIn />
 			<SignUp />
 			<ForgotPass />
+			{modalText && <Modal platform={"mobile"}>{modalText}</Modal>}
 		</LoginContainer>
 	);
 }

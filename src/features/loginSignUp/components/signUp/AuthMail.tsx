@@ -51,6 +51,7 @@ export default function AuthMail(props: propsType) {
 					postAuthMail(props.emailValue, setModalState, setPostCodeState)
 				}
 				type="button"
+				{...(props.platform && { platform: props.platform })}
 			>
 				인증코드 받기
 			</SendMailButton>
@@ -124,6 +125,11 @@ const SendMailButton = styled("button", {
 		variant: {
 			active: {
 				color: "gray.04",
+			},
+		},
+		platform: {
+			mobile: {
+				right: "12px",
 			},
 		},
 	},
