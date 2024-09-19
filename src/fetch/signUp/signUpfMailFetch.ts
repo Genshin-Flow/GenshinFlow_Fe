@@ -33,7 +33,6 @@ export async function signUpInfoCheck(
 		const codeState = await response.json();
 
 		if (!mailState) {
-			console.log("qeqweqwqe");
 			setModalState("이메일의 형식이 올바른지 확인해주십시오");
 		} else if (!passwordCheck) {
 			setModalState(
