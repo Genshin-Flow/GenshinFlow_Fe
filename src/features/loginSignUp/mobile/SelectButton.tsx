@@ -12,13 +12,26 @@ import ForgotPass from "@/features/loginSignUp/mobile/ForgotPass";
 import { nanoid } from "nanoid";
 import loginState, { stateType } from "@/stores/loginStateStore";
 import Modal from "@/features/loginSignUp/components/modal/Modal";
+import PrivacyPolicy from "@/features/loginSignUp/components/modal/PrivacyPolicy";
+import { useEffect, useRef } from "react";
+
 export default function SelectButton() {
-	const { selectBtn, setSelectBtn } = loginState();
-	const { modalText } = loginState();
+	const { selectBtn, setSelectBtn, modalText, policyModalState } = loginState();
 	const clickFn = (event: React.MouseEvent<HTMLElement, MouseEvent>) =>
 		clickHandler(event, setSelectBtn);
+	const PolicyModalRef = useRef<HTMLDivElement>(null);
+	const Container = useRef<HTMLDivElement>(null);
+	const BackEventFn = (event: Event) => BackEvent(event, setSelectBtn);
+	// 로그인 , 계정 만들기 누를시 모바일의 뒤로가기 제한
+	useEffect(() => {
+		history.pushState(null, "", "/MobileLogin");
+		window.addEventListener("popstate", BackEventFn);
+		return () => window.removeEventListener("popstate", BackEventFn);
+	});
+
 	return (
-		<LoginContainer>
+		<LoginContainer ref={Container}>
+			{policyModalState && <PrivacyPolicy ModalRef={PolicyModalRef} />}
 			<LoginDefaultInfo mobile={"mobile"} />
 			<SelectContainer
 				{...(selectBtn !== null && { defaultTransform: "default" })}
@@ -71,6 +84,11 @@ function clickHandler(
 	}
 }
 
+function BackEvent(event: Event, setSelectBtn: (state: stateType) => void) {
+	console.log("취소");
+	setSelectBtn(null);
+}
+
 const LoginContainer = styled("div", {
 	base: {
 		width: "100%",
@@ -85,7 +103,7 @@ const SelectContainer = styled("article", {
 		width: "100%",
 		height: "100%",
 		position: "absolute",
-		top: "295px",
+		top: "248px",
 		transition: "transform 0.5s",
 		padding: "0 20px",
 	},

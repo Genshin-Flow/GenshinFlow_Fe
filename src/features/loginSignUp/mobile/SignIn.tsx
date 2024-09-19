@@ -51,7 +51,7 @@ const LoginContainer = styled("article", {
 		position: "absolute",
 		transform: "translate(200%)",
 		transition: "transform 0.5s",
-		top: "346px",
+		top: "308px",
 		left: "0",
 		padding: "0 20px",
 	},
@@ -71,20 +71,20 @@ async function submitHandler(
 	const emailValue = $emailDom.value;
 	const passwordValue = $passwordDom.value;
 	const getLocal = Number(localStorage.getItem("loginCount")) + 1;
-	// if (getLocal !== 5) {
-	// 	if (emailValue === "") {
-	// 		setModal("이메일을 입력해주세요");
-	// 		return;
-	// 	} else if (passwordValue === "") {
-	// 		setModal("비밀번호를 입력해주세요");
-	// 		return;
-	// 	} else if (!checkMail(emailValue) || !passwordValidation(passwordValue)) {
-	// 		setModal(
-	// 			"메일주소 및 비밀번호가 틀렸습니다. 5회 틀릴 시 제한이 생깁니다",
-	// 		);
-	// 		return;
-	// 	}
-	// }
-	// loginCount(setModal, buttonState);
-	const data = await postLoginAuth(emailValue, passwordValue, router);
+	if (getLocal !== 5) {
+		if (emailValue === "") {
+			setModal("이메일을 입력해주세요");
+			return;
+		} else if (passwordValue === "") {
+			setModal("비밀번호를 입력해주세요");
+			return;
+		} else if (!checkMail(emailValue) || !passwordValidation(passwordValue)) {
+			setModal(
+				"메일주소 및 비밀번호가 틀렸습니다. 5회 틀릴 시 제한이 생깁니다",
+			);
+			return;
+		}
+	}
+	loginCount(setModal, buttonState);
+	await postLoginAuth(emailValue, passwordValue, router);
 }
