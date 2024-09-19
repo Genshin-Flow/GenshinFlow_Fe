@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import {
 	DropdownContainer,
 	DropdownButton,
@@ -7,6 +7,7 @@ import {
 	DropdownIcon,
 	Arrow,
 } from "./styles";
+import useOutsideClick from "@/hooks/useOutsideClick";
 
 type Option = {
 	value: string;
@@ -38,21 +39,9 @@ export default function Dropdown({
 		setIsOpen(false);
 	};
 
-	const handleClickOutside = (e: MouseEvent) => {
-		if (
-			dropdownRef.current &&
-			!dropdownRef.current.contains(e.target as Node)
-		) {
-			setIsOpen(false);
-		}
-	};
-
-	useEffect(() => {
-		document.addEventListener("mousedown", handleClickOutside);
-		return () => {
-			document.removeEventListener("mousedown", handleClickOutside);
-		};
-	}, []);
+	useOutsideClick(dropdownRef, () => {
+		setIsOpen(false);
+	});
 
 	return (
 		<DropdownContainer ref={dropdownRef}>

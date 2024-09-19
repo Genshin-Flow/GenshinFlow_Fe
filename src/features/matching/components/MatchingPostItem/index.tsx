@@ -16,25 +16,37 @@ import {
 	MoreOptions,
 	MoreOptionsButton,
 	Text,
-} from "./styles"
+	MenuContainer,
+	MenuItem,
+} from "./styles";
 import Modal from "../Modal";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import useOutsideClick from "@/hooks/useOutsideClick";
 
 // 퀘스트 종류 이미지
 export const questImage = {
-	domain: "/images/quests/domain.png",
-	event: "/images/quests/event.png",
-	explore: "/images/quests/explore.png",
-	gather: "/images/quests/gather.png",
-	mission: "/images/quests/mission.png",
-	mob: "/images/quests/mob.png",
+	domain: "/svgs/quests/domain.svg",
+	event: "/svgs/quests/event.svg",
+	explore: "/svgs/quests/explore.svg",
+	gather: "/svgs/quests/gather.svg",
+	mission: "/svgs/quests/mission.svg",
+	mob: "/svgs/quests/mob.svg",
 };
 
 export default function MatchingPostItem() {
-	// 모달 상태 
-	const [isModalOpen, setIsModalOpen] = useState(true);
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
+	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [isMenuOpen, setIsMenuOpen] = useState(false);
+	const menuRef = useRef<HTMLDivElement>(null);
+
+	const openModal = () => {
+		setIsModalOpen(true);
+		setIsMenuOpen(false);
+	};
+	const closeModal = () => setIsModalOpen(false);
+	const openMenu = () => setIsMenuOpen(true);
+	const closeMenu = () => setIsMenuOpen(false);
+
+	useOutsideClick(menuRef, closeMenu);
 
 	return (
 		<ItemContainer>
@@ -65,9 +77,17 @@ export default function MatchingPostItem() {
 				<Text color="gray02">1분 전</Text>
 			</TimeAgo>
 			<MoreOptions>
-				<MoreOptionsButton type="report" onClick={openModal}/>
+				<MoreOptionsButton type="moreOption" onClick={openMenu} />
+				{isMenuOpen && (
+					<MenuContainer ref={menuRef}>
+						<MenuItem onClick={closeMenu}>종료</MenuItem>
+						<MenuItem onClick={closeMenu}>삭제</MenuItem>
+						<MenuItem onClick={openModal}>수정</MenuItem>
+						<MenuItem onClick={closeMenu}>끌올</MenuItem>
+					</MenuContainer>
+				)}
 			</MoreOptions>
-			{isModalOpen && <Modal onClose={closeModal} type="report" />}
+			{isModalOpen && <Modal onClose={closeModal} type="write" />}
 		</ItemContainer>
 	);
 }
