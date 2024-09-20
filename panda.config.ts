@@ -20,6 +20,7 @@ export default defineConfig({
 						"01": { value: "#50596B" },
 						"02": { value: "#EBE7DE" },
 						"03": { value: "#FAD56B" }, // Yellow 01
+						"04": { value: "#F9F6F1" },
 					},
 					secondary: {
 						"01": { value: "#CE7866" },
@@ -37,14 +38,13 @@ export default defineConfig({
 						"06": { value: "#F4F4F4" },
 					},
 				},
+
 				// 사용 예시 -> fontSize: 'md'
 				fontSizes: {
 					xs: { value: "12px" },
 					sm: { value: "14px" },
 					md: { value: "16px" },
 					lg: { value: "20px" },
-					xl: { value: "24px" },
-					"2xl": { value: "28px" },
 				},
 				// 사용 예시 -> fontWeight: 'bold'
 				fontWeights: {
