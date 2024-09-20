@@ -6,7 +6,7 @@ import UserInfo from "@/features/mypage/components/userInfo/UserInfo";
 export default function MobileMypage() {
 	// 헤더 제작되면 추가
 	return (
-		<MyPageContainer>
+		<MyPageContainer className="MyPage">
 			<UserProfile />
 			<AccountInfo />
 			<UserInfo />
@@ -14,11 +14,9 @@ export default function MobileMypage() {
 	);
 }
 
-const MyPageContainer = styled("div", {
+const MyPageContainer = styled("article", {
 	base: {
 		width: "100%",
 		height: "100%",
-		backgroundColor: "primary.02",
-		padding: "95px 20px",
 	},
 });

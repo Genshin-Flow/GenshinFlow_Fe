@@ -1,7 +1,7 @@
 import { styled } from "@/../styled-system/jsx";
 
 type propsType = {
-	children: string;
+	children: React.ReactNode;
 	mt?: "mt20" | "mt40";
 	align?: "center" | "right";
 };

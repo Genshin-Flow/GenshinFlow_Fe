@@ -6,8 +6,8 @@ type tokenType = {
 };
 // withAuthList : 로그인이 필요한 페이지 url 추가시 ["/Mypage", "추가 url작성"]
 // withOutAuthList : 로그인을 안한 상태에서만 필요한 페이지 url 추가시 ["/Login", "추가 url작성"]
-const withAuthList: string[] = ["/Mypage"];
-const withOutAuthList: string[] = ["/Login"];
+const withAuthList: string[] = [""];
+const withOutAuthList: string[] = [""];
 
 export async function middleware(req: NextRequest) {
 	const token = (await cookies().get("accessToken")) as tokenType;
