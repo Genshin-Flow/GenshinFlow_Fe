@@ -34,6 +34,7 @@ export default function Button(props: propsType) {
 		<ButtonCompo
 			{...(props.margin && { margin: props.margin })}
 			{...(props.variable && { variant: props.variable })}
+			{...(props.platform && { platform: props.platform })}
 			ref={buttonRef}
 		>
 			{props.children}
@@ -91,6 +92,11 @@ const ButtonCompo = styled("button", {
 		platform: {
 			pc: {
 				height: "60px",
+			},
+			mobile: {
+				maxWidth: "none",
+				minWidth: "unset",
+				height: "40px",
 			},
 		},
 	},
