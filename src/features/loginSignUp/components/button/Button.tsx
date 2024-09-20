@@ -8,7 +8,6 @@ type propsType = {
 	//  string 타입을 variants의 값으로 사용할 수 없어 타입 any 사용
 	variable?: "login" | "signUp" | "forgotPassword" | "deActive" | "lock";
 	margin?: "mb12" | "mb20";
-	platform?: "mobile";
 	setSignInButton?: Dispatch<SetStateAction<"login" | "lock">>;
 };
 
@@ -35,7 +34,6 @@ export default function Button(props: propsType) {
 		<ButtonCompo
 			{...(props.margin && { margin: props.margin })}
 			{...(props.variable && { variant: props.variable })}
-			{...(props.platform && { placeItems: props.platform })}
 			ref={buttonRef}
 		>
 			{props.children}
@@ -59,12 +57,12 @@ const ButtonCompo = styled("button", {
 				bg: "primary.01",
 				color: "#ffffff",
 				"&:hover": {
-					bg: "#EFEFEF",
+					bg: "gray.05",
 					color: "black",
 				},
 			},
 			signUp: {
-				bg: "#EFEFEF",
+				bg: "gray.05",
 			},
 			forgotPassword: {
 				textStyle: "xs",
@@ -72,12 +70,12 @@ const ButtonCompo = styled("button", {
 				color: "gray.03",
 			},
 			deActive: {
-				bg: "#dddee1",
+				bg: "gray.05",
 				color: "#ffffff",
 				pointerEvents: "none",
 			},
 			lock: {
-				bg: "#dddee1",
+				bg: "gray.05",
 				color: "#ffffff",
 				pointerEvents: "none",
 			},
@@ -93,9 +91,6 @@ const ButtonCompo = styled("button", {
 		platform: {
 			pc: {
 				height: "60px",
-			},
-			mobile: {
-				height: "40px",
 			},
 		},
 	},

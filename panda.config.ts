@@ -20,7 +20,8 @@ export default defineConfig({
 						"01": { value: "#50596B" },
 						"02": { value: "#EBE7DE" },
 						"03": { value: "#FAD56B" }, // Yellow 01
-						"04": { value: "#F9F6F1" },
+            "04": { value: "#F9F6F1" },
+						"05": { value: "#4B54DC" },
 					},
 					secondary: {
 						"01": { value: "#CE7866" },
@@ -34,8 +35,9 @@ export default defineConfig({
 						"02": { value: "#707070" },
 						"03": { value: "#9A9A9A" },
 						"04": { value: "#C4C4C4" },
-						"05": { value: "#E7E7E7" },
+						"05": { value: "#EFEFEF" },
 						"06": { value: "#F4F4F4" },
+						"07": { value: "#EFEFEF" },
 					},
 				},
 

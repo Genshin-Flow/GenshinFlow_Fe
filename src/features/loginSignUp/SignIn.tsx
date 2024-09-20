@@ -6,6 +6,7 @@ import SignInAuth from "@/features/loginSignUp/components/signIn/SignInAuth";
 import ForgotPassword from "@/features/loginSignUp/components/button/ForgotPassword";
 import ForgotPass from "@/features/loginSignUp/ForgotPass";
 import loginState from "@/stores/loginStateStore";
+import Line from "@/features/loginSignUp/components/line/line";
 
 type marginType = "mb12" | "mb20" | "mb60";
 
@@ -15,6 +16,7 @@ export type propsType = {
 
 export default function SignIn(props: propsType) {
 	const { selectBtn } = loginState();
+
 	return (
 		<>
 			<LoginContainer
@@ -58,14 +60,5 @@ const LoginContainer = styled("article", {
 				},
 			},
 		},
-	},
-});
-
-const Line = styled("div", {
-	base: {
-		width: "100%",
-		height: "1px",
-		backgroundColor: "gray.03",
-		marginBottom: "20px",
 	},
 });

@@ -18,7 +18,11 @@ export default function SignUp() {
 		<>
 			<SignUpContainer className="SignUp">
 				<SubTitle>계정 만들기</SubTitle>
-				<AuthMail emailValue={emailValue} setEmailValue={setEmailValue} />
+				<AuthMail
+					emailValue={emailValue}
+					setEmailValue={setEmailValue}
+					mb={"mb12"}
+				/>
 				<form
 					onSubmit={(event) => submitHandler(event, emailValue, setModalState)}
 				>

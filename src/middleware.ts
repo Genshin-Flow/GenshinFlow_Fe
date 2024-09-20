@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
-
 type tokenType = {
 	name: string;
 	value: string;
@@ -11,7 +10,8 @@ const withAuthList: string[] = ["/Mypage"];
 const withOutAuthList: string[] = ["/Login"];
 
 export async function middleware(req: NextRequest) {
-	const token = (await cookies().get("data")) as tokenType;
+	const token = (await cookies().get("accessToken")) as tokenType;
+
 	const { pathname } = req.nextUrl;
 
 	if (withOutAuthList.includes(pathname) && token) {

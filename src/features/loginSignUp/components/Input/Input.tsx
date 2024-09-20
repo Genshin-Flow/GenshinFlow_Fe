@@ -1,7 +1,7 @@
 import React from "react";
 import { styled } from "@/../styled-system/jsx";
 
-type marginType = "mb12" | "mb20" | "mb40" | "mb60";
+type marginType = "mb0" | "mb12" | "mb16" | "mb20" | "mb40" | "mb60";
 
 type propsType = {
 	type: string;
@@ -34,8 +34,14 @@ const DefaultInput = styled("input", {
 
 	variants: {
 		margin: {
+			mb0: {
+				marginBottom: "0px",
+			},
 			mb12: {
 				marginBottom: "12px",
+			},
+			mb16: {
+				marginBottom: "16px",
 			},
 			mb20: {
 				marginBottom: "20px",
@@ -53,6 +59,12 @@ const DefaultInput = styled("input", {
 			},
 			mobile: {
 				height: "40px",
+				padding: "0 12px",
+				textStyle: "md",
+
+				"&::placeholder": {
+					textStyle: "md",
+				},
 			},
 		},
 	},
