@@ -41,7 +41,7 @@ export const ItemContainer = styled("div", {
     display: "flex",
     alignItems: "center",
     maxWidth: "1116px",
-    minWidth: "890px",
+    minWidth: "880px",
     width: "100%",
     height: "60px",
     backgroundColor: '#F9F6F1',
@@ -173,6 +173,7 @@ export const MoreOptions = styled('div', {
   base: {
     ...flexItem,
     flex: '1 1 90px',
+    position: 'relative',
   }
 });
 
@@ -197,5 +198,33 @@ export const MoreOptionsButton = styled('button', {
   },
   defaultVariants: {
     type: 'report',
+  },
+});
+
+export const MenuContainer = styled('div', {
+  base: {
+    position: 'absolute',
+    top: '45px',
+    right: '50%',
+    transform: 'translateX(-50%, 0)',
+    backgroundColor: 'white',
+    boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)',
+    zIndex: 1000,
+  },
+});
+
+export const MenuItem = styled('div', {
+  base: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: "120px",
+    padding: '8px 0',
+    fontSize: '16px',
+    fontWeight: 'medium',
+    cursor: 'pointer',
+    '&:hover': {
+      backgroundColor: '#f0f0f0',
+    },
   },
 });
