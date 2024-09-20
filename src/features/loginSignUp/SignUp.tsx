@@ -18,12 +18,17 @@ export default function SignUp() {
 		<>
 			<SignUpContainer className="SignUp">
 				<SubTitle>계정 만들기</SubTitle>
-				<AuthMail emailValue={emailValue} setEmailValue={setEmailValue} />
+				<AuthMail
+					emailValue={emailValue}
+					setEmailValue={setEmailValue}
+					mb={"mb12"}
+				/>
 				<form
 					onSubmit={(event) => submitHandler(event, emailValue, setModalState)}
 				>
 					<Input type={"password"} placeholder={"비밀번호"} margin={"mb12"} />
-					<Input type={"text"} placeholder={"인증코드"} margin={"mb20"} />
+					<Input type={"text"} placeholder={"인증코드"} margin={"mb12"} />
+					<Input type={"text"} placeholder={"UID"} margin={"mb20"} />
 					<Checkbox checkState={checkState} setCheckState={setCheckState} />
 					<Button variable={variable}>회원가입</Button>
 				</form>

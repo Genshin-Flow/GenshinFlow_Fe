@@ -7,13 +7,14 @@ import loginState from "@/stores/loginStateStore";
 type propsType = {
 	checkState: boolean;
 	setCheckState: Dispatch<SetStateAction<boolean>>;
+	mb?: "mb40";
 };
 
 export default function Checkbox(props: propsType) {
 	const { setPolicyModalState } = loginState();
 	return (
 		<>
-			<AgreeCheckBoxContainer>
+			<AgreeCheckBoxContainer {...(props.mb && { marginBottom: props.mb })}>
 				<CheckBox
 					type="checkbox"
 					id="checkbox"
@@ -43,6 +44,13 @@ const AgreeCheckBoxContainer = styled("div", {
 		justifyContent: "center",
 		alignItems: "center",
 		marginBottom: "18px",
+	},
+	variants: {
+		marginBottom: {
+			mb40: {
+				marginBottom: "40px",
+			},
+		},
 	},
 });
 

@@ -1,6 +1,7 @@
 import { styled } from "@/../styled-system/jsx";
 import Link from "next/link";
 
+
 type propsType = {
 	InfoTitle: string;
 	InfoText?: string;
