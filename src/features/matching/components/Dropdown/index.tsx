@@ -19,6 +19,7 @@ interface DropdownProps {
 	placeholder?: string;
 	value: string;
 	setValue: (value: string) => void;
+	style?: "default" | "genshin";
 }
 
 export default function Dropdown({
@@ -26,6 +27,7 @@ export default function Dropdown({
 	placeholder = "",
 	value,
 	setValue,
+	style = "default",
 }: DropdownProps) {
 	const [isOpen, setIsOpen] = useState(false);
 	const dropdownRef = useRef<HTMLDivElement>(null);
@@ -45,16 +47,21 @@ export default function Dropdown({
 
 	return (
 		<DropdownContainer ref={dropdownRef}>
-			<DropdownButton onClick={toggleDropdown}>
+			<DropdownButton onClick={toggleDropdown} style={style}>
 				{value || placeholder}
-				{isOpen ? <Arrow direction="up" /> : <Arrow direction="down" />}
+				{isOpen ? (
+					<Arrow direction="up" style={style} />
+				) : (
+					<Arrow direction="down" style={style} />
+				)}
 			</DropdownButton>
 			{isOpen && (
-				<DropdownList>
+				<DropdownList style={style}>
 					{options.map((option) => (
 						<DropdownItem
 							key={option.value}
 							onClick={() => selectOption(option.value)}
+							style={style}
 						>
 							{option.value}
 							{option.icon && (
