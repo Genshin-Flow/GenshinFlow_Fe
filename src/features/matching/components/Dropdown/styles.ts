@@ -25,6 +25,27 @@ export const DropdownButton = styled("button", {
     minWidth: "200px",
     height: "40px",
   },
+  variants: {
+    style: {
+      default: {},
+      genshin: {
+        display: "flex",
+        flexDirection: "row-reverse",
+        alignItems: "center",
+        gap: "12px",
+        backgroundColor: "#DED7CE",
+        borderRadius: "42px",
+        borderColor: "#D6D6D6",
+        padding: "0 15px",
+        minWidth: "none",
+        fontSize: "sm",
+        color: "gray.01",
+      },
+    },
+  },
+  defaultVariants: {
+    style: "default",
+  },
 });
 
 export const Arrow = styled("div", {
@@ -43,6 +64,14 @@ export const Arrow = styled("div", {
         transform: "rotate(0deg)",
       },
     },
+    style: {
+      default: {},
+      genshin: {
+        width: "20px",
+        height: "20px",
+        backgroundImage: 'url("/svgs/arrow2.svg")',
+      },
+    }
   },
 });
 
@@ -61,6 +90,20 @@ export const DropdownList = styled("ul", {
     borderRadius: "8px",
     overflow: "hidden",
   },
+  variants: {
+    style: {
+      default: {},
+      genshin: {
+        top: "calc(100% + 1px)",
+        backgroundColor: "none",
+        boxShadow: "none",
+        borderRadius: "0px",
+        display: "flex",
+        flexDirection: "column",
+        gap: "2px",
+      },
+    },
+  },
 });
 
 export const DropdownItem = styled("li", {
@@ -76,6 +119,23 @@ export const DropdownItem = styled("li", {
     "&:hover": {
       backgroundColor: "gray.05",
       // color: "white",
+    },
+  },
+  variants: {
+    style: {
+      default: {},
+      genshin: {
+        height: "32px",
+        justifyContent: "center",
+        borderRadius: "4px",
+        backgroundColor: "#F9F6F1",
+        padding: "0 0",
+        fontSize: "sm",
+        color: "gray.01",
+        "&:hover": {
+          backgroundColor: "secondary.03",
+        },
+      },
     },
   },
 });
