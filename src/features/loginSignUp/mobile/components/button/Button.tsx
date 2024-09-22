@@ -18,7 +18,6 @@ export default function Button(props: propsType) {
 			const timer = setInterval(() => {
 				buttonCount -= 1;
 				buttonRef.current!.innerText = `${buttonCount}s`;
-				console.log(buttonCount);
 				if (buttonCount <= 0 && props.setSignInButton) {
 					buttonRef.current!.innerText = `로그인`;
 					clearInterval(timer);
