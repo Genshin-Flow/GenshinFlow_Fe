@@ -41,7 +41,7 @@ export const ItemContainer = styled("div", {
     display: "flex",
     alignItems: "center",
     maxWidth: "1116px",
-    minWidth: "880px",
+    minWidth: "875px",
     width: "100%",
     height: "60px",
     backgroundColor: '#F9F6F1',
@@ -49,11 +49,22 @@ export const ItemContainer = styled("div", {
   },
 });
 
+const selectedVariant = {
+  variants: {
+    selected: {
+      true: {
+        backgroundColor: 'secondary.03',
+      },
+    },
+  },
+};
+
 export const UserName = styled("div", {
   base: {
     ...flexItem,
     flex: '1 1 200px',
   },
+  ...selectedVariant,
 });
 
 export const ProfileImage = styled("div", {
@@ -91,7 +102,8 @@ export const UserIdButton = styled("button", {
 export const QuestType = styled(UserName, {
   base: {
     // backgroundColor: 'secondary.03',
-  }
+  },
+  ...selectedVariant,
 });
 
 export const QuestIconWrapper = styled('div', {
@@ -128,7 +140,8 @@ export const WorldLevel = styled('div', {
   base: {
     ...flexItem,
     flex: '1 1 100px',
-  }
+  },
+  ...selectedVariant,
 });
 
 export const Message = styled('div', {
@@ -137,7 +150,8 @@ export const Message = styled('div', {
     flex: '1 1 386px',
     padding: '0 19px',
     minWidth: '0',
-  }
+  },
+  ...selectedVariant,
 });
 
 export const MessageText = styled('div', {
@@ -166,7 +180,8 @@ export const TimeAgo = styled('div', {
     flex: '1 1 140px',
     textStyle: 'sm',
     color: 'gray.02',
-  }
+  },
+  ...selectedVariant,
 });
 
 export const MoreOptions = styled('div', {

@@ -33,7 +33,11 @@ export const questImage = {
 	mob: "/svgs/quests/mob.svg",
 };
 
-export default function MatchingPostItem() {
+interface MatchingPostItemProps {
+	selected?: string;
+}
+
+export default function MatchingPostItem({ selected }: MatchingPostItemProps) {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 	const menuRef = useRef<HTMLDivElement>(null);
@@ -50,30 +54,30 @@ export default function MatchingPostItem() {
 
 	return (
 		<ItemContainer>
-			<UserName>
+			<UserName selected={selected === "userName"}>
 				<ProfileImage />
 				<UserInfo>
 					<Text>유저명</Text>
 					<UserIdButton>UID 80000000</UserIdButton>
 				</UserInfo>
 			</UserName>
-			<QuestType>
+			<QuestType selected={selected === "questType"}>
 				<QuestIconWrapper>
 					<QuestIcon />
 					<CenteredImage src={questImage.domain} alt="Quest Type" />
 				</QuestIconWrapper>
 				<Text>비경</Text>
 			</QuestType>
-			<WorldLevel>
+			<WorldLevel selected={selected === "worldLevel"}>
 				<Text>7</Text>
 			</WorldLevel>
-			<Message>
+			<Message selected={selected === "message"}>
 				<MessageText>
 					맵 밀어주실 착한 분 구해요.한 5판 할 것 같아요.
 					가나다라마바사아자차카타파하
 				</MessageText>
 			</Message>
-			<TimeAgo>
+			<TimeAgo selected={selected === "timeAgo"}>
 				<Text color="gray02">1분 전</Text>
 			</TimeAgo>
 			<MoreOptions>
@@ -90,4 +94,4 @@ export default function MatchingPostItem() {
 			{isModalOpen && <Modal onClose={closeModal} type="write" />}
 		</ItemContainer>
 	);
-}
+} 
