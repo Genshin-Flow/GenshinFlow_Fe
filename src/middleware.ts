@@ -41,5 +41,5 @@ export async function middleware(req: NextRequest) {
 }
 // 스프레드 문법이 배포시 오류가 발생하여 수정했습니다.
 export const config = {
-	matcher: ["/Mypage", "/Login"],
+	matcher: [],
 };
