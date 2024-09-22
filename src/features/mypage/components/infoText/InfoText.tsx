@@ -1,7 +1,6 @@
 import { styled } from "@/../styled-system/jsx";
 import Link from "next/link";
 
-
 type propsType = {
 	InfoTitle: string;
 	InfoText?: string;
@@ -23,7 +22,7 @@ export default function InfoText(props: propsType) {
 				<span>{props.InfoTitle}</span>
 			</InfoTitle>
 			<InfoBody>
-				<span>{!props.password ? props.InfoText : stars}</span>
+				<span>{props.password ? stars : props.InfoText}</span>
 				{props.password && (
 					<PasswordChange>
 						<Link href={"/ChangePassword"}>변경</Link>

@@ -15,7 +15,6 @@ export default function Modal(props: propsType) {
 
 	// 같은 텍스트라도 모달의 변경을 감지하기 위해 의존성 목록제거
 	useEffect(() => {
-		console.log(timerRef.current);
 		// 타이머 초기화 및 재설정
 		if (timerRef.current) {
 			clearInterval(timerRef.current);
