@@ -26,6 +26,7 @@ export const Container = styled("div", {
     display: "flex",
     flexDirection: "column",
     maxWidth: "1129px",
+    width: "100%",
     minWidth: "888px",
     height: "797px",
     minHeight: "660px",
