@@ -37,7 +37,7 @@ const authOptions: NextAuthOptions = {
 					},
 				);
 				const data = await response.json();
-				cookies().set("data", data.token, {
+				cookies().set("access", data.token, {
 					httpOnly: true,
 					sameSite: true,
 					secure: true,

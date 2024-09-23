@@ -1,26 +1,49 @@
 import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
-type tokenType = {
-	name: string;
-	value: string;
-};
-// withAuthList : 로그인이 필요한 페이지 url 추가시 ["/Mypage", "추가 url작성"]
-// withOutAuthList : 로그인을 안한 상태에서만 필요한 페이지 url 추가시 ["/Login", "추가 url작성"]
-const withAuthList: string[] = [""];
-const withOutAuthList: string[] = [""];
+
+const withAuthList: string[] = ["/Mypage"];
+const withOutAuthList: string[] = ["/Login"];
 
 export async function middleware(req: NextRequest) {
-	const token = (await cookies().get("accessToken")) as tokenType;
-
+	let tokenState = false;
+	const accessToken = cookies().get("access")?.value;
+	const refreshToken = cookies().get("refresh")?.value;
 	const { pathname } = req.nextUrl;
 
-	if (withOutAuthList.includes(pathname) && token) {
-		return NextResponse.redirect(new URL("/", req.url));
-	} else if (withAuthList.includes(pathname) && !token) {
-		return NextResponse.redirect(new URL("/Login", req.url));
+	// Base URL 체크 및 에러 방지
+	if (!process.env.NEXT_PUBLIC_BaseApi) {
+		throw new Error("Base API URL is not defined in environment variables.");
+	}
+
+	const response = await fetch(
+		`${process.env.NEXT_PUBLIC_BaseApi}/api/refreshAccessToken`,
+		{
+			method: "post",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				accessToken,
+				refreshToken,
+			}),
+		},
+	);
+
+	const data = await response.json();
+	switch (data.message) {
+		case "유효":
+		case "access재발급":
+			tokenState = true;
+			break;
+	}
+
+	if (withOutAuthList.includes(pathname) && tokenState) {
+		return NextResponse.redirect(new URL("/", req.nextUrl.origin));
+	} else if (withAuthList.includes(pathname) && !tokenState) {
+		return NextResponse.redirect(new URL("/Login", req.nextUrl.origin));
 	}
 }
-// 스프레드 문법이 배포시 오류가 발생하여 수정했습니다.
+
 export const config = {
-	matcher: ["/Mypage", "/Login"],
+	matcher: [],
 };

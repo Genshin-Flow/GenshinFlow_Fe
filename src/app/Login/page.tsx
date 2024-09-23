@@ -9,28 +9,38 @@ import Modal from "@/features/loginSignUp/components/modal/Modal";
 import loginState, { stateType } from "@/stores/loginStateStore";
 import GoBack from "@/features/loginSignUp/components/button/GoBack";
 import PrivacyPolicy from "@/features/loginSignUp/components/modal/PrivacyPolicy";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useMediaQuery } from "react-responsive";
+import SelectMobile from "@/features/loginSignUp/mobile/Select";
 
 export default function Login() {
 	const { modalText, selectBtn, policyModalState, setSelectBtn } = loginState();
 	const PolicyModalRef = useRef<HTMLDivElement>(null);
 	const RenderState = RenderBackButton(selectBtn);
-
+	// 임시로 추가 크기는 변경되면 수정
+	const isPc = useMediaQuery({ query: "(min-width:1024px)" });
+	const [desktop, setDesktop] = useState(false);
+	useEffect(() => {
+		setDesktop(isPc);
+	}, [isPc]);
 	return (
 		<>
-			<MainTemplate>
-				{policyModalState && <PrivacyPolicy ModalRef={PolicyModalRef} />}
-				<SelectContainer>
-					<LoginDefaultInfo />
-					{RenderState && (
-						<GoBack currentPage={selectBtn} setSelectBtn={setSelectBtn} />
-					)}
-					<Select />
-					<SignIn />
-					<SignUpSelect />
-					{modalText && <Modal platform={"pc"}>{modalText}</Modal>}
-				</SelectContainer>
-			</MainTemplate>
+			{desktop && (
+				<MainTemplate>
+					{policyModalState && <PrivacyPolicy ModalRef={PolicyModalRef} />}
+					<SelectContainer>
+						<LoginDefaultInfo />
+						{RenderState && (
+							<GoBack currentPage={selectBtn} setSelectBtn={setSelectBtn} />
+						)}
+						<Select />
+						<SignIn />
+						<SignUpSelect />
+						{modalText && <Modal platform={"pc"}>{modalText}</Modal>}
+					</SelectContainer>
+				</MainTemplate>
+			)}
+			{!desktop && <SelectMobile />}
 		</>
 	);
 }
