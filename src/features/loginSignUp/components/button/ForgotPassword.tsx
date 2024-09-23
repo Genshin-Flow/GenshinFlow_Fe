@@ -26,6 +26,6 @@ function clickHandler(
 ) {
 	const target = event.target as HTMLElement;
 	if (target.innerText === "비밀번호를 잊어버렸어요") {
-		setSelectBtn("forgotPassword");
+		setSelectBtn("authMailPassword");
 	}
 }

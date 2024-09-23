@@ -19,7 +19,12 @@ export default function RequestCode() {
 	}, [count]);
 	return (
 		<RequestCodeContainer>
-			<InputStyle type="email" placeholder={"메일주소"} marginTop="mt40" />
+			<InputStyle
+				type="email"
+				placeholder={"메일주소"}
+				marginTop="mt40"
+				authInput="authInput"
+			/>
 			<RequestCodeButton
 				{...(countState && { variant: "active" })}
 				onClick={() => setCount(60)}

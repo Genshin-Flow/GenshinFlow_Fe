@@ -1,15 +1,24 @@
+"use client";
 import { styled } from "@/../styled-system/jsx";
 import Input from "@/features/loginSignUp/components/Input/Input";
 import Button from "@/features/loginSignUp/components/button/Button";
+import { FormEvent } from "react";
 
 export default function ForgotPass() {
 	return (
 		<ForgotPasContainer className="forgotPassword">
-			<Input type={"text"} placeholder={"새 비밀번호"} margin={"mb12"} />
-			<Input type={"password"} placeholder={"비밀번호"} margin={"mb60"} />
-			<Button variable="login">설정 완료</Button>
+			<form action="#" onSubmit={submitHandler}>
+				<Input type={"text"} placeholder={"새 비밀번호"} margin={"mb12"} />
+				<Input type={"password"} placeholder={"비밀번호"} margin={"mb60"} />
+				<Button variable="login">설정 완료</Button>
+			</form>
 		</ForgotPasContainer>
 	);
+}
+
+function submitHandler(event: FormEvent<HTMLElement>) {
+	event.preventDefault();
+	const target = event.target as HTMLElement;
 }
 
 const ForgotPasContainer = styled("article", {

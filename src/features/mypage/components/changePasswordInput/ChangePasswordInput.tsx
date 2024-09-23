@@ -58,6 +58,11 @@ export const InputStyle = styled("input", {
 				marginTop: "20px",
 			},
 		},
+		authInput: {
+			authInput: {
+				paddingRight: "91px",
+			},
+		},
 	},
 });
 

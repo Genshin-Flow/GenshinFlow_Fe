@@ -6,6 +6,7 @@ import { useRef } from "react";
 type propsType = {
 	children: string;
 	//  string 타입을 variants의 값으로 사용할 수 없어 타입 any 사용
+	platform?: "mobile";
 	variable?: "login" | "signUp" | "forgotPassword" | "deActive" | "lock";
 	margin?: "mb12" | "mb20";
 	setSignInButton?: Dispatch<SetStateAction<"login" | "lock">>;

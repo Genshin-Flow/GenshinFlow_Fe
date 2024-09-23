@@ -43,6 +43,8 @@ function RenderBackButton(selectBtn: stateType) {
 			return true;
 		case "signUpSelect":
 			return true;
+		case "authMailPassword":
+			return true;
 		case "forgotPassword":
 			return true;
 	}
