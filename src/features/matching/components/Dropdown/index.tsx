@@ -47,7 +47,7 @@ export default function Dropdown({
 
 	return (
 		<DropdownContainer ref={dropdownRef}>
-			<DropdownButton onClick={toggleDropdown} style={style}>
+			<DropdownButton onClick={toggleDropdown} style={style} isOpen={isOpen}>
 				{value || placeholder}
 				{isOpen ? (
 					<Arrow direction="up" style={style} />

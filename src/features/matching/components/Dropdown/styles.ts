@@ -42,9 +42,23 @@ export const DropdownButton = styled("button", {
         color: "gray.01",
       },
     },
+    isOpen: {
+      true: {},
+      false: {},
+    },
   },
+  compoundVariants: [
+    {
+      style: "genshin",
+      isOpen: true,
+      css: {
+        backgroundColor: "#C8B59C", 
+      },
+    },
+  ],
   defaultVariants: {
     style: "default",
+    isOpen: false,
   },
 });
 
@@ -100,7 +114,7 @@ export const DropdownList = styled("ul", {
         borderRadius: "0px",
         display: "flex",
         flexDirection: "column",
-        gap: "2px",
+        gap: "0px",
       },
     },
   },
