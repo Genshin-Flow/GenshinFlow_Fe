@@ -12,7 +12,7 @@ export default function SignUpSelect() {
 	const { selectBtn, setSelectBtn } = loginState();
 	const targetRef = useRef<HTMLButtonElement>(null);
 	const EventHandlerFn = (event: MouseEvent) =>
-		ClickHandler(event, setSelectBtn);
+		clickHandler(event, setSelectBtn);
 
 	useEffect(() => {
 		targetRef.current?.addEventListener("click", EventHandlerFn);
@@ -66,7 +66,7 @@ const SignUpSelectContainer = styled("article", {
 	},
 });
 
-function ClickHandler(
+function clickHandler(
 	event: MouseEvent,
 	SetSelectBtn: (state: stateType) => void,
 ) {

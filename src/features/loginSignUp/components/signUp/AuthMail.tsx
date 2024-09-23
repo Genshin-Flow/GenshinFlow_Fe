@@ -16,6 +16,7 @@ type propsType = {
 	setEmailValue: Dispatch<SetStateAction<string>>;
 	mb: "mb12" | "mb20";
 	platform?: "mobile";
+	authCodeInput?: boolean;
 };
 
 export default function AuthMail(props: propsType) {
@@ -39,10 +40,11 @@ export default function AuthMail(props: propsType) {
 			{...(props.mb && { marginBottom: props.mb })}
 		>
 			<Input
-				type={"text"}
+				type={"email"}
 				placeholder={"메일주소"}
 				margin={"mb0"}
 				platform={props.platform}
+				authCodeInput={props.authCodeInput}
 			/>
 			<SendMailCount className="mailAuthCount">{postCodeState}s</SendMailCount>
 			<SendMailButton

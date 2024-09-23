@@ -63,6 +63,12 @@ const SelectContainerStyle = styled("div", {
 					transform: "translateX(0%)",
 				},
 			},
+			authMailPassword: {
+				height: "633px",
+				"& .AuthForChangePassword": {
+					transform: "translateX(0%)",
+				},
+			},
 		},
 		defaultTransform: {
 			default: {

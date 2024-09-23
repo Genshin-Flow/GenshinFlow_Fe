@@ -16,6 +16,7 @@ export default function ForgotPass() {
 				setEmailValue={setEmailValue}
 				mb="mb20"
 				platform="mobile"
+				authCodeInput={true}
 			/>
 			<Input
 				type={"text"}

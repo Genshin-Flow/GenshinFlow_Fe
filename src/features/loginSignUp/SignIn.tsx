@@ -4,7 +4,7 @@ import { nanoid } from "nanoid";
 import { loginSvg } from "@/data/SvgUrl/svg";
 import SignInAuth from "@/features/loginSignUp/components/signIn/SignInAuth";
 import ForgotPassword from "@/features/loginSignUp/components/button/ForgotPassword";
-import ForgotPass from "@/features/loginSignUp/ForgotPass";
+import ForgotPassAuthMail from "@/features/loginSignUp/ForgotPassAuthMail";
 import loginState from "@/stores/loginStateStore";
 import Line from "@/features/loginSignUp/components/line/line";
 
@@ -21,7 +21,12 @@ export default function SignIn(props: propsType) {
 		<>
 			<LoginContainer
 				className="LoginContainer"
-				{...(selectBtn === "forgotPassword" && { defaultTransform: "default" })}
+				{...(selectBtn === "authMailPassword" && {
+					defaultTransform: "default",
+				})}
+				{...(selectBtn === "forgotPassword" && {
+					defaultTransform: "default",
+				})}
 			>
 				{loginSvg.map((item, index) => (
 					<OauthButton
@@ -37,7 +42,7 @@ export default function SignIn(props: propsType) {
 				<SignInAuth mb={props.mb} />
 				<ForgotPassword />
 			</LoginContainer>
-			<ForgotPass />
+			<ForgotPassAuthMail />
 		</>
 	);
 }

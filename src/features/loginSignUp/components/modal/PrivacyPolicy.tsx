@@ -89,6 +89,7 @@ const ContinueText = styled("span", {
 		bottom: "3%",
 		left: "50%",
 		transform: "translate(-50%,-50%)",
+		pointerEvents: "none",
 	},
 });
 

@@ -4,6 +4,7 @@ export type stateType =
 	| "login"
 	| "signUpSelect"
 	| "signUp"
+	| "authMailPassword"
 	| "forgotPassword"
 	| null;
 
