@@ -55,7 +55,7 @@ export default function SelectButton() {
 				<Button mb={"mb12"} buttonState="login">
 					로그인
 				</Button>
-				<ForgotPassword />
+				<ForgotPassword platform="mobile" />
 			</SelectContainer>
 			<SignIn />
 			<SignUp />
