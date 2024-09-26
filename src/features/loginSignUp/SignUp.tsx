@@ -46,9 +46,17 @@ function submitHandler(
 	const target = event.target as HTMLFormElement;
 	const $password = target.children[0] as HTMLInputElement;
 	const $authCode = target.children[1] as HTMLInputElement;
+	const $uid = target.children[1] as HTMLInputElement;
 	const passwordValue = $password.value;
 	const authCodeValue = $authCode.value;
-	signUpInfoCheck(emailValue, passwordValue, authCodeValue, setModalState);
+	const uidValue = $uid.value;
+	signUpInfoCheck(
+		emailValue,
+		passwordValue,
+		uidValue,
+		authCodeValue,
+		setModalState,
+	);
 }
 
 const SignUpContainer = styled("article", {
