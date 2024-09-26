@@ -7,6 +7,7 @@ type propsType = {
 	type: string;
 	placeholder: string;
 	margin: marginType;
+	authCodeInput?: "authInput" | "mobileAuthInput";
 	platform?: "mobile";
 };
 
@@ -17,6 +18,7 @@ export default function Input(props: propsType) {
 			placeholder={props.placeholder}
 			margin={props.margin}
 			{...(props.platform && { platform: props.platform })}
+			{...(props.authCodeInput && { authCodeInput: props.authCodeInput })}
 		/>
 	);
 }
@@ -65,6 +67,14 @@ const DefaultInput = styled("input", {
 				"&::placeholder": {
 					textStyle: "md",
 				},
+			},
+		},
+		authCodeInput: {
+			authInput: {
+				paddingRight: "145px",
+			},
+			mobileAuthInput: {
+				paddingRight: "96px",
 			},
 		},
 	},

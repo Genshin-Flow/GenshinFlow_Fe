@@ -21,7 +21,7 @@ export default function SignUp() {
 	return (
 		<SignUpContainer className="signUpContainer">
 			<SubTitle platform="mobile">계정 만들기</SubTitle>
-			<form action="" onSubmit={submitHandler}>
+			<SignUpForm action="" onSubmit={submitHandler}>
 				<AuthMail
 					emailValue={email}
 					setEmailValue={setEmail}
@@ -40,13 +40,19 @@ export default function SignUp() {
 					margin={"mb16"}
 					platform="mobile"
 				/>
+				<Input
+					type={"text"}
+					placeholder={"UID"}
+					margin={"mb16"}
+					platform="mobile"
+				/>
 				<Checkbox
 					checkState={checkState}
 					setCheckState={setCheckState}
 					mb="mb40"
 				/>
 				<Button buttonState={variable}>회원가입</Button>
-			</form>
+			</SignUpForm>
 		</SignUpContainer>
 	);
 }
@@ -63,6 +69,14 @@ const SignUpContainer = styled("article", {
 	},
 });
 
+const SignUpForm = styled("form", {
+	base: {
+		"& div > input": {
+			paddingRight: "96px",
+		},
+	},
+});
+
 async function SubmitHandler(
 	event: FormEvent<HTMLFormElement>,
 	emailValue: string,
@@ -73,7 +87,16 @@ async function SubmitHandler(
 	const target = event.target as HTMLElement;
 	const $mailAuthDom = target.children[1] as HTMLInputElement;
 	const $password = target.children[2] as HTMLInputElement;
+	const $uid = target.children[3] as HTMLInputElement;
 	const passwordValue = $password.value;
 	const mailAuthValue = $mailAuthDom.value;
-	signUpInfoCheck(emailValue, passwordValue, mailAuthValue, setModal, router);
+	const uidValue = $uid.value;
+	signUpInfoCheck(
+		emailValue,
+		passwordValue,
+		uidValue,
+		mailAuthValue,
+		setModal,
+		router,
+	);
 }
