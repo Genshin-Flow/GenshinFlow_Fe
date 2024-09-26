@@ -3,7 +3,11 @@ import Button from "@/features/loginSignUp/components/button/Button";
 import loginState, { stateType } from "@/stores/loginStateStore";
 import React, { useEffect, useRef } from "react";
 
-export default function ForgotPassword() {
+type propsType = {
+	platform?: "mobile";
+};
+
+export default function ForgotPassword(props: propsType) {
 	const { setSelectBtn } = loginState();
 	const clickFn = (event: MouseEvent) => clickHandler(event, setSelectBtn);
 	const buttonRef = useRef<HTMLDivElement>(null);
@@ -15,7 +19,9 @@ export default function ForgotPassword() {
 
 	return (
 		<div ref={buttonRef}>
-			<Button variable="forgotPassword">비밀번호를 잊어버렸어요</Button>
+			<Button variable="forgotPassword" platform={props.platform}>
+				비밀번호를 잊어버렸어요
+			</Button>
 		</div>
 	);
 }

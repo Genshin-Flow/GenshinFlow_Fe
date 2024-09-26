@@ -9,8 +9,7 @@ export async function postAuthMail(
 ) {
 	const mailState = checkMail(emailValue);
 	if (mailState) {
-		forwardingMailFetch(emailValue, setModal);
-		setCount(60);
+		forwardingMailFetch(emailValue, setModal, setCount);
 	} else {
 		setModal("메일의 형식이 올바르지 않습니다");
 	}

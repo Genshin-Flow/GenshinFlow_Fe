@@ -28,7 +28,7 @@ export default function ForgotPassAuthMail() {
 						emailValue={email}
 						setEmailValue={setEmail}
 						mb={"mb12"}
-						authCodeInput={true}
+						authCodeInput={"authInput"}
 					/>
 					<Input type={"text"} placeholder={"인증코드"} margin={"mb60"} />
 					<Button variable="login">새 비밀번호 설정</Button>

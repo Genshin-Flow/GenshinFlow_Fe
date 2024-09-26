@@ -1,13 +1,28 @@
 "use client";
 import { styled } from "@/../styled-system/jsx";
 import Button from "@/features/loginSignUp/components/button/Button";
-import RequestCode from "@/features/mypage/components/requestCode/RequestCode";
-import { FormEvent } from "react";
+import AuthMail from "@/features/loginSignUp/components/signUp/AuthMail";
+import { Dispatch, FormEvent, SetStateAction, useState } from "react";
+import loginState from "@/stores/loginStateStore";
+import { setNewPassword } from "@/fetch/setNewPassword/newPassword";
 
 export default function ChangePasswordInput() {
+	const { setModalState } = loginState();
+	const [email, setEmail] = useState("");
 	return (
-		<MailAuthForm action="#" onSubmit={submitHandler}>
-			<RequestCode />
+		<MailAuthForm
+			action="#"
+			onSubmit={(event) => submitHandler(event, email, setModalState)}
+			onChange={(event) => changeHandler(event, setEmail)}
+		>
+			<AuthMail
+				platform="mobile"
+				emailValue={email}
+				setEmailValue={setEmail}
+				mb={"mb12"}
+				authCodeInput="mobileAuthInput"
+			/>
+
 			<InputStyle
 				type="text"
 				placeholder={"메일로 전송된 코드를 입력하세요"}
@@ -27,13 +42,45 @@ export default function ChangePasswordInput() {
 	);
 }
 
-function submitHandler(event: FormEvent<HTMLFormElement>) {
+function submitHandler(
+	event: FormEvent<HTMLElement>,
+	email: string,
+	setModalState: (state: string) => void,
+) {
 	event.preventDefault();
+	const target = event.target as HTMLElement;
+	const $passwordVerify = target.children[1] as HTMLInputElement;
+	const $newPassword = target.children[2] as HTMLInputElement;
+	const passwordVerifyValue = $passwordVerify.value;
+	const newPasswordValue = $newPassword.value;
+
+	if (email === "") {
+		setModalState("메일을 입력해주세요");
+	} else if (passwordVerifyValue === "") {
+		console.log(passwordVerifyValue);
+		setModalState("인증코드를 입력해주세요");
+	} else {
+		setNewPassword(newPasswordValue, passwordVerifyValue, setModalState);
+	}
+}
+
+function changeHandler(
+	event: FormEvent<HTMLElement>,
+	setEmail: Dispatch<SetStateAction<string>>,
+) {
+	const target = event.target as HTMLInputElement;
+	if (target.type === "email") {
+		setEmail(target.value);
+		console.log(target.value);
+	}
 }
 
 const MailAuthForm = styled("form", {
 	base: {
 		width: "100%",
+		"& > div > input": {
+			backgroundColor: "primary.04",
+		},
 	},
 });
 
