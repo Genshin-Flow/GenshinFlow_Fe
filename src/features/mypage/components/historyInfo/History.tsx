@@ -37,6 +37,18 @@ const data = [
 		desc: "비경ㅇ도와주세요",
 		id: 3,
 	},
+	{
+		date: "2024-10-01",
+		quest: "비경",
+		desc: "비경ㅇ도와주세요",
+		id: 4,
+	},
+	{
+		date: "2024-10-01",
+		quest: "비경",
+		desc: "비경ㅇ도와주세요",
+		id: 5,
+	},
 ];
 
 export default function History(props: propsType) {
@@ -120,6 +132,8 @@ const HistoryListContainer = styled("ul", {
 		textStyle: "md",
 		padding: "0 12px",
 		minHeight: "50px",
+		maxHeight: "200px",
+		overflow: "hidden",
 	},
 });
 
