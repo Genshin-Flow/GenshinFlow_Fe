@@ -8,6 +8,7 @@ type propsType = {
 	//  string 타입을 variants의 값으로 사용할 수 없어 타입 any 사용
 	variable?: "login" | "signUp" | "forgotPassword" | "deActive" | "lock";
 	margin?: "mb12" | "mb20";
+	platform?: "mobile" | "pc";
 	setSignInButton?: Dispatch<SetStateAction<"login" | "lock">>;
 };
 
