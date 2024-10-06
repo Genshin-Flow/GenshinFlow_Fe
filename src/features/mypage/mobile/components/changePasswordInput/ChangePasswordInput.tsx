@@ -1,7 +1,7 @@
 "use client";
 import { styled } from "@/../styled-system/jsx";
 import Button from "@/features/loginSignUp/components/button/Button";
-import RequestCode from "@/features/mypage/components/requestCode/RequestCode";
+import RequestCode from "@/features/mypage/mobile/components/requestCode/RequestCode";
 import { FormEvent } from "react";
 
 export default function ChangePasswordInput() {
