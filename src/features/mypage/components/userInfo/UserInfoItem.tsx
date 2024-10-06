@@ -1,11 +1,11 @@
 import { styled } from "@/../styled-system/jsx";
 import UserInfoButton from "@/features/mypage/components/userInfo/UserInfoButton";
-
 type propsType = {
 	name: string;
 	children: string;
 	buttonText?: string;
 	password?: boolean;
+	onClick?: () => void;
 };
 
 export default function UserInfoItem(props: propsType) {
@@ -21,7 +21,9 @@ export default function UserInfoItem(props: propsType) {
 		<InfoItem>
 			<ItemName>{props.name}</ItemName>
 			<ItemBody>{children}</ItemBody>
-			<UserInfoButton>{props.buttonText}</UserInfoButton>
+			<UserInfoButton clickFn={props.onClick}>
+				{props.buttonText}
+			</UserInfoButton>
 		</InfoItem>
 	);
 }

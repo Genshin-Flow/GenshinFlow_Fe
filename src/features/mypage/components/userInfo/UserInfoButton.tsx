@@ -1,5 +1,3 @@
-"use client";
-import loginState from "@/stores/loginStateStore";
 import { styled } from "@/../styled-system/jsx";
 import { ReactNode } from "react";
 
