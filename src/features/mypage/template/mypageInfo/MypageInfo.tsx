@@ -41,6 +41,7 @@ const MypageInfoContainer = styled("div", {
 				overflow: "hidden",
 			},
 			history: {
+				height: "70%",
 				padding: "0",
 			},
 		},
