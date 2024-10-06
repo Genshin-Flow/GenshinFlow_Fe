@@ -16,7 +16,7 @@ export default function page() {
 	return (
 		<AllHistoryContainer>
 			<MypageText mt="mt40">전체 히스토리</MypageText>
-			<form
+			<Form
 				action="#"
 				onSubmit={(event) =>
 					historySubmitHandler(
@@ -39,7 +39,7 @@ export default function page() {
 				<ButtonContainer>
 					<Button buttonState="login">전체 삭제하기</Button>
 				</ButtonContainer>
-			</form>
+			</Form>
 		</AllHistoryContainer>
 	);
 }
@@ -54,14 +54,17 @@ const AllHistoryContainer = styled("section", {
 	},
 });
 
+const Form = styled("form", {
+	base: {
+		height: "100%",
+		overflow: "hidden",
+	},
+});
 const ButtonContainer = styled("div", {
 	base: {
 		width: "100%",
 		boxSizing: "border-box:",
-		position: "absolute",
-		padding: "20px",
-		left: "0px",
-		bottom: "40px",
+		marginTop: "40px",
 	},
 });
 
