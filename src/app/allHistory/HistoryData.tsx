@@ -42,7 +42,6 @@ const HistoryListContainer = styled("ul", {
 	base: {
 		width: "100%",
 		height: "100%",
-		maxHeight: "477px",
 		overflow: "auto",
 		textStyle: "md",
 		textAlign: "right",
