@@ -43,6 +43,7 @@ const MypageInfoContainer = styled("div", {
 			history: {
 				height: "70%",
 				padding: "0",
+				maxHeight: "477px",
 			},
 		},
 	},
