@@ -7,4 +7,36 @@
 	body {
 		min-height: 100%;
 	}
+
+	.scrollbar {
+		overflow-y: scroll; /* 세로 스크롤바 */
+		height: 300px; /* 높이 설정 */
+	}
+
+	/* 스크롤바 스타일 */
+	.scrollbar::-webkit-scrollbar {
+		width: 8px;
+	}
+
+	.scrollbar::-webkit-scrollbar-track {
+		background: #f0f0f0;
+		border-radius: 5px;
+		background-color: var(--colors-gray-01);
+	}
+
+	.scrollbar::-webkit-scrollbar-thumb {
+		background-position: 50%;
+		background-repeat: no-repeat;
+		background-image: url("/svgs/scroll.svg");
+		background-clip: padding-box;
+		-webkit-background-clip: padding-box;
+		background-color: #f4f4f4;
+		border: 1px solid transparent;
+		border-radius: 2px;
+		width: 6px;
+	}
+
+	.scrollbar::-webkit-scrollbar-thumb:hover {
+		background: #ffcc00;
+	}
 }
