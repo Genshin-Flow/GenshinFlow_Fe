@@ -1,14 +1,10 @@
 "use client";
-
 import { styled } from "../../../../../styled-system/jsx";
-import Link from "next/link";
 
 export default function Exit() {
 	return (
 		<ExitButton onClick={clickHandler} type="button">
-			<Link href={"/"}>
-				<img src="/svgs/exit.svg" alt="메인화면으로 이동" />
-			</Link>
+			<img src="/svgs/exit.svg" alt="메인화면으로 이동" />
 		</ExitButton>
 	);
 }
