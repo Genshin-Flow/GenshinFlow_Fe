@@ -1,6 +1,6 @@
 import { styled } from "@/../styled-system/jsx";
-import MypageText from "@/features/mypage/components/mypageText/MypageText";
-import ChangePasswordInput from "@/features/mypage/components/changePasswordInput/ChangePasswordInput";
+import MypageText from "@/features/mypage/mobile/components/mypageText/MypageText";
+import ChangePasswordInput from "@/features/mypage/mobile/components/changePasswordInput/ChangePasswordInput";
 
 export default function page() {
 	return (

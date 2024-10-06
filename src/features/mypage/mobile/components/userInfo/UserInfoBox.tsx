@@ -1,5 +1,5 @@
 "use client";
-import InfoText from "@/features/mypage/components/infoText/InfoText";
+import InfoText from "@/features/mypage/mobile/components/infoText/InfoText";
 import MypageInfo from "@/features/mypage/template/mypageInfo/MypageInfo";
 
 export default function UserInfoBox() {
