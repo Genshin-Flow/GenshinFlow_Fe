@@ -1,5 +1,5 @@
 "use client";
-import { InputStyle } from "@/features/mypage/components/changePasswordInput/ChangePasswordInput";
+import { InputStyle } from "@/features/mypage/mobile/components/changePasswordInput/ChangePasswordInput";
 import { styled } from "@/../styled-system/jsx";
 import { useEffect, useState } from "react";
 
