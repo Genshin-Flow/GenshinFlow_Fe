@@ -20,7 +20,7 @@ export default defineConfig({
 						"01": { value: "#50596B" },
 						"02": { value: "#EBE7DE" },
 						"03": { value: "#FAD56B" }, // Yellow 01
-            "04": { value: "#F9F6F1" },
+						"04": { value: "#F9F6F1" },
 						"05": { value: "#4B54DC" },
 					},
 					secondary: {
@@ -86,6 +86,17 @@ export default defineConfig({
 						fontSize: "20px",
 						fontWeight: "700",
 					},
+				},
+			},
+			keyframes: {
+				jelly: {
+					"0%": { transform: "scale(1,1)" },
+					"30%": { transform: "scale(1.25,0.75)" },
+					"40%": { transform: "scale(0.75,1.25)" },
+					"50%": { transform: "scale(1.15,0.85)" },
+					"65%": { transform: "scale(0.95,1.05)" },
+					"75%": { transform: "scale(1.05,0.95)" },
+					"100%": { transform: "scale(1,1)" },
 				},
 			},
 		},
