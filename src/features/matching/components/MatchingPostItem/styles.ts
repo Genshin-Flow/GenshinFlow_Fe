@@ -47,6 +47,20 @@ export const ItemContainer = styled("div", {
     backgroundColor: '#F9F6F1',
     borderBottom: '1px solid {colors.gray.05}',
   },
+  variants: {
+    isMobile: {
+      true: {
+        width: '100%',
+        height: '140px',
+        maxWidth: 'none',
+        minWidth: 'none',
+        padding: '12px 12px',
+        flexDirection: 'column',
+        alignItems: 'flex-start',
+        justifyContent: 'space-between',
+      },
+    }
+  }
 });
 
 const selectedVariant = {
@@ -133,6 +147,19 @@ export const CenteredImage = styled('img', {
     transform: 'translate(-50%, -50%)',
     width: '28px', 
     height: '28px', 
+  },
+  variants: {
+    isMobile: {
+      true: {
+        position: 'relative',
+        width: '24px',
+        height: '24px',
+        top: 'none',
+        left: 'none',
+        transform: 'none',
+        marginRight: '7px',
+      },
+    }
   }
 });
 
@@ -210,6 +237,12 @@ export const MoreOptionsButton = styled('button', {
         backgroundImage: 'url("/svgs/moreoption.svg")',
       },
     },
+    isMobile: {
+      true: {
+        width: '30px',
+        height: '30px',
+      },
+    }
   },
   defaultVariants: {
     type: 'report',
@@ -226,6 +259,13 @@ export const MenuContainer = styled('div', {
     boxShadow: '0 4px 4px rgba(0, 0, 0, 0.25)',
     zIndex: 1000,
   },
+  variants: {
+    isMobile: {
+      true: {
+        top: '30px',
+      },
+    },
+  }
 });
 
 export const MenuItem = styled('div', {
@@ -242,4 +282,65 @@ export const MenuItem = styled('div', {
       backgroundColor: '#f0f0f0',
     },
   },
+});
+
+// 모바일 스타일 
+export const MobileUserName = styled('div', {
+  base: {
+    display: 'flex',
+  }
+});
+
+export const MobileMessageText = styled('div', {
+  base: {
+    display: 'line-block',
+    alignItems: 'center',
+    justifyContent: 'left',
+    width: '100%',
+    textStyle: 'sm',
+    color: 'gray.01',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    minWidth: '0',
+  }
+});
+
+export const InfoContainer = styled('div', {
+  base: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    width: '100%',
+    height: '30px',
+    gap: '8px',
+  }
+});
+
+export const InfoWrapper = styled('div', {
+  base: {
+    display: 'flex',
+    width: '100%',
+    gap: '8px',
+  }
+});
+
+export const Info = styled('div', {
+  base: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '100%',
+    borderRadius: '8px',
+    backgroundColor: '#DED7CE',
+    flex: '1',
+    fontSize: '12px',
+    fontWeight: 'medium',
+    color: 'gray.01',
+  }
+});
+
+export const MobileMoreOptions = styled('div', {
+  base: {
+    position: 'relative',
+  }
 });
