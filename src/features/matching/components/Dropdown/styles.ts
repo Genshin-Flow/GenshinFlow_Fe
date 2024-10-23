@@ -4,7 +4,15 @@ export const DropdownContainer = styled("div", {
   base: {
     position: "relative",
     display: "inline-block",
+    // width: "100%",
   },
+  variants: {
+    isMobile: {
+      true: {
+        width: "100%",
+      },
+    },
+  }
 });
 
 export const DropdownButton = styled("button", {
@@ -46,6 +54,15 @@ export const DropdownButton = styled("button", {
       true: {},
       false: {},
     },
+    isMobile: {
+      true: {
+        width: "100%",
+        maxWidth: "100%",
+        justifyContent: 'center',
+        gap: '8px',
+        padding: '0 10px',
+      }
+    }
   },
   compoundVariants: [
     {
