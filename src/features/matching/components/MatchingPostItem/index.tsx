@@ -143,6 +143,7 @@ export default function MatchingPostItem({
 							)}
 						</MobileMoreOptions>
 					</InfoContainer>
+					{isModalOpen && <Modal onClose={closeModal} type="write" isMobile={isMobile} />}
 				</ItemContainer>
 			)}
 		</>

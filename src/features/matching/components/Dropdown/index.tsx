@@ -20,6 +20,8 @@ interface DropdownProps {
 	value: string;
 	setValue: (value: string) => void;
 	style?: "default" | "genshin";
+	isMobile?: boolean;
+	isMobile2?: boolean;
 }
 
 export default function Dropdown({
@@ -28,6 +30,8 @@ export default function Dropdown({
 	value,
 	setValue,
 	style = "default",
+	isMobile = false,
+	isMobile2 = false,
 }: DropdownProps) {
 	const [isOpen, setIsOpen] = useState(false);
 	const dropdownRef = useRef<HTMLDivElement>(null);
@@ -46,8 +50,8 @@ export default function Dropdown({
 	});
 
 	return (
-		<DropdownContainer ref={dropdownRef}>
-			<DropdownButton onClick={toggleDropdown} style={style} isOpen={isOpen}>
+		<DropdownContainer ref={dropdownRef} isMobile={isMobile2}>
+			<DropdownButton onClick={toggleDropdown} style={style} isOpen={isOpen} isMobile={isMobile}>
 				{value || placeholder}
 				{isOpen ? (
 					<Arrow direction="up" style={style} />

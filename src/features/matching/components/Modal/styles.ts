@@ -20,6 +20,16 @@ export const ModalContainer = styled("div", {
 		backgroundColor: "white",
 		position: "relative",
 	},
+  variants: {
+    isMobile: {
+      true: {
+        minWidth: "100%",
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+      },
+    },
+  }
 });
 
 export const ModalHeader = styled("div", {  
@@ -33,6 +43,14 @@ export const ModalHeader = styled("div", {
     color: "white",
     fontSize: "lg",
     fontWeight: "bold",
+  },
+  variants: {
+    isMobile: {
+      true: {
+        justifyContent: "center",
+        flexShrink: 0,
+      },
+    },
   },
 });
 
@@ -65,6 +83,17 @@ export const ModalContent = styled("div", {
         backgroundColor: "secondary.03",
         border: "10px solid",
         borderColor: "primary.02",
+      },
+    },
+    isMobile: {
+      true: {
+        padding: "40px 20px",
+        paddingBottom: "0px",
+        border: 'none',
+        flex: 1,
+        minHeight: 0, 
+        overflowY: "auto", 
+        overflowX: "hidden", 
       },
     },
   },
@@ -132,6 +161,14 @@ export const UserQuestContainer = styled("div", {
     gap: "80px",
     marginBottom: "16px",
   },
+  variants: {
+    isMobile: {
+      true: {
+        flexDirection: "column",
+        gap: "40px",
+      },
+    },
+  }
 });
 
 export const UserInfo = styled("div", {
@@ -146,6 +183,16 @@ export const UserInfo = styled("div", {
       marginBottom: "20px",
     },
   },
+  variants: {
+    isMobile: {
+      true: {
+        width: "100%",
+        "& p": {
+          fontSize: "20px",
+        }
+      }
+    }
+  }
 });
 
 export const InputContainer = styled("div", {
@@ -156,6 +203,30 @@ export const InputContainer = styled("div", {
     justifyContent: "space-between",
     textStyle: "sm",
     color: "gray.01",
+  },
+  variants: {
+    isMobile: {
+      true: {
+        alignItems: 'center',
+        width: "100%",
+        "& div": {
+          textStyle: "sm",
+          color: "gray.01",
+          width: "80px",
+        }
+      },
+    },
+    isMobile2: {
+      true: {
+        alignItems: 'center',
+        width: "100%",
+        "& div": {
+          textStyle: "sm",
+          color: "gray.01",
+          width: "120px",
+        }
+      },
+    }
   },
 });
 
@@ -170,6 +241,14 @@ export const TextInput = styled("input", {
     textStyle: "xs",
     color: "gray.03",
     outline: "none",
+    borderRadius: '0'
+  },
+  variants: {
+    isMobile: {
+      true: {
+        flex: '1',
+      },
+    },
   },
 });
 
@@ -185,6 +264,16 @@ export const QuestInfo = styled("div", {
       marginBottom: "20px",
     },
   },
+  variants: {
+    isMobile: {
+      true: {
+        width: "100%",
+        "& p": {
+          fontSize: "20px",
+        }
+      }
+    }
+  }
 });
 
 export const Content = styled("div", {
@@ -199,6 +288,16 @@ export const Content = styled("div", {
       marginBottom: "20px",
     },
   },
+  variants: {
+    isMobile: {
+      true: {
+        marginTop: '4px',
+        "& p": {
+          fontSize: "20px",
+        }
+      }
+    }
+  }
 });
 
 export const ContentInput = styled("textarea", {
@@ -216,6 +315,13 @@ export const ContentInput = styled("textarea", {
     color: "gray.01",
     outline: "none",
   },
+  variants: {
+    isMobile: {
+      true: {
+        height: "280px",
+      },
+    },
+  },
 });
 
 export const Options = styled("div", {
@@ -223,14 +329,25 @@ export const Options = styled("div", {
     display: "flex",
     flexDirection: "column",
     gap: "20px",
-    "& p:first-child": {
+    "& > p:first-child": {
       fontSize: "sm",
       fontWeight: "bold",
       color: "gray.01",
     },
-    "& div": {
+    "& > div": {
       display: "flex",
       justifyContent: "space-between",
+    },
+  },
+  variants: {
+    isMobile: {
+      true: {
+        gap: "20px",
+        flexDirection: "column",
+        "& > p:first-child": {
+          fontSize: "20px",
+        },
+      },
     },
   },
 });
@@ -249,6 +366,13 @@ export const PasswordInput = styled("input", {
     textStyle: "xs",
     color: "gray.03",
     outline: "none",
+  },
+  variants: {
+    isMobile: {
+      true: {
+        width: "100%",
+      },
+    },
   },
 });
 
@@ -297,8 +421,52 @@ export const Button = styled("button", {
         backgroundColor: "secondary.01",
       },
     },
+    isMobile: {
+      true: {
+        flex: 1,
+        height: '36px',
+      }
+    }
   },
   defaultVariants: {
     type: "submit",
+  },
+});
+
+// 모바일
+export const FlexWrapper = styled("div", {
+  base: {
+    display: "flex",
+    // gap: "30px",
+    alignItems: "center",
+    width: "100%",
+    justifyContent: "space-around",
+  },
+});
+
+export const MobileText = styled("p", {
+  base: {
+    fontSize: "14px",
+    fontWeight: "medium",
+    color: "gray.01",
+    width: "120px",
+    whiteSpace: "nowrap",
+  },
+});
+
+export const InputWrapper = styled("div", {
+  base: {
+    display: "flex",
+    width: "100%",
+  },
+});
+
+export const MobileBtns = styled("div", {
+  base: {
+    display: "flex",
+    justifyContent: "space-between",
+    gap: "20px",
+    marginTop: "40px",
+    marginBottom: "40px",
   },
 });

@@ -52,6 +52,7 @@ export const ItemContainer = styled("div", {
       true: {
         width: '100%',
         height: '140px',
+        minHeight: '140px',
         maxWidth: 'none',
         minWidth: 'none',
         padding: '12px 12px',
