@@ -3,6 +3,7 @@ import localfont from "next/font/local";
 import QueryProvider from "@/app/QueryProvider";
 import "./globals.css";
 import JenniperSet from "@/app/nextJenniper/JenniperSet";
+import Loading from "@/components/Loading";
 
 export const metadata: Metadata = {
 	title: "Create Next App",
@@ -24,7 +25,10 @@ export default function RootLayout({
 		<html lang="ko">
 			<JenniperSet />
 			<body className={pretandard.className}>
-				<QueryProvider>{children}</QueryProvider>
+				<QueryProvider>
+					{children}
+					<Loading />
+				</QueryProvider>
 			</body>
 		</html>
 	);
