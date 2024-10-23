@@ -6,7 +6,7 @@ export const HeaderContainer = styled('header', {
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
-    height: '120px',
+    minHeight: '120px',
   },
 })
 
