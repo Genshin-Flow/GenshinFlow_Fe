@@ -1,5 +1,5 @@
 "use client";
-import { styled } from "../../../../../styled-system/jsx";
+import { styled } from "@/../styled-system/jsx";
 
 export default function Exit() {
 	return (
