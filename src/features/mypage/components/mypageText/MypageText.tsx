@@ -20,7 +20,6 @@ export default function MypageText(props: propsType) {
 const MyPageText = styled("p", {
 	base: {
 		width: "100%",
-
 		textStyle: "xl",
 	},
 	variants: {

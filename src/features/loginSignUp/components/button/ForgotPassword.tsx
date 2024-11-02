@@ -15,7 +15,9 @@ export default function ForgotPassword() {
 
 	return (
 		<div ref={buttonRef}>
-			<Button variable="forgotPassword">비밀번호를 잊어버렸어요</Button>
+			<Button variable="forgotPassword" platform="mobile">
+				비밀번호를 잊어버렸어요
+			</Button>
 		</div>
 	);
 }

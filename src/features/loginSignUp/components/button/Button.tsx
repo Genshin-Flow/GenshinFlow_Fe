@@ -9,6 +9,7 @@ type propsType = {
 	variable?: "login" | "signUp" | "forgotPassword" | "deActive" | "lock";
 	margin?: "mb12" | "mb20";
 	setSignInButton?: Dispatch<SetStateAction<"login" | "lock">>;
+	platform?: "mobile";
 };
 
 export default function Button(props: propsType) {
