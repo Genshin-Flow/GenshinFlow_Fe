@@ -1,10 +1,11 @@
+"use client";
 import { styled } from "@/../styled-system/jsx";
 import SubTitle from "@/features/loginSignUp/components/pageSubTitle/SubTitle";
 import Input from "@/features/loginSignUp/components/Input/Input";
 import Button from "@/features/loginSignUp/mobile/components/button/Button";
 import { Dispatch, FormEvent, SetStateAction, useState } from "react";
 import { postLoginAuth } from "@/fetch/signIn/signIn";
-import { loginCount } from "@/features/loginSignUp/components/signIn/SignInAuth";
+import { loginFailed } from "@/features/loginSignUp/components/signIn/SignInAuth";
 import loginState from "@/stores/loginStateStore";
 import { checkMail } from "@/features/loginSignUp/auth/emailCheck/emailValidation";
 import { passwordValidation } from "@/features/loginSignUp/auth/passwordCheck/passwordValidation";
@@ -70,21 +71,16 @@ async function submitHandler(
 	const $passwordDom = target.childNodes[1] as HTMLInputElement;
 	const emailValue = $emailDom.value;
 	const passwordValue = $passwordDom.value;
-	const getLocal = Number(localStorage.getItem("loginCount")) + 1;
-	if (getLocal !== 5) {
-		if (emailValue === "") {
-			setModal("이메일을 입력해주세요");
-			return;
-		} else if (passwordValue === "") {
-			setModal("비밀번호를 입력해주세요");
-			return;
-		} else if (!checkMail(emailValue) || !passwordValidation(passwordValue)) {
-			setModal(
-				"메일주소 및 비밀번호가 틀렸습니다. 5회 틀릴 시 제한이 생깁니다",
-			);
-			return;
-		}
+	// const getLocal = Number(localStorage.getItem("loginCount")) + 1;
+	if (emailValue === "" || passwordValue === "") {
+		setModal("이메일 혹은 비밀번호를 올바르게 입력해주세요");
+		return;
+	} else if (!checkMail(emailValue) || !passwordValidation(passwordValue)) {
+		setModal("이메일 혹은 비밀번호의 형식이 올바르지 않습니다.");
+		return;
 	}
-	loginCount(setModal, buttonState);
-	await postLoginAuth(emailValue, passwordValue, router);
+	const data = await postLoginAuth(emailValue, passwordValue, router);
+	if (data.status !== 200) {
+		loginFailed(data, setModal, buttonState);
+	}
 }
