@@ -85,7 +85,6 @@ function clickHandler(
 }
 
 function BackEvent(event: Event, setSelectBtn: (state: stateType) => void) {
-	console.log("취소");
 	setSelectBtn(null);
 }
 
