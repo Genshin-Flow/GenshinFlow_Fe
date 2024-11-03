@@ -1,5 +1,6 @@
-export async function reissueToken(refreshToken?: string) {
+export async function reissueToken(refreshToken: string) {
 	try {
+		if (!refreshToken) throw new Error("cannot find refresh token");
 		const baseApi = process.env.NEXT_PUBLIC_BaseApi;
 		const tokenReissue = process.env.TokenReissue;
 		if (!baseApi || !tokenReissue) {
