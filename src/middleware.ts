@@ -85,10 +85,10 @@ async function adminPageController(
 		// 	리프레시 토큰으로 얻어온 엑세스 토큰 혹은 기존의 엑세스 토큰을 이용하여 유저 정보를 조회해 등급을 확인
 		if (accessToken) {
 			const userInfo = await getUserInfo();
-			if (userInfo.role !== "관리자")
-				throw new Error(
-					"관리자 계정이 아니거나 정보를 불러오는데 실패했습니다.",
-				);
+			if (userInfo.role !== "관리자") {
+				// 관리자가 아닐시 redirect
+				return NextResponse.redirect(new URL("/", req.url));
+			}
 		} else {
 			return NextResponse.redirect(new URL("/Login", req.url));
 		}
