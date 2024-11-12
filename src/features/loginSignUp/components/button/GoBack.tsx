@@ -24,8 +24,10 @@ function changePage(currentPage: stateType) {
 			return null;
 		case "signUp":
 			return "signUpSelect";
-		case "forgotPassword":
+		case "authMailPassword":
 			return "login";
+		case "forgotPassword":
+			return "authMailPassword";
 	}
 }
 
