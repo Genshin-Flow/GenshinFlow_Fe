@@ -15,36 +15,19 @@ const withOutAuthList: string[] = ["/Login", "/MobileLogin"];
 const widthAdminAuthList: string[] = ["/Admin"];
 
 export async function middleware(req: NextRequest) {
-	try {
-		const accessToken = cookies().get("AccessToken") as tokenType;
-		const refreshToken = cookies().get("RefreshToken") as tokenType;
-		const accessTokenValue = accessToken && accessToken.value;
-		const refreshTokenValue = refreshToken && refreshToken.value;
-		const { pathname } = req.nextUrl;
-		const returnUserRedirectUrl = await userPageController(
-			req,
-			pathname,
-			accessTokenValue,
-			refreshTokenValue,
-		);
-		const returnAdminRedirectUrl = await adminPageController(
-			req,
-			pathname,
-			accessTokenValue,
-			refreshTokenValue,
-		);
-		if (returnUserRedirectUrl || returnAdminRedirectUrl) {
-			return returnUserRedirectUrl || returnAdminRedirectUrl;
-		}
-	} catch (error) {
-		if (error instanceof Error) {
-			console.error(error);
-		}
+	const token = (await cookies().get("accessToken")) as tokenType;
+
+	const { pathname } = req.nextUrl;
+
+	if (withOutAuthList.includes(pathname) && token) {
+		return NextResponse.redirect(new URL("/", req.url));
+	} else if (withAuthList.includes(pathname) && !token) {
+		return NextResponse.redirect(new URL("/Login", req.url));
 	}
 }
-// 미들웨어를 거치를 URL을 이곳에 등록하면 됩니다 ex) /Mypage,/Login
+// 스프레드 문법이 배포시 오류가 발생하여 수정했습니다.
 export const config = {
-	matcher: ["/Mypage", "/Login", "/MobileLogin"],
+	matcher: ["/Mypage", "/Login"],
 };
 
 async function userPageController(

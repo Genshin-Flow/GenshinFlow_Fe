@@ -41,6 +41,12 @@ export default function SignUp() {
 					margin={"mb16"}
 					platform="mobile"
 				/>
+				<Input
+					type={"text"}
+					placeholder={"UID"}
+					margin={"mb16"}
+					platform="mobile"
+				/>
 				<Checkbox
 					checkState={checkState}
 					setCheckState={setCheckState}

@@ -65,7 +65,6 @@ async function submitHandler(
 	router: AppRouterInstance,
 ) {
 	event.preventDefault();
-
 	const target = event.target as HTMLElement;
 	const $emailDom = target.childNodes[0] as HTMLInputElement;
 	const $passwordDom = target.childNodes[1] as HTMLInputElement;
