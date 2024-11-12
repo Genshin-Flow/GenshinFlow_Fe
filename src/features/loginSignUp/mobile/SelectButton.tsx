@@ -21,10 +21,10 @@ export default function SelectButton() {
 		clickHandler(event, setSelectBtn);
 	const PolicyModalRef = useRef<HTMLDivElement>(null);
 	const Container = useRef<HTMLDivElement>(null);
-	const BackEventFn = (event: Event) => BackEvent(event, setSelectBtn);
+	const BackEventFn = () => BackEvent(setSelectBtn);
 	// 로그인 , 계정 만들기 누를시 모바일의 뒤로가기 제한
 	useEffect(() => {
-		history.pushState(null, "", "/MobileLogin");
+		history.pushState(null, "", "/Login");
 		window.addEventListener("popstate", BackEventFn);
 		return () => window.removeEventListener("popstate", BackEventFn);
 	});
@@ -55,7 +55,7 @@ export default function SelectButton() {
 				<Button mb={"mb12"} buttonState="login">
 					로그인
 				</Button>
-				<ForgotPassword />
+				<ForgotPassword platform="mobile" />
 			</SelectContainer>
 			<SignIn />
 			<SignUp />
@@ -84,7 +84,7 @@ function clickHandler(
 	}
 }
 
-function BackEvent(event: Event, setSelectBtn: (state: stateType) => void) {
+function BackEvent(setSelectBtn: (state: stateType) => void) {
 	setSelectBtn(null);
 }
 
@@ -127,6 +127,11 @@ const SelectContainer = styled("article", {
 			},
 			forgotPassword: {
 				"& ~ .forgotPassContainer": {
+					transform: "translateX(0%)",
+				},
+			},
+			authMailPassword: {
+				"& ~ .AuthForChangePassword": {
 					transform: "translateX(0%)",
 				},
 			},

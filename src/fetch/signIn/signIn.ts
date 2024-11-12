@@ -1,6 +1,11 @@
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 // 백엔드 api에 따라 타입지정 필요
 
+export type loginReturnType = {
+	failLoginCount: string;
+	message: string;
+};
+
 type fetchReturnType = {
 	state: number;
 };
