@@ -9,6 +9,7 @@ type propsType = {
 	platform?: "mobile";
 	variable?: "login" | "signUp" | "forgotPassword" | "deActive" | "lock";
 	margin?: "mb12" | "mb20";
+	platform?: "mobile" | "pc";
 	setSignInButton?: Dispatch<SetStateAction<"login" | "lock">>;
 	platform?: "mobile";
 };
