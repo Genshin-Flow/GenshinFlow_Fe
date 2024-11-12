@@ -17,7 +17,7 @@ const TemplateContainer = styled("section", {
 		justifyContent: "center",
 		alignItems: "center",
 		position: "relative",
-		background: "url('/img/LoginBackground/naviaBg.webp') no-repeat",
+		background: "url('/img/loginBackground/naviaBg.webp') no-repeat",
 		backgroundSize: "cover",
 		backgroundPosition: "50% 50%",
 		"&:after": {
