@@ -1,45 +1,46 @@
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
-import { Cookies } from "react-cookie";
 // 백엔드 api에 따라 타입지정 필요
 
-type fetchReturnType = {
-	state: number;
+export type loginReturnType = {
+	failLoginCount: string;
+	message: string;
 };
 
-const cookies = new Cookies();
+export type accessTokenType = {
+	accessToken: string;
+	refresh: string;
+};
 
 export async function postLoginAuth(
 	emailValue: string,
 	passwordValue: string,
 	router?: AppRouterInstance,
-): Promise<fetchReturnType | unknown> {
+): Promise<accessTokenType | unknown> {
 	try {
-		const response = await fetch(`${process.env.login}`, {
-			method: "post",
-			headers: {
-				"content-Type": "application/json",
+		const response = await fetch(
+			`${process.env.NEXT_PUBLIC_BaseApi}/api/loginToken`,
+			{
+				method: "post",
+				headers: {
+					"content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					email: emailValue,
+					password: passwordValue,
+				}),
 			},
-			body: JSON.stringify({
-				email: emailValue,
-				password: passwordValue,
-			}),
-		});
-		const data = await response.json();
-		// access token 10분 유지 (임시 시간)
-		if (true) {
-			cookies.set("accessToken", "accessToken", {
-				maxAge: 600,
-				secure: true,
-			});
-			// 리프레시 토큰 1시간 유지 (임시 시간)
-			cookies.set("Refresh", "리프레시 토큰 데이터", {
-				maxAge: 3600,
-				secure: true,
-			});
+		);
+
+		// 응답 상태 코드를 수동으로 확인
+		if (!response.ok) {
+			throw new Error(`HTTP error! status: ${response.status}`);
 		}
+
+		// access token 10분 유지 (임시 시간)
 		router?.push("/");
-		return true;
-	} catch (error) {
-		return error;
+		return { message: "로그인" };
+	} catch (error: any) {
+		// 실패시 리턴 데이터 추가
+		return { message: "로그인 실패", failLoginCount: "5" };
 	}
 }
