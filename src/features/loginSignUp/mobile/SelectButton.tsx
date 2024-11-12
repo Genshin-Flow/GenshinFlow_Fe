@@ -24,7 +24,7 @@ export default function SelectButton() {
 	const BackEventFn = () => BackEvent(setSelectBtn);
 	// 로그인 , 계정 만들기 누를시 모바일의 뒤로가기 제한
 	useEffect(() => {
-		history.pushState(null, "", "/MobileLogin");
+		history.pushState(null, "", "/Login");
 		window.addEventListener("popstate", BackEventFn);
 		return () => window.removeEventListener("popstate", BackEventFn);
 	});
