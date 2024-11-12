@@ -55,7 +55,7 @@ export default function SelectButton() {
 				<Button mb={"mb12"} buttonState="login">
 					로그인
 				</Button>
-				<ForgotPassword />
+				<ForgotPassword platform="mobile" />
 			</SelectContainer>
 			<SignIn />
 			<SignUp />
@@ -127,6 +127,11 @@ const SelectContainer = styled("article", {
 			},
 			forgotPassword: {
 				"& ~ .forgotPassContainer": {
+					transform: "translateX(0%)",
+				},
+			},
+			authMailPassword: {
+				"& ~ .AuthForChangePassword": {
 					transform: "translateX(0%)",
 				},
 			},
