@@ -1,10 +1,10 @@
 import Script from "next/script";
-export default function JenniperSet() {
+function JenniperSet() {
 	return (
 		<>
 			<Script>
 				{`  
-        if( ${process.env.developMode === "production"}){
+        if( ${process.env.NODE_ENV === "production"}){
           (function(j,ennifer) {
           j['dmndata']=[];j['jenniferFront']=function(args){window.dmndata.push(args)};
           j['dmnaid']=ennifer;j['dmnatime']=new Date();j['dmnanocookie']=false;j['dmnajennifer']='JENNIFER_FRONT@INTG';
@@ -19,3 +19,5 @@ export default function JenniperSet() {
 		</>
 	);
 }
+
+export default JenniperSet;
