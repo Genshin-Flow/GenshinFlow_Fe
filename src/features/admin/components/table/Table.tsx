@@ -1,7 +1,6 @@
 import { styled } from "@/../styled-system/jsx";
-import { reportUserType } from "@/features/admin/components/reportManagement/ReportManagement";
 import { nanoid } from "nanoid";
-import { Dispatch, ReactNode, SetStateAction } from "react";
+import { ReactNode } from "react";
 
 type propsType = {
 	tableHeaderItems: string[];

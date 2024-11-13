@@ -1,8 +1,8 @@
 "use client";
 import { styled } from "@/../styled-system/jsx";
 import MypageInfo from "@/features/mypage/template/mypageInfo/MypageInfo";
-import MypageText from "@/features/mypage/components/mypageText/MypageText";
-import HistoryData from "@/app/allHistory/HistoryData";
+import MypageText from "@/features/mypage/mobile/components/mypageText/MypageText";
+import HistoryData from "@/app/AllHistory/HistoryData";
 import Button from "@/features/loginSignUp/mobile/components/button/Button";
 import { listItemType } from "@/features/mypage/components/historyInfo/History";
 import { useEffect, useState } from "react";
@@ -63,7 +63,7 @@ const Form = styled("form", {
 const ButtonContainer = styled("div", {
 	base: {
 		width: "100%",
-		boxSizing: "border-box:",
+		boxSizing: "border-box",
 		marginTop: "40px",
 	},
 });

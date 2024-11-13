@@ -1,21 +1,20 @@
 import { styled } from "@/../styled-system/jsx";
 import { Dispatch, SetStateAction, useState } from "react";
 import { useAdminSearch } from "@/hooks/useAdminSearch";
-import { reportUserType } from "@/features/admin/components/reportManagement/ReportManagement";
 import { adminUserSearch } from "@/fetch/adminUserSearch/adminUserSearch";
 
-type propsType = {
+type propsType<T> = {
 	title: string;
-	setUserList: Dispatch<SetStateAction<reportUserType[]>>;
+	setUserList: Dispatch<SetStateAction<T[]>>;
 };
 
-export default function TableHeader(props: propsType) {
+export default function TableHeader<T>({ title, setUserList }: propsType<T>) {
 	const [searchValue, setSearchValue] = useState("");
 	const [searchResult, setSearchResult] = useState<string[]>([]);
 	useAdminSearch(searchValue, setSearchResult);
 	return (
 		<TableHeaderContainer>
-			<Title>{props.title}</Title>
+			<Title>{title}</Title>
 			<SearchContainer>
 				<SearchIconBox>
 					<img src="/svgs/magnifyingGlass.svg" alt="돋보기" />
@@ -27,9 +26,7 @@ export default function TableHeader(props: propsType) {
 				/>
 				{searchResult.length > 0 && (
 					<SearchResultBox
-						onClick={(event) =>
-							searchItemClickHandler(event, props.setUserList)
-						}
+						onClick={(event) => searchItemClickHandler(event, setUserList)}
 					>
 						{searchResult.map((item) => (
 							// userId는 추후 명세에 따라 추가
@@ -44,9 +41,9 @@ export default function TableHeader(props: propsType) {
 	);
 }
 
-async function searchItemClickHandler(
+async function searchItemClickHandler<T>(
 	event: React.MouseEvent<HTMLUListElement, MouseEvent>,
-	setUserList: Dispatch<SetStateAction<reportUserType[]>>,
+	setUserList: Dispatch<SetStateAction<T[]>>,
 ) {
 	const target = event.target as HTMLElement;
 	const userId = target.dataset.userid;
