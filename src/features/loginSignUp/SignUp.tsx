@@ -7,7 +7,7 @@ import Button from "@/features/loginSignUp/components/button/Button";
 import Checkbox from "@/features/loginSignUp/components/checkBox/Checkbox";
 import { FormEvent, useState } from "react";
 import loginState from "@/stores/loginStateStore";
-import { signUpInfoCheck } from "@/fetch/signUp/signUpfMailFetch";
+import { signUp } from "@/fetch/signUp/signUp";
 
 export default function SignUp() {
 	const [checkState, setCheckState] = useState(false);
@@ -46,17 +46,11 @@ function submitHandler(
 	const target = event.target as HTMLFormElement;
 	const $password = target.children[0] as HTMLInputElement;
 	const $authCode = target.children[1] as HTMLInputElement;
-	const $uid = target.children[1] as HTMLInputElement;
+	const $uid = target.children[2] as HTMLInputElement;
 	const passwordValue = $password.value;
 	const authCodeValue = $authCode.value;
 	const uidValue = $uid.value;
-	signUpInfoCheck(
-		emailValue,
-		passwordValue,
-		uidValue,
-		authCodeValue,
-		setModalState,
-	);
+	signUp(emailValue, passwordValue, authCodeValue, uidValue, setModalState);
 }
 
 const SignUpContainer = styled("article", {

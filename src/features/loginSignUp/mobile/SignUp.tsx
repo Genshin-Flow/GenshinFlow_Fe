@@ -1,3 +1,4 @@
+"use client";
 import { styled } from "@/../styled-system/jsx";
 import SubTitle from "@/features/loginSignUp/components/pageSubTitle/SubTitle";
 import AuthMail from "@/features/loginSignUp/components/signUp/AuthMail";
@@ -5,7 +6,7 @@ import Input from "@/features/loginSignUp/components/Input/Input";
 import { FormEvent, useState } from "react";
 import Checkbox from "@/features/loginSignUp/components/checkBox/Checkbox";
 import Button from "@/features/loginSignUp/mobile/components/button/Button";
-import { signUpInfoCheck } from "@/fetch/signUp/signUpfMailFetch";
+import { signUp } from "@/fetch/signUp/signUp";
 import loginState from "@/stores/loginStateStore";
 import { useRouter } from "next/navigation";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
@@ -21,7 +22,7 @@ export default function SignUp() {
 	return (
 		<SignUpContainer className="signUpContainer">
 			<SubTitle platform="mobile">계정 만들기</SubTitle>
-			<SignUpForm action="" onSubmit={submitHandler}>
+			<form action="#" onSubmit={submitHandler}>
 				<AuthMail
 					emailValue={email}
 					setEmailValue={setEmail}
@@ -52,7 +53,7 @@ export default function SignUp() {
 					mb="mb40"
 				/>
 				<Button buttonState={variable}>회원가입</Button>
-			</SignUpForm>
+			</form>
 		</SignUpContainer>
 	);
 }
@@ -69,14 +70,6 @@ const SignUpContainer = styled("article", {
 	},
 });
 
-const SignUpForm = styled("form", {
-	base: {
-		"& div > input": {
-			paddingRight: "96px",
-		},
-	},
-});
-
 async function SubmitHandler(
 	event: FormEvent<HTMLFormElement>,
 	emailValue: string,
@@ -85,18 +78,11 @@ async function SubmitHandler(
 ) {
 	event.preventDefault();
 	const target = event.target as HTMLElement;
-	const $mailAuthDom = target.children[1] as HTMLInputElement;
+	const $authCode = target.children[1] as HTMLInputElement;
 	const $password = target.children[2] as HTMLInputElement;
 	const $uid = target.children[3] as HTMLInputElement;
 	const passwordValue = $password.value;
-	const mailAuthValue = $mailAuthDom.value;
+	const authCodeValue = $authCode.value;
 	const uidValue = $uid.value;
-	signUpInfoCheck(
-		emailValue,
-		passwordValue,
-		uidValue,
-		mailAuthValue,
-		setModal,
-		router,
-	);
+	signUp(emailValue, passwordValue, authCodeValue, uidValue, setModal, router);
 }

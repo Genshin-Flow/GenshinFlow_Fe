@@ -1,49 +1,79 @@
 import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
+import { getUserInfo } from "@/fetch/getUserInfo/getUserInfo";
+type tokenType = {
+	name: string;
+	value: string;
+};
+import { reissueToken } from "@/fetch/reissureToken/reissureToken";
 
+// withAuthList : 로그인이 필요한 페이지 url: 추가시 ["/Mypage", "추가 url작성"]
+// withOutAuthList : 로그인을 안한 상태에서만 필요한 페이지 url: 추가시 ["/Login", "추가 url작성"]
+// widthAdminAuthList : 어드민 권한을 가진 유저만 접근 가능한 페이지 url: 추가시 ["/Login", "추가 url작성"]
 const withAuthList: string[] = ["/Mypage"];
-const withOutAuthList: string[] = ["/Login"];
+const withOutAuthList: string[] = ["/Login", "/MobileLogin"];
+const widthAdminAuthList: string[] = ["/Admin"];
 
 export async function middleware(req: NextRequest) {
-	let tokenState = false;
-	const accessToken = cookies().get("access")?.value;
-	const refreshToken = cookies().get("refresh")?.value;
+	const token = (await cookies().get("accessToken")) as tokenType;
+
 	const { pathname } = req.nextUrl;
 
-	// Base URL 체크 및 에러 방지
-	if (!process.env.NEXT_PUBLIC_BaseApi) {
-		throw new Error("Base API URL is not defined in environment variables.");
+	if (withOutAuthList.includes(pathname) && token) {
+		return NextResponse.redirect(new URL("/", req.url));
+	} else if (withAuthList.includes(pathname) && !token) {
+		return NextResponse.redirect(new URL("/Login", req.url));
 	}
+}
+// 스프레드 문법이 배포시 오류가 발생하여 수정했습니다.
+export const config = {
+	matcher: ["/Mypage", "/Login"],
+};
 
-	const response = await fetch(
-		`${process.env.NEXT_PUBLIC_BaseApi}/api/refreshAccessToken`,
-		{
-			method: "post",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({
-				accessToken,
-				refreshToken,
-			}),
-		},
-	);
-
-	const data = await response.json();
-	switch (data.message) {
-		case "유효":
-		case "access재발급":
-			tokenState = true;
-			break;
+async function userPageController(
+	req: NextRequest,
+	pathname: string,
+	accessTokenValue: string,
+	refreshTokenValue: string,
+) {
+	//  로그아웃이 필요한 서비스에 접근하려할때
+	if (withOutAuthList.includes(pathname) && accessTokenValue) {
+		return NextResponse.redirect(new URL("/", req.url));
 	}
-
-	if (withOutAuthList.includes(pathname) && tokenState) {
-		return NextResponse.redirect(new URL("/", req.nextUrl.origin));
-	} else if (withAuthList.includes(pathname) && !tokenState) {
-		return NextResponse.redirect(new URL("/Login", req.nextUrl.origin));
+	// 로그인이 필요한 서비스에 접근하려할때
+	else if (withAuthList.includes(pathname) && !accessTokenValue) {
+		// 엑세스 토큰은 없지만 리프레시 토큰은 있을때 재발급 로직 실행 ( 로그인으로 리다이렉트 하지 않기 위한 if 작성 )
+		if (refreshTokenValue) {
+			await reissueToken(refreshTokenValue);
+		} else {
+			return NextResponse.redirect(new URL("/Login", req.url));
+		}
 	}
 }
 
-export const config = {
-	matcher: [],
-};
+async function adminPageController(
+	req: NextRequest,
+	pathname: string,
+	accessTokenValue: string,
+	refreshTokenValue: string,
+) {
+	// 관리자 페이지에 접속하려 할시 토큰 및 인증권한 체크
+	if (widthAdminAuthList.includes(pathname) && !accessTokenValue) {
+		// 엑세스 토큰이 없을시 재발급요청
+		if (refreshTokenValue) {
+			await reissueToken(refreshTokenValue);
+		}
+
+		const accessToken = cookies().get("AccessToken") as tokenType;
+		// 	리프레시 토큰으로 얻어온 엑세스 토큰 혹은 기존의 엑세스 토큰을 이용하여 유저 정보를 조회해 등급을 확인
+		if (accessToken) {
+			const userInfo = await getUserInfo();
+			if (userInfo.role !== "관리자") {
+				// 관리자가 아닐시 redirect
+				return NextResponse.redirect(new URL("/", req.url));
+			}
+		} else {
+			return NextResponse.redirect(new URL("/Login", req.url));
+		}
+	}
+}
