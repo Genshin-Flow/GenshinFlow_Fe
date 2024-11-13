@@ -1,6 +1,6 @@
 import { styled } from "@/../styled-system/jsx";
 import UserProfile from "@/features/mypage/components/userProfile/UserProfile";
-import AccountInfo from "@/features/mypage/components/accountInfo/AccountInfo";
+import AccountInfo from "@/features/mypage/mobile/components/accountInfo/AccountInfo";
 import UserInfo from "@/features/mypage/components/userInfo/UserInfo";
 import History from "@/features/mypage/components/historyInfo/History";
 import Link from "next/link";

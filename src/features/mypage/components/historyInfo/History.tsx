@@ -1,6 +1,6 @@
 "use client";
 import { styled } from "@/../styled-system/jsx";
-import MypageText from "@/features/mypage/components/mypageText/MypageText";
+import MypageText from "@/features/mypage/mobile/components/mypageText/MypageText";
 import MypageInfo from "@/features/mypage/template/mypageInfo/MypageInfo";
 import { nanoid } from "nanoid";
 import HistoryButton from "@/features/mypage/components/historyInfo/HistoryButton";
