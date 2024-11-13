@@ -1,9 +1,8 @@
-import { reportUserType } from "@/features/admin/components/reportManagement/ReportManagement";
 import { Dispatch, SetStateAction } from "react";
 
-export async function adminUserSearch(
+export async function adminUserSearch<T>(
 	userId: string,
-	setUserList: Dispatch<SetStateAction<reportUserType[]>>,
+	setUserList: Dispatch<SetStateAction<T[]>>,
 ) {
 	try {
 		const baseAPI = process.env.NEXT_PUBLIC_LocalBaseApi;

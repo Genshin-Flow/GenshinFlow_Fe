@@ -34,7 +34,10 @@ export default function ReportManagement() {
 	);
 	return (
 		<>
-			<TableHeader title="신고 관리" setUserList={setUserList} />
+			<TableHeader<reportUserType>
+				title="신고 관리"
+				setUserList={setUserList}
+			/>
 			<Table tableHeaderItems={tableHeaderItems}>
 				<ReportList
 					reportUserData={reportUserList}
