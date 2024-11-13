@@ -1,0 +1,16 @@
+<svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="50.2549" y="5" width="64" height="64" transform="rotate(45 50.2549 5)" fill="#4C4C4C"/>
+<rect x="50.2549" y="9.25488" width="57.9827" height="57.9827" transform="rotate(45 50.2549 9.25488)" fill="#F8F8F8"/>
+<rect x="50" y="18.5098" width="44.8944" height="44.8944" transform="rotate(45 50 18.5098)" fill="#333333"/>
+<mask id="mask0_781_1013" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="18" y="18" width="64" height="65">
+<rect x="50" y="18.5098" width="44.8944" height="44.8944" transform="rotate(45 50 18.5098)" fill="#333333"/>
+</mask>
+<g mask="url(#mask0_781_1013)">
+<circle cx="50" cy="51" r="28" fill="#686868"/>
+<circle cx="50" cy="51" r="24" fill="#2B2B2B"/>
+</g>
+<path d="M66.2635 33.7366L58.7852 50.0001L66.2635 66.2635L50 58.7853L33.7365 66.2635L41.2148 50.0001L33.7365 33.7366L50 41.2148L66.2635 33.7366Z" fill="#B2B2B2"/>
+<circle cx="50" cy="50" r="12" fill="#2B2B2B"/>
+<path d="M50 27L56.2121 43.7879L73 50L56.2121 56.2121L50 73L43.7879 56.2121L27 50L43.7879 43.7879L50 27Z" fill="white"/>
+<circle cx="50" cy="50" r="3" fill="#2B2B2B"/>
+</svg>
