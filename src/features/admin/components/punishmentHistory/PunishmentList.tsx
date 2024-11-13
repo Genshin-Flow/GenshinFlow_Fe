@@ -5,8 +5,9 @@ import ImageBox from "@/features/admin/components/popUp/evidencePhoto/ImageBox";
 import adminStore from "@/stores/adminPage/adminPageStore";
 import DisciplinaryItems from "@/features/admin/components/popUp/disciplinaryItems/DisciplinaryItems";
 import UserInfo from "@/features/admin/components/popUp/userInfo/UserInfo";
-import { TableItemContainer, TableItem, LastItemBlock } from "@/app/Admin/page";
+
 import { punishmentHistoryType } from "@/features/admin/components/punishmentHistory/PunishmentHistory";
+import { styled } from "@/../styled-system/jsx";
 
 type propsType = {
 	reportUserData: punishmentHistoryType[];
@@ -130,3 +131,60 @@ function resetRefPosition(
 		currentRef.style.top = `${positionY}%`;
 	}
 }
+
+const TableItemContainer = styled("ul", {
+	base: {
+		width: "100%",
+		height: "100%",
+		overflow: "auto",
+	},
+});
+
+const TableItem = styled("li", {
+	base: {
+		width: "100%",
+		height: "58px",
+		display: "flex",
+		alignItems: "center",
+		borderCollapse: "collapse",
+
+		"& > div": {
+			height: "100%",
+			padding: "16.5px 10px",
+			border: "1px solid black",
+		},
+
+		"& > div:nth-of-type(1)": {
+			width: "15%",
+		},
+		"& > div:nth-of-type(2)": {
+			width: "15%",
+		},
+		"& > div:nth-of-type(3)": {
+			width: "20%",
+		},
+		"& > div:nth-of-type(4)": {
+			width: "15%",
+		},
+		"& > div:nth-of-type(5)": {
+			width: "15%",
+			padding: "0",
+			display: "flex",
+			justifyContent: "center",
+			alignItems: "center",
+			cursor: "pointer",
+		},
+		"& > div:nth-of-type(6)": {
+			width: "20%",
+			padding: "0",
+		},
+	},
+});
+
+const LastItemBlock = styled("div", {
+	base: {
+		width: "100%",
+		height: "1px",
+		opacity: "0",
+	},
+});

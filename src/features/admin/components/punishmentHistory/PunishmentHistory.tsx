@@ -35,7 +35,10 @@ export default function PunishmentHistory() {
 	);
 	return (
 		<>
-			<TableHeader title={"제재 대상 확인"} />
+			<TableHeader<punishmentHistoryType>
+				title={"제재 대상 확인"}
+				setUserList={setPunishmentData}
+			/>
 			<Table tableHeaderItems={tableHeader}>
 				<PunishmentList
 					reportUserData={punishmentList}
