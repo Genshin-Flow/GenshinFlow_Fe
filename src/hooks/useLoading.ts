@@ -1,24 +1,29 @@
-// 경로가 변경될 때마다 로딩 상태 업데이트 
-'use client';
-import { useEffect } from 'react';
-import { usePathname } from 'next/navigation';
-import { useLoadingStore } from '@/stores/loadingStore';
+// 경로가 변경될 때마다 로딩 상태 업데이트
+"use client";
+import { useEffect } from "react";
+import { usePathname } from "next/navigation";
+import { useLoadingStore } from "@/stores/loadingStore";
 
 export const useLoading = () => {
-  const { isLoading, setIsLoading } = useLoadingStore();
-  const pathname = usePathname();
+	const { isLoading, setIsLoading } = useLoadingStore();
+	const pathname = usePathname();
 
-  useEffect(() => {
-    // 경로 변경 시작 시 로딩 상태를 true로 설정
-    setIsLoading(true);
+	useEffect(() => {
+		setIsLoading(true);
+		// 완료시 실행할 콜백 함수
+		const onPageLoad = () => {
+			setIsLoading(false);
+		};
 
-    // 페이지 로드 완료 시 로딩 상태를 false로 설정
-    const timeout = setTimeout(() => {
-      setIsLoading(false);
-    }, 1000); // 나중에 수정 필요함 
+		// document 로딩상태 감지
+		if (document.readyState === "complete") {
+			onPageLoad();
+		} else {
+			window.addEventListener("load", onPageLoad, false);
+			// 이벤트 클린업
+			return () => window.removeEventListener("load", onPageLoad);
+		}
+	}, [pathname, setIsLoading]);
 
-    return () => clearTimeout(timeout);
-  }, [pathname, setIsLoading]);
-
-  return isLoading;
+	return isLoading;
 };
