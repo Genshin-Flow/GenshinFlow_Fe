@@ -36,6 +36,7 @@ export default function Header({ isMobile = false }: HeaderProps) {
 						<Link href="/">
 							<Logo src="/svgs/logo.svg" alt="Logo" />
 						</Link>
+						{/* login -> Login */}
 						<Link href="/Login">
 							<LoginButton>로그인</LoginButton>
 						</Link>
@@ -48,6 +49,7 @@ export default function Header({ isMobile = false }: HeaderProps) {
 					</Link>
 					<Btns>
 						<Button style="menu" />
+						{/* login -> MobileLogin */}
 						<Link href="/MobileLogin">
 							<Button style="login" />
 						</Link>
