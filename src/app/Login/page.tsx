@@ -14,7 +14,13 @@ import { useMediaQuery } from "react-responsive";
 import SelectMobile from "@/features/loginSignUp/mobile/Select";
 
 export default function Login() {
-	const { modalText, selectBtn, policyModalState, setSelectBtn } = loginState();
+	const {
+		modalText,
+		selectBtn,
+		policyModalState,
+		setSelectBtn,
+		setModalState,
+	} = loginState();
 	const PolicyModalRef = useRef<HTMLDivElement>(null);
 	const RenderState = RenderBackButton(selectBtn);
 	// 임시로 추가 크기는 변경되면 수정
@@ -23,6 +29,12 @@ export default function Login() {
 	useEffect(() => {
 		setDesktop(isPc);
 	}, [isPc]);
+
+	// 화면 슬라이드 전환시 모달 삭제 ( 기존의 계속 모달이 떠 있던 문제 제거 )
+	useEffect(() => {
+		setModalState("");
+	}, [selectBtn]);
+
 	return (
 		<>
 			{desktop && (
