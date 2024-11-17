@@ -49,6 +49,7 @@ export default function SignIn() {
 
 const LoginContainer = styled("article", {
 	base: {
+		width: "100%",
 		position: "absolute",
 		transform: "translate(200%)",
 		transition: "transform 0.5s",
