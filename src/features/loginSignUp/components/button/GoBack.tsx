@@ -1,6 +1,5 @@
 import { styled } from "@/../styled-system/jsx";
 import { stateType } from "@/stores/loginStateStore";
-
 type propsType = {
 	currentPage: stateType;
 	setSelectBtn: (selectBtn: stateType) => void;
