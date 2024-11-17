@@ -23,11 +23,11 @@ export default function Home() {
 	}
 
 	return (
-		<>
+		<Main className="naviaBg">
 			<Header isMobile={isMobile} />
 			{isMobile ? <Mobile /> : <Pc />}
 			<Footer isMobile={isMobile} />
-		</>
+		</Main>
 	);
 }
 
@@ -48,6 +48,12 @@ function Mobile() {
 	);
 }
 
+const Main = styled("main", {
+	base: {
+		position: "relative",
+	},
+});
+
 const Container = styled("div", {
 	base: {
 		display: "flex",
@@ -57,7 +63,7 @@ const Container = styled("div", {
 		justifyContent: "space-between",
 		gap: "20px",
 		padding: "0 40px",
-		paddingTop: '40px',
+		paddingTop: "40px",
 		flex: "1",
 	},
 });
