@@ -16,7 +16,13 @@ import PrivacyPolicy from "@/features/loginSignUp/components/modal/PrivacyPolicy
 import { useEffect, useRef } from "react";
 
 export default function SelectButton() {
-	const { selectBtn, setSelectBtn, modalText, policyModalState } = loginState();
+	const {
+		selectBtn,
+		setSelectBtn,
+		modalText,
+		policyModalState,
+		setModalState,
+	} = loginState();
 	const clickFn = (event: React.MouseEvent<HTMLElement, MouseEvent>) =>
 		clickHandler(event, setSelectBtn);
 	const PolicyModalRef = useRef<HTMLDivElement>(null);
@@ -29,6 +35,10 @@ export default function SelectButton() {
 		}
 		window.addEventListener("popstate", BackEventFn);
 		return () => window.removeEventListener("popstate", BackEventFn);
+	}, [selectBtn]);
+
+	useEffect(() => {
+		setModalState("");
 	}, [selectBtn]);
 
 	return (
