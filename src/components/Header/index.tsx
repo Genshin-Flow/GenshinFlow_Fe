@@ -49,8 +49,7 @@ export default function Header({ isMobile = false }: HeaderProps) {
 					</Link>
 					<Btns>
 						<Button style="menu" />
-						{/* login -> MobileLogin */}
-						<Link href="/MobileLogin">
+						<Link href="/Login">
 							<Button style="login" />
 						</Link>
 					</Btns>
