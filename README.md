@@ -1,36 +1,79 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# GenshinFlow
 
-## Getting Started
+`GenshinFlow`는 원신 게임을 즐기는 유저들을 위한 서비스입니다. 이 서비스는 초보 유저와 초보 유저들을 돕고자 하는 유저들 간의 원활한 소통과 만남을 도와주기 위해 개발되었습니다.
 
-First, run the development server:
+## md파일 링크
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- [사용법](useSite)
+- [폴더 구조](dir)
+- [코딩 컨벤션](commit)
+- [커밋 컨벤션](code)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 팀원구성
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+|                                                                    **아아**                                                                    |                                                                    **시훈**                                                                     |                                                                    **배로**                                                                    |                                                                  **Wicked**                                                                   |                                                                    **하루**                                                                    |                                                                   **대감**                                                                   |
+| :--------------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------: |
+| [ <img src="https://github.com/user-attachments/assets/be240d27-4dd7-4a28-b24f-3f61f1d8c001" width="150"> <br/> ](https://github.com/fefdfea1) | [ <img src="https://github.com/user-attachments/assets/be240d27-4dd7-4a28-b24f-3f61f1d8c001" width="150"> <br/> ](https://github.com/lee-sihun) | [ <img src="https://github.com/user-attachments/assets/7cd8f4eb-8e59-4298-b2aa-1651e5b2c3f8" width="150"> <br/> ](https://github.com/BaeRoNuI) | [ <img src="https://github.com/user-attachments/assets/32d099b7-01b5-4c93-a109-06b59bd4c23c" width="150"> <br/> ](https://github.com/Preasim) | [ <img src="https://github.com/user-attachments/assets/be240d27-4dd7-4a28-b24f-3f61f1d8c001" width="150"> <br/> ](https://github.com/haru0307) | [ <img src="https://github.com/user-attachments/assets/be240d27-4dd7-4a28-b24f-3f61f1d8c001" width="150"> <br/> ](https://github.com/daegam) |
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## 개발환경
 
-## Learn More
+- Front: NextJs, PandaCss, tanstack/react-query, next-pwa, zustand
+- back-end: javaSpring , h2, Redis, MySQL, AWS, s3등
+- 버전 및 이슈관리:Git,Github
+- 협업 툴: Notion, Discord
+- 서비스 배포 환경: 배포후 수정
+- 디자인: Figma
+- 커밋 컨벤션: - [커밋 컨벤션 md링크](commit)
+- 코딩 컨벤션: - [코딩 컨벤션 md링크](code)
 
-To learn more about Next.js, take a look at the following resources:
+## 기술의 채택 이유및 브랜치 전략
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Next Js, Panda Css
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- #### Next Js
+  - 클라이언트 사이드로만 동작하는 리엑트 보다 서버 사이드 또한 손쉽게 지원 하는 Next Js가 성능상의 이점이 많을 것으로 생각되었고 동적 라우팅 기능으로 보다 편리한 개발을 할 수 있어 선택하였습니다.
+- #### Panda Css
 
-## Deploy on Vercel
+  - 판다 css는 기존 Styled-component를 사용하려다 Next Js의 서버사이드 환경에서 런타임환경에러가 발생해 대안으로 제로 런타임 css 프레임워크인 Panda Css를 선택하였습니다.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- ### Zustand
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+  - recoil이나 redux를 사용하지 않고 zustand를 채택한 이유로는 지금은 모르겠지만 그 당시의 recoil은 1년 전쯤이 마지막 업데이트로 더이상의 지원을 하고 있지 않았고 redux를 사용하자니 팀원모두 redux의 특유의 복잡함을 좋아하지 않아 유행세를 타고 있던 zustand를 채택하였습니다.
+
+- ### eslint,prettier
+
+  - 일관된 문서 서식과 문법을 유지하기위해 사용하였습니다.
+  - naver 코딩 컨벤션을 사용하여 작업 도중 문서의 서식이나 문법이 컨벤션에 일치하는지 신경쓰지 않을 수 있어 편하게 작업 할 수 있었습니다.
+
+- ### 브랜치 전략
+  - git-flow 전략을 사용하여 안정적인 브랜치 관리와 각각을 pr로 올려 코드를 검토하고 혹시 모를 push를 하는 경우에는 따로 브랜치를 만들어 push 하지 않으면 merge 되지 않도록 하여 최대한 사고가 나지 않도록 노력했습니다.
+
+### 역할 분담
+
+### 아아
+
+- #### UI
+  - PC 및 모바일 마이페이지, 로그인, 비밀번호 변경 페이지, 회원가입 제작
+- #### 기능
+  - 로그인 기능 accessToken 및 RefreshToken 제작 토큰을 이용한 인증 로직 구현
+  - 마이페이지 게시글 히스토리 불러오기, 삭제
+  - Next Auth를 이용한 oauth 로그인 구현
+
+### 시훈
+
+- #### UI
+  - PC 및 모바일 메인 페이지 제작 및 공통 컴포넌트 개발
+- #### 공통 컴포넌트 및 초기 세팅
+  - PC 및 모바일 헤더 제작
+  - 로딩 컴포넌트 개발
+  - 초기 컬러 코드 및 폰트 적용, 폰트 크기등 판다 css에서 사용 할 수 있도록 적용
+- #### 기능
+  - tanstack-query를 이용한 구인글 리스트 불러오기 개발
+  - swiper 라이브러리를 이용한 슬라이더 개발
+  - 메인페이지 구인글의 신고,삭제,끌올등 유저액션 개발
+
+## 라이센스
+
+원신 플로우는 Hoyoverse와 제휴되어 있거나 승인되어 있지 않습니다.
+
+원신 플로우는 원신 게임 서비스를 기반하는 유용한 정보와 기능을 제공하며, 해당 게임의 콘텐츠와 저작권은 모두 Hoyoverse 측에 있습니다.
