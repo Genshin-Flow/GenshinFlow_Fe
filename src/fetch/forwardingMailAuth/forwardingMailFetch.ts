@@ -1,10 +1,14 @@
 import { Dispatch, SetStateAction } from "react";
 
-export async function forwardingMailFetch(
-	emailValue: string,
-	setModal: (state: string) => void,
-	setCount: Dispatch<SetStateAction<number>>,
-) {
+class MailAuthError extends Error {
+	response: Response;
+	constructor(response: Response) {
+		super();
+		this.response = response;
+	}
+}
+
+export async function forwardingMailFetch(emailValue: string) {
 	// 추후 api 스팩에 따라 body 결정
 	try {
 		const baseAPi = process.env.NEXT_PUBLIC_BaseApi;
@@ -23,22 +27,14 @@ export async function forwardingMailFetch(
 				email: emailValue,
 			}),
 		});
-		if (response.status !== 200) {
-			throw new Error("failed to send AuthCode");
-		}
-		const data = response.json();
-		if (response.status !== 200) {
-			throw new Error("인증코드 발송 오류!");
-		} else {
-			setModal("인증코드가 발송 되었습니다");
-			setCount(60);
-			return data;
+		if (response.ok) {
+			return response;
+		} else if (!response.ok) {
+			throw new MailAuthError(response);
 		}
 	} catch (error) {
-		setModal("인증코드 발송 오류 다시 시도해주세요");
-		if (error instanceof Error) {
-			console.error(error);
+		if (error instanceof MailAuthError) {
+			return error.response;
 		}
-		return "";
 	}
 }

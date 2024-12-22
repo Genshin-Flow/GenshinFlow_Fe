@@ -15,7 +15,7 @@ const withOutAuthList: string[] = ["/Login", "/MobileLogin"];
 const widthAdminAuthList: string[] = ["/Admin"];
 
 export async function middleware(req: NextRequest) {
-	const token = (await cookies().get("accessToken")) as tokenType;
+	const token = cookies().get("accessToken") as tokenType;
 
 	const { pathname } = req.nextUrl;
 

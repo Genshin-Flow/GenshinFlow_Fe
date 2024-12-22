@@ -40,7 +40,6 @@ function Radio({
 	disabled,
 }: RadioProps) {
 	const group = useContext(RadioContext);
-
 	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
 		if (group.onChange) {
 			group.onChange(e.target.value);
@@ -58,7 +57,7 @@ function Radio({
 				checked={group.value !== undefined ? value === group.value : undefined}
 				onChange={handleChange}
 			/>
-      <RadioSpan />
+			<RadioSpan />
 			{children}
 		</RadioLabel>
 	);

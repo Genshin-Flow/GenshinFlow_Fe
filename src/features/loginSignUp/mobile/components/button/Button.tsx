@@ -85,7 +85,7 @@ const ButtonStyle = styled("button", {
 				backgroundColor: "primary.01",
 
 				"&:hover": {
-					backgroundColor: "gray.07",
+					backgroundColor: "gray.05",
 					color: "black",
 				},
 			},

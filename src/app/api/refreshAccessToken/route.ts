@@ -11,7 +11,7 @@ async function POST(req: Request) {
 				refreshToken,
 			}),
 		});
-		const data = await response;
+		const data = await response.json();
 		// 리프레시 토큰의 지속시간이 다 되었을때 에러 핸들링도 필요
 		if ("조건") {
 			return NextResponse.json({ message: "유효" }, { status: 200 });
