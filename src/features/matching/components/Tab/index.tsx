@@ -24,11 +24,15 @@ import {
 	EventDate,
 	EventShortCut,
 	MobileWriteButton,
+	VisibleTabList,
 } from "./styles";
 import MatchingPostItem from "../MatchingPostItem";
 import Dropdown from "../Dropdown";
 import Modal from "../Modal";
 import { useState, useEffect } from "react";
+import { useRef } from "react";
+import { useMainPostObserve } from "@/hooks/useMainPostObserve";
+import { InfiniteData } from "@tanstack/react-query";
 
 interface TabProps {
 	isMobile?: boolean;
@@ -36,6 +40,22 @@ interface TabProps {
 
 interface MatchingProps {
 	isMobile?: boolean;
+}
+
+interface PostData {
+	title: string;
+	id: number;
+	uid: number;
+	region: string;
+	questCategory: string;
+	wordLevel: number;
+	content: string;
+	password: string;
+	completed: boolean;
+	completedAt: string;
+	sortedAt: string;
+	createdAt: string;
+	updatedAt: string;
 }
 
 export default function Tab({ isMobile = false }: TabProps) {
@@ -91,6 +111,15 @@ function Matching({ isMobile = false }: MatchingProps) {
 	const [lv, setLv] = useState("");
 	const [region, setRegion] = useState("ASIA");
 	const [selectType, setSelectType] = useState("");
+	const [postData, setPostData] = useState<PostData[]>([]);
+	const scrollRef = useRef<HTMLDivElement>(null);
+	const { data, isLoading, hasNextPage } = useMainPostObserve(scrollRef);
+	useEffect(() => {
+		if (data?.pages) {
+			const newPosts = data.pages.flatMap((page) => page);
+			setPostData((prev) => [...prev, ...newPosts]);
+		}
+	}, [data]);
 
 	const openModal = () => setIsModalOpen(true);
 	const closeModal = () => setIsModalOpen(false);
@@ -193,9 +222,14 @@ function Matching({ isMobile = false }: MatchingProps) {
 						<Gap />
 					</MatchingHeader>
 					<PostList>
-						{Array.from({ length: 50 }).map((_, index) => (
-							<MatchingPostItem key={index} selected={selectType} />
+						{postData.map((_, index) => (
+							<MatchingPostItem
+								key={index}
+								selected={selectType}
+								type={"report"}
+							/>
 						))}
+						{hasNextPage && !isLoading && <VisibleTabList ref={scrollRef} />}
 					</PostList>
 					{isModalOpen && <Modal onClose={closeModal} type="write" />}
 				</>
@@ -232,6 +266,7 @@ function Matching({ isMobile = false }: MatchingProps) {
 								key={index}
 								selected={selectType}
 								isMobile={isMobile}
+								type={"write"}
 							/>
 						))}
 					</PostList>

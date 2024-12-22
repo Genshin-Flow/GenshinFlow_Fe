@@ -28,7 +28,6 @@ import {
 import Modal from "../Modal";
 import { useRef, useState } from "react";
 import useOutsideClick from "@/hooks/useOutsideClick";
-
 // 퀘스트 종류 이미지
 export const questImage = {
 	domain: "/svgs/quests/domain.svg",
@@ -40,11 +39,13 @@ export const questImage = {
 };
 
 interface MatchingPostItemProps {
+	type: string;
 	selected?: string;
 	isMobile?: boolean;
 }
 
 export default function MatchingPostItem({
+	type,
 	selected,
 	isMobile = false,
 }: MatchingPostItemProps) {
@@ -56,6 +57,7 @@ export default function MatchingPostItem({
 		setIsModalOpen(true);
 		setIsMenuOpen(false);
 	};
+
 	const closeModal = () => setIsModalOpen(false);
 	const openMenu = () => setIsMenuOpen(true);
 	const closeMenu = () => setIsMenuOpen(false);
@@ -93,17 +95,29 @@ export default function MatchingPostItem({
 						<Text color="gray02">1분 전</Text>
 					</TimeAgo>
 					<MoreOptions>
-						<MoreOptionsButton type="moreOption" onClick={openMenu} />
-						{isMenuOpen && (
+						<MoreOptionsButton
+							type="moreOption"
+							onClick={openMenu}
+							className="moreOption"
+						/>
+						{isMenuOpen && type !== "write" ? (
 							<MenuContainer ref={menuRef}>
 								<MenuItem onClick={closeMenu}>종료</MenuItem>
 								<MenuItem onClick={closeMenu}>삭제</MenuItem>
 								<MenuItem onClick={openModal}>수정</MenuItem>
 								<MenuItem onClick={closeMenu}>끌올</MenuItem>
 							</MenuContainer>
+						) : (
+							""
+						)}
+
+						{isModalOpen && type === "report" && (
+							<Modal onClose={closeModal} type="report" isMobile={isMobile} />
+						)}
+						{isModalOpen && type === "write" && (
+							<Modal onClose={closeModal} type="write" isMobile={isMobile} />
 						)}
 					</MoreOptions>
-					{isModalOpen && <Modal onClose={closeModal} type="write" />}
 				</ItemContainer>
 			) : (
 				<ItemContainer isMobile={isMobile}>
@@ -121,7 +135,11 @@ export default function MatchingPostItem({
 					<InfoContainer>
 						<InfoWrapper>
 							<Info>
-								<CenteredImage src={questImage.domain} alt="Quest Type" isMobile={isMobile} />
+								<CenteredImage
+									src={questImage.domain}
+									alt="Quest Type"
+									isMobile={isMobile}
+								/>
 								퀘스트
 							</Info>
 							<Info>월드레벨 7</Info>
@@ -143,7 +161,9 @@ export default function MatchingPostItem({
 							)}
 						</MobileMoreOptions>
 					</InfoContainer>
-					{isModalOpen && <Modal onClose={closeModal} type="write" isMobile={isMobile} />}
+					{isModalOpen && (
+						<Modal onClose={closeModal} type="write" isMobile={isMobile} />
+					)}
 				</ItemContainer>
 			)}
 		</>

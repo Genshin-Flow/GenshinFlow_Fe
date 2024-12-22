@@ -12,7 +12,6 @@ export async function useAdminSearch(
 	}, [debouncedValue]);
 
 	async function changeHandler() {
-		console.log("실행");
 		const searchApi = process.env.NEXT_PUBLIC_adminSearchApi;
 		if (!searchApi) {
 			throw new Error(

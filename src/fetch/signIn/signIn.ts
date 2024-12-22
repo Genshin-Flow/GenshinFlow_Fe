@@ -27,34 +27,34 @@ class extendedResponseError extends Error {
 export async function postLoginAuth(
 	emailValue: string,
 	passwordValue: string,
-	router?: AppRouterInstance,
 ): Promise<fetchReturnType | any> {
 	try {
-		const localBaseApi = process.env.NEXT_PUBLIC_LocalBaseApi;
-		if (!localBaseApi) {
+		const BaseApi = process.env.NEXT_PUBLIC_BaseApi;
+		const Login = process.env.NEXT_PUBLIC_login;
+		if (!BaseApi && !Login) {
 			throw new Error("로그인 환경변수를 찾을 수 없습니다.");
 		}
-		const response = await fetch(`${localBaseApi}/api/login`, {
+		const response = await fetch(`${BaseApi}${Login}`, {
 			method: "post",
+			headers: {
+				"Content-Type": "application/json",
+			},
 			body: JSON.stringify({
 				email: emailValue,
 				password: passwordValue,
 			}),
 		});
-		if (response.status !== 200) {
+		if (!response.ok) {
 			throw new extendedResponseError(response);
 		}
-		const data = await response.json();
-		router?.push("/");
-		return data;
+		return response;
 	} catch (error) {
 		if (error instanceof extendedResponseError) {
 			return error.response;
 		}
 
 		if (error instanceof Error) {
-			console.error(error);
-			return false;
+			return error;
 		}
 	}
 }

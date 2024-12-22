@@ -1,11 +1,4 @@
-import {
-	Dispatch,
-	MutableRefObject,
-	SetStateAction,
-	useEffect,
-	useState,
-} from "react";
-import { reportManageMentList } from "@/fetch/reportManageMentList/reportManageMentList";
+import { Dispatch, MutableRefObject, SetStateAction, useEffect } from "react";
 
 const observerOption = {
 	root: null,
@@ -13,26 +6,21 @@ const observerOption = {
 	threshold: 0,
 };
 
-export function useObserver<T>(
+export function useObserver(
 	targetRef: MutableRefObject<null>,
-	data: T[],
-	setData: Dispatch<SetStateAction<T[]>>,
+	LoadingState: boolean,
 	setLoadingState: Dispatch<SetStateAction<boolean>>,
+	callBack?: () => void,
 ) {
-	const [currentPage, setPage] = useState(0);
 	useEffect(() => {
 		if (targetRef && targetRef.current) {
 			const observer = new IntersectionObserver((entries) => {
 				if (entries[0].isIntersecting) {
 					// dom이 보이면 새로운 데이터 호출 다른 함수도 호출이 필요할시 이곳에 추가로 작성
+					if (callBack && !LoadingState) {
+						callBack();
+					}
 					setLoadingState(true);
-					reportManageMentList(
-						data,
-						setData,
-						setLoadingState,
-						currentPage,
-						setPage,
-					);
 				}
 			}, observerOption);
 			observer.observe(targetRef.current);
@@ -42,5 +30,5 @@ export function useObserver<T>(
 				}
 			};
 		}
-	}, [targetRef]);
+	}, [LoadingState]);
 }
