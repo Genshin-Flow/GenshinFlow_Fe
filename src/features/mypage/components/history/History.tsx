@@ -109,7 +109,6 @@ export function historySubmitHandler(
 		return !checkboxId.includes(String(item.id));
 	});
 
-	console.log(newData);
 	// 상태 업데이트
 	setListData(newData); // 필요에 따라 상태를 비웁니다.
 	setBoxId([]);

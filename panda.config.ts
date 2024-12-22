@@ -37,7 +37,7 @@ export default defineConfig({
 						"04": { value: "#C4C4C4" },
 						"05": { value: "#EFEFEF" },
 						"06": { value: "#F4F4F4" },
-						"07": { value: "#EFEFEF" },
+						"07": { value: "#E7E7E7" },
 					},
 				},
 

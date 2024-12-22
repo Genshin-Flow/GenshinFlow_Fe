@@ -2,15 +2,28 @@
 import Button from "@/features/loginSignUp/components/button/Button";
 import Input from "@/features/loginSignUp/components/Input/Input";
 import { propsType } from "@/features/loginSignUp/SignIn";
-import { Dispatch, FormEvent, SetStateAction, useRef, useState } from "react";
+import {
+	Dispatch,
+	FormEvent,
+	SetStateAction,
+	useEffect,
+	useRef,
+	useState,
+} from "react";
 import loginState from "@/stores/loginStateStore";
 import { postLoginAuth } from "@/fetch/signIn/signIn";
 import { passwordValidation } from "@/features/loginSignUp/auth/passwordCheck/passwordValidation";
 import { checkMail } from "@/features/loginSignUp/auth/emailCheck/emailValidation";
 import { loginReturnType } from "@/fetch/signIn/signIn";
+import { useRouter } from "next/navigation";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import useTokenStore from "@/stores/tokenStore";
+import { setRefreshToken } from "@/fetch/setRefreshToken/setRefreshToken";
 
 export default function SignInAuth(props: propsType) {
 	const { setModalState } = loginState();
+	const router = useRouter();
+	const { accessToken, setAccessToken } = useTokenStore();
 	const formRef = useRef<HTMLFormElement>(null);
 	const [loginButtonState, setLoginButtonState] = useState<"login" | "lock">(
 		"login",
@@ -20,7 +33,13 @@ export default function SignInAuth(props: propsType) {
 		<form
 			ref={formRef}
 			onSubmit={(event) =>
-				submitHandler(event, setModalState, setLoginButtonState)
+				submitHandler(
+					event,
+					setModalState,
+					setLoginButtonState,
+					setAccessToken,
+					router,
+				)
 			}
 			method="post"
 			action={"#"}
@@ -48,6 +67,8 @@ async function submitHandler(
 	event: FormEvent<HTMLFormElement>,
 	setModal: (state: string) => void,
 	setLoginButtonState: Dispatch<SetStateAction<"login" | "lock">>,
+	setAccessToken: (accessToken: string) => void,
+	router: AppRouterInstance,
 ) {
 	event.preventDefault();
 	const target = event.target as HTMLFormElement;
@@ -55,9 +76,7 @@ async function submitHandler(
 	const $password = target.children[1] as HTMLInputElement;
 	const emailValue = $email.value;
 	const passwordValue = $password.value;
-	// const getLocal = Number(localStorage.getItem("loginCount")) + 1;
 
-	// loginCount(setModal, setLoginButtonState);
 	// 데이터 fetch를 통한 유저의 로그인 틀린 횟수를 가져와 비교 ( 조건문 작성필요 )
 	//  로그인을 틀리는 횟수를 카운트 하는 방법이 아직 명확하게 정해지지 않아 일단은 서버에서 해당 횟수를 받아오는걸 기준으로 작성
 	if (emailValue === "" || passwordValue === "") {
@@ -69,7 +88,18 @@ async function submitHandler(
 	}
 	// 로그인 시도 및 에러 핸들링
 	const data = await postLoginAuth(emailValue, passwordValue);
-	if (data.status !== 200) {
+	if (data.ok) {
+		const result = await data.json();
+		setAccessToken(result.accessToken);
+		const refreshTokenResPonse = await setRefreshToken(result.refreshToken);
+		if (!refreshTokenResPonse.ok) {
+			setRefreshTokenFailed(setModal);
+			return;
+		} else {
+			router.push("/");
+		}
+	}
+	if (!data.ok) {
 		loginFailed(data, setModal, setLoginButtonState);
 	}
 }
@@ -96,24 +126,6 @@ export function loginFailed(
 	}
 }
 
-// data return 타입에 비밀번호 틀린 횟수를 이용해 일정이상 틀리면 setLoginButtonState lock으로 변경
-// export function loginCount(
-// 	setModal: (state: string) => void,
-// 	setLoginButtonState: Dispatch<SetStateAction<"login" | "lock">>,
-// ) {
-// 	const localLoginCount = Number(localStorage.getItem("loginCount"));
-// 	if (Number.isInteger(localLoginCount)) {
-// 		localStorage.setItem("loginCount", JSON.stringify(localLoginCount + 1));
-// 		const getLocal = Number(localStorage.getItem("loginCount"));
-
-// 		if (getLocal === 5) {
-// 			setLoginButtonState("lock");
-// 			setModal("5회 연속 오류로 30초 뒤 시도해주세요");
-// 		} else if (getLocal >= 10) {
-// 			setModal("10회 오류로 계정이 비활성화 됩니다.");
-// 			localStorage.setItem("loginCount", JSON.stringify(0));
-// 		}
-// 	} else {
-// 		localStorage.setItem("loginCount", JSON.stringify(0));
-// 	}
-// }
+export function setRefreshTokenFailed(setModal: (state: string) => void) {
+	setModal("토큰 설정에 실패했습니다 다시 시도해주세요");
+}

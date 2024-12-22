@@ -16,6 +16,15 @@ import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.share
  * 모달 상태조작 함수
  * @returns
  */
+
+class SignUpError extends Error {
+	response: Response;
+	constructor(response: Response) {
+		super();
+		this.response = response;
+	}
+}
+
 export async function signUp(
 	email: string,
 	password: string,
@@ -27,47 +36,55 @@ export async function signUp(
 	try {
 		const mailState = checkMail(email);
 		const passwordCheck = passwordValidation(password);
-		const localBaseAPi = process.env.NEXT_PUBLIC_LocalBaseApi;
+		const localBaseAPi = process.env.NEXT_PUBLIC_BaseApi;
+		const SignUp = process.env.NEXT_PUBLIC_signUpApi;
 
-		if (!localBaseAPi) {
+		if (!localBaseAPi && !SignUp) {
 			throw new Error("회원가입 환경변수를 찾을 수 없습니다.");
 		}
 
 		if (!mailState) {
 			setModalState("이메일의 형식이 올바른지 확인해주십시오");
-		} else if (!passwordCheck) {
+			return;
+		}
+
+		if (!passwordCheck) {
 			setModalState(
 				"비밀번호는 소문자와 특수기호 1개 이상이 포함되어야 합니다",
 			);
+			return;
 		}
 
-		/*
-		 client 환경에서는 clientRouter라우터를 이용한 페이지 전환, 서버 사이드 환경에서는
-		 redirect를 이용해서 페이지전환
-		 */
 		if (mailState && passwordCheck && authCodeValue) {
-			const response = await fetch(`${localBaseAPi}/api/signUp`, {
+			const response = await fetch(`${localBaseAPi}${SignUp}`, {
 				method: "POST",
 				body: JSON.stringify({
 					email,
 					password,
-					authCodeValue,
-					uidValue,
+					authNum: authCodeValue,
+					uid: Number(uidValue),
 				}),
 				headers: {
 					"Content-Type": "application/json",
 				},
 			});
-			if (response.status !== 200) throw new Error("signUp failed");
+
+			if (!response.ok) {
+				throw new SignUpError(response);
+			}
+
 			if (clientRouter) {
 				clientRouter?.push("/Login");
 			} else {
 				redirect("/Login");
 			}
+
+			return response;
 		}
 	} catch (error) {
-		// 예외코드 ,메세지에 따른 예외처리 로직작성
-		setModalState("회원가입에 실패했습니다.");
-		return false;
+		if (error instanceof SignUpError) {
+			return error.response;
+		}
+		throw error;
 	}
 }

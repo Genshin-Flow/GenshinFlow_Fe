@@ -1,8 +1,9 @@
 import TableHeader from "@/features/admin/components/tableHeader/TableHeader";
 import Table from "@/features/admin/components/table/Table";
 import PunishmentList from "@/features/admin/components/punishmentHistory/PunishmentList";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useObserver } from "@/hooks/useObserver";
+import { reportManageMentList } from "@/fetch/reportManageMentList/reportManageMentList";
 
 export type punishmentHistoryType = {
 	userId: string;
@@ -18,7 +19,7 @@ export default function PunishmentHistory() {
 	const [punishmentList, setPunishmentData] =
 		useState<punishmentHistoryType[]>(dummy);
 	const [loadingState, setLoadingState] = useState(false);
-
+	const [currentPage, setPage] = useState(0);
 	const tableHeader = [
 		"대상 ID",
 		"지난 신고 날짜",
@@ -27,12 +28,14 @@ export default function PunishmentHistory() {
 		"사진",
 		"제재 항목",
 	];
-	useObserver<punishmentHistoryType>(
-		ref,
-		punishmentList,
-		setPunishmentData,
-		setLoadingState,
-	);
+	// useObserver(ref, setLoadingState);
+	// reportManageMentList(
+	// 	punishmentList,
+	// 	setPunishmentData,
+	// 	setLoadingState,
+	// 	currentPage,
+	// 	setPage,
+	// );
 	return (
 		<>
 			<TableHeader<punishmentHistoryType>

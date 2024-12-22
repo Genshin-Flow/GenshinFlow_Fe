@@ -28,6 +28,8 @@ import {
 import { Radio, RadioGroup } from "../Radio";
 import { useState } from "react";
 import Dropdown from "../Dropdown";
+import ReportAttackButton from "../Radio/ReportAttackButton";
+import { report } from "@/fetch/report/report";
 
 interface ModalProps {
 	onClose: () => void;
@@ -48,7 +50,7 @@ export default function Modal({ onClose, type, isMobile = false }: ModalProps) {
 					{!isMobile && <CloseButton onClick={onClose} />}
 				</ModalHeader>
 				<ModalContent type={type} isMobile={isMobile}>
-					{type === "report" ? (
+					{type === "write" ? (
 						<ReportModal />
 					) : (
 						<WriteModal onClose={onClose} isMobile={isMobile} />
@@ -61,26 +63,32 @@ export default function Modal({ onClose, type, isMobile = false }: ModalProps) {
 
 // 신고 모달
 function ReportModal() {
-	const [value, setValue] = useState("0");
+	// 데이터를 바로 submitHandler에 전달하기 위해  0,1,2... -> 상업적/홍보성, 불법정보, 개인정보누출... 로 변경
+	const [value, setValue] = useState("상업적/홍보성");
+	const [image, setImage] = useState<File[]>([]);
 	return (
 		<>
-			<RadioGroup value={value} onChange={setValue}>
-				<RadioGroupContainer>
-					<RadioColumn>
-						<Radio value="0">상업적/홍보성</Radio>
-						<Radio value="1">불법정보</Radio>
-						<Radio value="2">개인정보누출</Radio>
-						<Radio value="3">기타</Radio>
-					</RadioColumn>
-					<RadioColumn right>
-						<Radio value="4">음란/선정성</Radio>
-						<Radio value="5">욕설/인신공격</Radio>
-						<Radio value="6">권리침해</Radio>
-					</RadioColumn>
-				</RadioGroupContainer>
-			</RadioGroup>
-			<ReportInput placeholder="" />
-			<ReportButton>신고하기</ReportButton>
+			<form action="#" onSubmit={(e) => reportSubmitHandler(e, value)}>
+				<RadioGroup value={value} onChange={setValue}>
+					<RadioGroupContainer>
+						<RadioColumn>
+							<Radio value="상업적/홍보성">상업적/홍보성</Radio>
+							<Radio value="불법정보">불법정보</Radio>
+							<Radio value="개인정보누출">개인정보누출</Radio>
+							<Radio value="기타">기타</Radio>
+						</RadioColumn>
+						<RadioColumn right>
+							<Radio value="음란/선정성">음란/선정성</Radio>
+							<Radio value="욕설/인신공격">욕설/인신공격</Radio>
+							<Radio value="권리침해">권리침해</Radio>
+						</RadioColumn>
+					</RadioGroupContainer>
+				</RadioGroup>
+				<ReportInput placeholder="기타사항 입력" />
+				{/* 이미지 첨부 버튼 추가 */}
+				<ReportAttackButton image={image} setImage={setImage} />
+				<ReportButton>신고하기</ReportButton>
+			</form>
 		</>
 	);
 }
@@ -258,4 +266,14 @@ function WriteModal({
 			)}
 		</>
 	);
+}
+
+async function reportSubmitHandler(
+	e: React.FormEvent<HTMLFormElement>,
+	value: string,
+) {
+	e.preventDefault();
+	// id 추가되면 신고자 , 신고받은 대상 id를 함게 넘김
+	// const fetchResult = await report(value, image);
+	// if (!fetchResult) alert("신고 진행중 문제가 발생했습니다.");
 }

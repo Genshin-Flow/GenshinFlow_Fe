@@ -5,6 +5,7 @@ import JenniperSet from "@/app/nextJenniper/JenniperSet";
 import Loading from "@/components/Loading";
 import QueryProvider from "@/provider/QueryProvider";
 import CookieProvider from "@/provider/CookieProvider";
+
 export const metadata: Metadata = {
 	manifest: "/manifest.json",
 	title: "Genshin Flow",
@@ -30,11 +31,11 @@ export default function RootLayout({
 		<html lang="ko">
 			<JenniperSet />
 			<body className={pretandard.className}>
-        	<CookieProvider>
-				<QueryProvider>
-					{children}
-					<Loading />
-				</QueryProvider>
+				<CookieProvider>
+					<QueryProvider>
+						{children}
+						<Loading />
+					</QueryProvider>
 				</CookieProvider>
 			</body>
 		</html>
