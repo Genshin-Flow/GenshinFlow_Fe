@@ -6,7 +6,7 @@ const observerOption = {
 	threshold: 0,
 };
 
-export function useObserver(
+export function useObserver<T>(
 	targetRef: MutableRefObject<null>,
 	LoadingState: boolean,
 	setLoadingState: Dispatch<SetStateAction<boolean>>,

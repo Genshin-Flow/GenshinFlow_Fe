@@ -26,12 +26,12 @@ export default function ReportManagement() {
 		"제재 항목",
 	];
 
-	useObserver<reportUserType>(
-		ref,
-		reportUserList,
-		setUserList,
-		setLoadingState,
-	);
+	// useObserver<reportUserType>(
+	// 	ref,
+	// 	onLoading,
+	// 	setLoadingState,
+	// 	setLoadingState,
+	// );
 	return (
 		<>
 			<TableHeader<reportUserType>

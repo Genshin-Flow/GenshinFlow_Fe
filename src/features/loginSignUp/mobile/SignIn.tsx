@@ -79,7 +79,7 @@ async function submitHandler(
 		setModal("이메일 혹은 비밀번호의 형식이 올바르지 않습니다.");
 		return;
 	}
-	const data = await postLoginAuth(emailValue, passwordValue, router);
+	const data = await postLoginAuth(emailValue, passwordValue);
 	if (data.status !== 200) {
 		loginFailed(data, setModal, buttonState);
 	}
