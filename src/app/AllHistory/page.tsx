@@ -10,9 +10,6 @@ import { historySubmitHandler } from "@/features/mypage/components/historyInfo/H
 export default function page() {
 	const [listData, setListData] = useState<listItemType[]>(data);
 	const [checkboxId, setBoxId] = useState<string[]>([]);
-	useEffect(() => {
-		console.log(checkboxId);
-	}, [checkboxId]);
 	return (
 		<AllHistoryContainer>
 			<MypageText mt="mt40">전체 히스토리</MypageText>

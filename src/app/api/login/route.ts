@@ -1,10 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
-import { serialize } from "cookie";
+import { setRefreshToken } from "@/fetch/setRefreshToken/setRefreshToken";
 
 type requestType = NextRequest & {
 	email: string;
 	password: string;
 };
+class returnState extends Error {
+	response: Response;
+	constructor(response: Response) {
+		super();
+		this.response = response;
+	}
+}
 
 export async function POST(req: requestType) {
 	try {
@@ -31,36 +38,22 @@ export async function POST(req: requestType) {
 				password,
 			}),
 		});
-		if (response.status !== 200) throw new Error("Failed to Login");
+		if (!response.ok) throw new returnState(response);
 		const data = await response.json();
-		const accessToken = serialize("AccessToken", data.accessToken, {
-			httpOnly: true,
-			secure: true,
-			maxAge: Number(accessCookieTime),
-		});
-		const refreshToken = serialize("RefreshToken", data.refreshToken, {
-			httpOnly: true,
-			secure: true,
-			maxAge: Number(refreshCookieTime),
-		});
 		return NextResponse.json(
-			{ ok: true },
+			{ ok: true, data },
 			{
-				status: 200,
-				headers: {
-					"Set-Cookie": `${accessToken},${refreshToken}`,
-				},
+				status: response.status,
 			},
 		);
 	} catch (err) {
-		if (err instanceof Error) {
-			console.error(err);
+		if (err instanceof returnState) {
+			return NextResponse.json(
+				{ ok: false },
+				{
+					status: err.response.status,
+				},
+			);
 		}
-		return NextResponse.json(
-			{ ok: false },
-			{
-				status: 400,
-			},
-		);
 	}
 }

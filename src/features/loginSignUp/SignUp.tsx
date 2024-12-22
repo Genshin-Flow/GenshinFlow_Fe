@@ -9,6 +9,14 @@ import { FormEvent, useState } from "react";
 import loginState from "@/stores/loginStateStore";
 import { signUp } from "@/fetch/signUp/signUp";
 
+class SignUpError extends Error {
+	response: Response;
+	constructor(message: string, response: Response) {
+		super(message);
+		this.response = response;
+	}
+}
+
 export default function SignUp() {
 	const [checkState, setCheckState] = useState(false);
 	const [emailValue, setEmailValue] = useState("");
@@ -37,20 +45,48 @@ export default function SignUp() {
 	);
 }
 
-function submitHandler(
+async function submitHandler(
 	event: FormEvent<HTMLElement>,
 	emailValue: string,
 	setModalState: (state: string) => void,
 ) {
-	event.preventDefault();
-	const target = event.target as HTMLFormElement;
-	const $password = target.children[0] as HTMLInputElement;
-	const $authCode = target.children[1] as HTMLInputElement;
-	const $uid = target.children[2] as HTMLInputElement;
-	const passwordValue = $password.value;
-	const authCodeValue = $authCode.value;
-	const uidValue = $uid.value;
-	signUp(emailValue, passwordValue, authCodeValue, uidValue, setModalState);
+	try {
+		event.preventDefault();
+		const target = event.target as HTMLFormElement;
+		const $password = target.children[0] as HTMLInputElement;
+		const $authCode = target.children[1] as HTMLInputElement;
+		const $uid = target.children[2] as HTMLInputElement;
+		const passwordValue = $password.value;
+		const authCodeValue = $authCode.value;
+		const uidValue = $uid.value;
+		const response = await signUp(
+			emailValue,
+			passwordValue,
+			authCodeValue,
+			uidValue,
+			setModalState,
+		);
+
+		if (!response) {
+			throw new Error("서버 응답이 없습니다.");
+		}
+		if (!response.ok) {
+			switch (response.status) {
+				case 409:
+					throw new SignUpError("동일한 이메일이 이미 존재합니다.", response);
+				case 400:
+					throw new SignUpError("인증코드가 일치하지 않습니다", response);
+				default:
+					throw new SignUpError("알 수 없는 오류가 발생했습니다.", response);
+			}
+		}
+		// 성공 케이스
+		setModalState("가입이 완료 되었습니다!");
+	} catch (error) {
+		if (error instanceof Error) {
+			setModalState(error.message);
+		}
+	}
 }
 
 const SignUpContainer = styled("article", {

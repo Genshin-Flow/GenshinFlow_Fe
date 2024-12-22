@@ -71,7 +71,6 @@ function changeHandler(
 	const target = event.target as HTMLInputElement;
 	if (target.type === "email") {
 		setEmail(target.value);
-		console.log(target.value);
 	}
 }
 
