@@ -3,19 +3,7 @@ import {
 	Container,
 	TabContainer,
 	TabItem,
-	MatchingMenu,
-	WriteButton,
-	MatchingHeader,
-	UserName,
-	QuestType,
-	WorldLevel,
-	Message,
-	TimeAgo,
-	MoreOptions,
-	Gap,
-	PostList,
 	MobileContainer,
-	FilterContainer,
 	EventContainer,
 	EventItem,
 	BannerImage,
@@ -24,15 +12,19 @@ import {
 	EventDate,
 	EventShortCut,
 	MobileWriteButton,
-	VisibleTabList,
 } from "./styles";
 import MatchingPostItem from "../MatchingPostItem";
-import Dropdown from "../Dropdown";
+
 import Modal from "../Modal";
 import { useState, useEffect } from "react";
 import { useRef } from "react";
 import { useMainPostObserve } from "@/hooks/useMainPostObserve";
-import { InfiniteData } from "@tanstack/react-query";
+import { nanoid } from "nanoid/non-secure";
+import userStore from "@/stores/userStore";
+import MatchingMenu from "@/features/matching/components/MatchingMenu";
+import MobileFilterContainer from "@/features/matching/mobile/components/MobileContainer";
+import MatchingHeader from "@/features/matching/components/MatchingHeader";
+import PostList from "@/features/matching/components/PostList";
 
 interface TabProps {
 	isMobile?: boolean;
@@ -42,8 +34,10 @@ interface MatchingProps {
 	isMobile?: boolean;
 }
 
-interface PostData {
+export interface PostContent {
 	title: string;
+	writerName: string;
+	writerEmail: string;
 	id: number;
 	uid: number;
 	region: string;
@@ -56,6 +50,14 @@ interface PostData {
 	sortedAt: string;
 	createdAt: string;
 	updatedAt: string;
+}
+
+interface PostData {
+	content: PostContent[];
+	page: number;
+	size: number;
+	totalElements: number;
+	totalPages: number;
 }
 
 export default function Tab({ isMobile = false }: TabProps) {
@@ -107,18 +109,21 @@ export default function Tab({ isMobile = false }: TabProps) {
 
 function Matching({ isMobile = false }: MatchingProps) {
 	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [selectType, setSelectType] = useState("");
+	const [postData, setPostData] = useState<PostContent[]>();
 	const [quest, setQuest] = useState("");
 	const [lv, setLv] = useState("");
 	const [region, setRegion] = useState("ASIA");
-	const [selectType, setSelectType] = useState("");
-	const [postData, setPostData] = useState<PostData[]>([]);
 	const scrollRef = useRef<HTMLDivElement>(null);
+	const { email } = userStore();
 	const { data, isLoading, hasNextPage } = useMainPostObserve(scrollRef);
 	useEffect(() => {
-		if (data?.pages) {
-			const newPosts = data.pages.flatMap((page) => page);
-			setPostData((prev) => [...prev, ...newPosts]);
+		const pageData = data?.pages[0] as unknown as PostData;
+		if (pageData?.content) {
+			const newPosts = pageData.content;
+			setPostData((prev) => (prev ? [...prev, ...newPosts] : newPosts));
 		}
+		console.log(isLoading);
 	}, [data]);
 
 	const openModal = () => setIsModalOpen(true);
@@ -127,149 +132,52 @@ function Matching({ isMobile = false }: MatchingProps) {
 		setSelectType((prevType) => (prevType === type ? "" : type));
 	};
 
-	const questOptions = [
-		{ value: "일반비경" },
-		{ value: "이벤트 퀘스트" },
-		{ value: "영역 토벌" },
-		{ value: "일일 임무" },
-		{ value: "맵 탐사" },
-		{ value: "채집" },
-	];
-
-	const lvOptions = [
-		{ value: "1" },
-		{ value: "2" },
-		{ value: "3" },
-		{ value: "4" },
-		{ value: "5" },
-		{ value: "6" },
-		{ value: "7" },
-		{ value: "8" },
-		{ value: "9" },
-	];
-
-	const regionOptions = [
-		{ value: "ASIA" },
-		{ value: "AMERICA" },
-		{ value: "EUROPE" },
-		{ value: "CHINA" },
-		{ value: "TW, HK, MO" },
-	];
-
 	return (
 		<>
 			{!isMobile ? (
 				<>
-					<MatchingMenu>
-						<div>
-							<Dropdown
-								placeholder="퀘스트 종류"
-								value={quest}
-								setValue={setQuest}
-								options={questOptions}
-								style="genshin"
-							/>
-							<Dropdown
-								placeholder="월드 레벨"
-								value={lv}
-								setValue={setLv}
-								options={lvOptions}
-								style="genshin"
-							/>
-						</div>
-						<div>
-							<Dropdown
-								value={region}
-								setValue={setRegion}
-								options={regionOptions}
-								style="genshin"
-							/>
-							<WriteButton onClick={openModal}>구인글 쓰기</WriteButton>
-						</div>
-					</MatchingMenu>
-					<MatchingHeader>
-						<UserName
-							select={selectType === "userName"}
-							onClick={() => handleSelectType("userName")}
-						>
-							유저명
-						</UserName>
-						<QuestType
-							select={selectType === "questType"}
-							onClick={() => handleSelectType("questType")}
-						>
-							퀘스트 종류
-						</QuestType>
-						<WorldLevel
-							select={selectType === "worldLevel"}
-							onClick={() => handleSelectType("worldLevel")}
-						>
-							월드 레벨
-						</WorldLevel>
-						<Message
-							select={selectType === "message"}
-							onClick={() => handleSelectType("message")}
-						>
-							이야기
-						</Message>
-						<TimeAgo
-							select={selectType === "timeAgo"}
-							onClick={() => handleSelectType("timeAgo")}
-						>
-							등록일시
-						</TimeAgo>
-						<MoreOptions></MoreOptions>
-						<Gap />
-					</MatchingHeader>
-					<PostList>
-						{postData.map((_, index) => (
-							<MatchingPostItem
-								key={index}
-								selected={selectType}
-								type={"report"}
-							/>
-						))}
-						{hasNextPage && !isLoading && <VisibleTabList ref={scrollRef} />}
-					</PostList>
+					<MatchingMenu
+						openModal={openModal}
+						quest={quest}
+						setQuest={setQuest}
+						lv={lv}
+						setLv={setLv}
+						region={region}
+						setRegion={setRegion}
+					/>
+					<MatchingHeader
+						selectType={selectType}
+						handleSelectType={handleSelectType}
+					/>
+					<PostList
+						postData={postData}
+						hasNextPage={hasNextPage}
+						isLoading={isLoading}
+						scrollRef={scrollRef}
+						selectType={selectType}
+						email={email}
+					/>
 					{isModalOpen && <Modal onClose={closeModal} type="write" />}
 				</>
 			) : (
 				<MobileContainer>
-					<FilterContainer>
-						<Dropdown
-							placeholder="퀘스트 종류"
-							value={quest}
-							setValue={setQuest}
-							options={questOptions}
-							style="genshin"
-							isMobile={isMobile}
-						/>
-						<Dropdown
-							placeholder="월드 레벨"
-							value={lv}
-							setValue={setLv}
-							options={lvOptions}
-							style="genshin"
-							isMobile={isMobile}
-						/>
-						<Dropdown
-							value={region}
-							setValue={setRegion}
-							options={regionOptions}
-							style="genshin"
-							isMobile={isMobile}
-						/>
-					</FilterContainer>
-					<PostList isMobile={isMobile}>
-						{Array.from({ length: 50 }).map((_, index) => (
-							<MatchingPostItem
-								key={index}
-								selected={selectType}
-								isMobile={isMobile}
-								type={"write"}
-							/>
-						))}
-					</PostList>
+					<MobileFilterContainer
+						isMobile={isMobile}
+						quest={quest}
+						setQuest={setQuest}
+						lv={lv}
+						setLv={setLv}
+						region={region}
+						setRegion={setRegion}
+					/>
+					<PostList
+						postData={postData}
+						hasNextPage={hasNextPage}
+						isLoading={isLoading}
+						scrollRef={scrollRef}
+						selectType={selectType}
+						email={email}
+					/>
 					<MobileWriteButton onClick={openModal} />
 					{isModalOpen && (
 						<Modal onClose={closeModal} type="write" isMobile={isMobile} />

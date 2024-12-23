@@ -8,7 +8,7 @@ import { RefObject, useEffect } from "react";
 
 const observerOption = {
 	root: null,
-	rootMargin: "0px",
+	rootMargin: "100px",
 	threshold: 0,
 };
 
@@ -18,14 +18,10 @@ export function useMainPostObserve(scrollRef: RefObject<HTMLDivElement>) {
 		queryFn: ({ pageParam = 1 }) =>
 			getMainPostList({ page: pageParam, size: 20 }),
 		initialPageParam: 1,
-		retry: 2,
 		getNextPageParam: (lastPage) => {
-			// 더 이상 데이터가 없으면 undefined 반환
-			if (!lastPage.hasMore) return undefined;
-			// 다음 페이지 번호 반환
-			return lastPage.currentPage + 1;
+			if (!lastPage || lastPage.page >= lastPage.totalPages) return undefined;
+			return lastPage.page + 1;
 		},
-		// refetchOnWindowFocus: false,
 		staleTime: 1000 * 60 * 5,
 	});
 
@@ -38,6 +34,7 @@ export function useMainPostObserve(scrollRef: RefObject<HTMLDivElement>) {
 			}
 		}, observerOption);
 
+		console.log(scrollRef.current);
 		observer.observe(scrollRef.current);
 
 		return () => {
