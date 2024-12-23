@@ -51,9 +51,9 @@ export default function Modal({ onClose, type, isMobile = false }: ModalProps) {
 				</ModalHeader>
 				<ModalContent type={type} isMobile={isMobile}>
 					{type === "write" ? (
-						<ReportModal />
-					) : (
 						<WriteModal onClose={onClose} isMobile={isMobile} />
+					) : (
+						<ReportModal />
 					)}
 				</ModalContent>
 			</ModalContainer>
