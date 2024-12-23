@@ -25,7 +25,7 @@ type setUserActionType = {
 };
 
 const defaultUserInfo = {
-	email: "gmail",
+	email: "nextconnect.lab@gmail.com",
 	userProfile: {
 		passwordLeng: "10",
 		uid: "85171071",

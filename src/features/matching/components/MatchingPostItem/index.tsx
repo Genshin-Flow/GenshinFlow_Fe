@@ -28,6 +28,8 @@ import {
 import Modal from "../Modal";
 import { useRef, useState } from "react";
 import useOutsideClick from "@/hooks/useOutsideClick";
+import { PostContent } from "@/features/matching/components/Tab";
+import dayjs from "dayjs";
 // 퀘스트 종류 이미지
 export const questImage = {
 	domain: "/svgs/quests/domain.svg",
@@ -39,30 +41,50 @@ export const questImage = {
 };
 
 interface MatchingPostItemProps {
-	type: string;
+	type: "report" | "write";
+	item: PostContent;
 	selected?: string;
 	isMobile?: boolean;
+	email: string;
 }
 
 export default function MatchingPostItem({
 	type,
 	selected,
+	item,
 	isMobile = false,
+	email,
 }: MatchingPostItemProps) {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
-	const menuRef = useRef<HTMLDivElement>(null);
 
+	const menuRef = useRef<HTMLDivElement>(null);
 	const openModal = () => {
 		setIsModalOpen(true);
 		setIsMenuOpen(false);
 	};
 
 	const closeModal = () => setIsModalOpen(false);
-	const openMenu = () => setIsMenuOpen(true);
 	const closeMenu = () => setIsMenuOpen(false);
 
+	const handleMoreOptionsClick = () => {
+		if (type === "write") {
+			setIsMenuOpen(!isMenuOpen);
+		} else {
+			openModal();
+		}
+	};
+
 	useOutsideClick(menuRef, closeMenu);
+
+	const createdAt = new Date(item.createdAt);
+	const now = new Date();
+	const timeDifference = now.getTime() - createdAt.getTime();
+	let minutesAgo = Math.floor(timeDifference / (1000 * 60));
+	let timeAgo = "";
+	if (minutesAgo > 60) {
+		timeAgo = dayjs(createdAt).format("YYYY-MM-DD HH:mm");
+	}
 
 	return (
 		<>
@@ -71,8 +93,8 @@ export default function MatchingPostItem({
 					<UserName selected={selected === "userName"}>
 						<ProfileImage />
 						<UserInfo>
-							<Text>유저명</Text>
-							<UserIdButton>UID 80000000</UserIdButton>
+							<Text>{item.writerName}</Text>
+							<UserIdButton>{item.uid}</UserIdButton>
 						</UserInfo>
 					</UserName>
 					<QuestType selected={selected === "questType"}>
@@ -83,39 +105,29 @@ export default function MatchingPostItem({
 						<Text>비경</Text>
 					</QuestType>
 					<WorldLevel selected={selected === "worldLevel"}>
-						<Text>7</Text>
+						<Text>{item.wordLevel}</Text>
 					</WorldLevel>
 					<Message selected={selected === "message"}>
-						<MessageText>
-							맵 밀어주실 착한 분 구해요.한 5판 할 것 같아요.
-							가나다라마바사아자차카타파하
-						</MessageText>
+						<MessageText>{item.title}</MessageText>
 					</Message>
 					<TimeAgo selected={selected === "timeAgo"}>
-						<Text color="gray02">1분 전</Text>
+						<Text color="gray02">
+							{minutesAgo > 60 ? timeAgo : minutesAgo + "분 전"}
+						</Text>
 					</TimeAgo>
 					<MoreOptions>
 						<MoreOptionsButton
-							type="moreOption"
-							onClick={openMenu}
+							type={type === "write" ? "moreOption" : "report"}
+							onClick={handleMoreOptionsClick}
 							className="moreOption"
 						/>
-						{isMenuOpen && type !== "write" ? (
-							<MenuContainer ref={menuRef}>
+						{isMenuOpen && type === "write" && (
+							<MenuContainer ref={menuRef} isMobile={isMobile}>
 								<MenuItem onClick={closeMenu}>종료</MenuItem>
 								<MenuItem onClick={closeMenu}>삭제</MenuItem>
 								<MenuItem onClick={openModal}>수정</MenuItem>
 								<MenuItem onClick={closeMenu}>끌올</MenuItem>
 							</MenuContainer>
-						) : (
-							""
-						)}
-
-						{isModalOpen && type === "report" && (
-							<Modal onClose={closeModal} type="report" isMobile={isMobile} />
-						)}
-						{isModalOpen && type === "write" && (
-							<Modal onClose={closeModal} type="write" isMobile={isMobile} />
 						)}
 					</MoreOptions>
 				</ItemContainer>
@@ -147,11 +159,11 @@ export default function MatchingPostItem({
 						</InfoWrapper>
 						<MobileMoreOptions>
 							<MoreOptionsButton
-								type="moreOption"
+								type={email === item.writerEmail ? "moreOption" : "report"}
 								isMobile={isMobile}
-								onClick={openMenu}
+								onClick={handleMoreOptionsClick}
 							/>
-							{isMenuOpen && (
+							{isMenuOpen && type === "write" && (
 								<MenuContainer ref={menuRef} isMobile={isMobile}>
 									<MenuItem onClick={closeMenu}>종료</MenuItem>
 									<MenuItem onClick={closeMenu}>삭제</MenuItem>
@@ -161,10 +173,10 @@ export default function MatchingPostItem({
 							)}
 						</MobileMoreOptions>
 					</InfoContainer>
-					{isModalOpen && (
-						<Modal onClose={closeModal} type="write" isMobile={isMobile} />
-					)}
 				</ItemContainer>
+			)}
+			{isModalOpen && (
+				<Modal onClose={closeModal} type={type} isMobile={isMobile} />
 			)}
 		</>
 	);
