@@ -209,6 +209,7 @@ export const TimeAgo = styled("div", {
 		flex: "1 1 140px",
 		textStyle: "sm",
 		color: "gray.02",
+		textAlign: "center",
 	},
 	...selectedVariant,
 });

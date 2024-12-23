@@ -164,31 +164,7 @@ export const MatchingMenu = styled("div", {
 	},
 });
 
-export const WriteButton = styled("button", {
-	base: {
-		display: "flex",
-		alignItems: "center",
-		justifyContent: "center",
-		width: "113px",
-		height: "40px",
-		backgroundColor: "primary.01",
-		color: "secondary.03",
-		fontSize: "14px",
-		fontWeight: "medium",
-		letterSpacing: "0",
-		borderRadius: "4px",
-		cursor: "pointer",
-		border: "1px solid #696969",
-		backgroundImage: "url('/svgs/write.svg')",
-		backgroundRepeat: "no-repeat",
-		backgroundSize: "24px 24px",
-		backgroundPosition: "10px center",
-		paddingLeft: "35px",
-		boxSizing: "border-box",
-	},
-});
-
-export const MatchingHeader = styled("div", {
+export const MatchingHeaderContainer = styled("div", {
 	base: {
 		display: "flex",
 		alignItems: "center",
@@ -316,20 +292,6 @@ export const TimeAgo = styled("div", {
 				},
 			},
 		},
-	},
-});
-
-export const MoreOptions = styled("div", {
-	base: {
-		...flexItem,
-		flex: "1 1 90px",
-	},
-});
-
-export const Gap = styled("div", {
-	base: {
-		width: "8px",
-		height: "100%",
 	},
 });
 
@@ -507,13 +469,5 @@ export const MobileWriteButton = styled("button", {
 		bottom: "20px",
 		right: "20px",
 		zIndex: 2,
-	},
-});
-
-export const VisibleTabList = styled("div", {
-	base: {
-		width: "100%",
-		height: "1px", // 충분한 높이 설정
-		display: "block",
 	},
 });
