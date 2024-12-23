@@ -2,6 +2,7 @@ import { styled } from "@/../styled-system/jsx";
 import { Dispatch, SetStateAction, useState } from "react";
 import { useAdminSearch } from "@/hooks/useAdminSearch";
 import { adminUserSearch } from "@/fetch/adminUserSearch/adminUserSearch";
+import { nanoid } from "nanoid";
 
 type propsType<T> = {
 	title: string;
@@ -30,7 +31,11 @@ export default function TableHeader<T>({ title, setUserList }: propsType<T>) {
 					>
 						{searchResult.map((item) => (
 							// userId는 추후 명세에 따라 추가
-							<SearchResultList data-userid={`${item}`} className="searchItems">
+							<SearchResultList
+								data-userid={`${item}`}
+								className="searchItems"
+								key={nanoid()}
+							>
 								{item}
 							</SearchResultList>
 						))}

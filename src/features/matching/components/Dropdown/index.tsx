@@ -8,6 +8,7 @@ import {
 	Arrow,
 } from "./styles";
 import useOutsideClick from "@/hooks/useOutsideClick";
+import { nanoid } from "nanoid";
 
 type Option = {
 	value: string;
@@ -51,7 +52,12 @@ export default function Dropdown({
 
 	return (
 		<DropdownContainer ref={dropdownRef} isMobile={isMobile2}>
-			<DropdownButton onClick={toggleDropdown} style={style} isOpen={isOpen} isMobile={isMobile}>
+			<DropdownButton
+				onClick={toggleDropdown}
+				style={style}
+				isOpen={isOpen}
+				isMobile={isMobile}
+			>
 				{value || placeholder}
 				{isOpen ? (
 					<Arrow direction="up" style={style} />
@@ -63,7 +69,7 @@ export default function Dropdown({
 				<DropdownList style={style}>
 					{options.map((option) => (
 						<DropdownItem
-							key={option.value}
+							key={nanoid()}
 							onClick={() => selectOption(option.value)}
 							style={style}
 						>
