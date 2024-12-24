@@ -13,13 +13,11 @@ import {
 	EventShortCut,
 	MobileWriteButton,
 } from "./styles";
-import MatchingPostItem from "../MatchingPostItem";
 
 import Modal from "../Modal";
 import { useState, useEffect } from "react";
 import { useRef } from "react";
 import { useMainPostObserve } from "@/hooks/useMainPostObserve";
-import { nanoid } from "nanoid/non-secure";
 import userStore from "@/stores/userStore";
 import MatchingMenu from "@/features/matching/components/MatchingMenu";
 import MobileFilterContainer from "@/features/matching/mobile/components/MobileContainer";
@@ -123,7 +121,6 @@ function Matching({ isMobile = false }: MatchingProps) {
 			const newPosts = pageData.content;
 			setPostData((prev) => (prev ? [...prev, ...newPosts] : newPosts));
 		}
-		console.log(isLoading);
 	}, [data]);
 
 	const openModal = () => setIsModalOpen(true);
@@ -131,7 +128,6 @@ function Matching({ isMobile = false }: MatchingProps) {
 	const handleSelectType = (type: string) => {
 		setSelectType((prevType) => (prevType === type ? "" : type));
 	};
-
 	return (
 		<>
 			{!isMobile ? (
