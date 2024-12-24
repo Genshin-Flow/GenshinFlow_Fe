@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { setRefreshToken } from "@/fetch/setRefreshToken/setRefreshToken";
+import { setRefreshToken } from "@/fetch/Token/setRefreshToken/setRefreshToken";
 
 type requestType = NextRequest & {
 	email: string;

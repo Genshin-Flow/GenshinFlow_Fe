@@ -1,4 +1,4 @@
-import { getMainPostList } from "@/fetch/mainPostList/mainPostList";
+import { getMainPostList } from "@/fetch/Main/mainPostList/mainPostList";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 

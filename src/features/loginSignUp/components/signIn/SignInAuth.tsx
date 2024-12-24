@@ -2,28 +2,18 @@
 import Button from "@/features/loginSignUp/components/button/Button";
 import Input from "@/features/loginSignUp/components/Input/Input";
 import { propsType } from "@/features/loginSignUp/SignIn";
-import {
-	Dispatch,
-	FormEvent,
-	SetStateAction,
-	useEffect,
-	useRef,
-	useState,
-} from "react";
+import { Dispatch, FormEvent, SetStateAction, useRef, useState } from "react";
 import loginState from "@/stores/loginStateStore";
-import { postLoginAuth } from "@/fetch/signIn/signIn";
+import { postLoginAuth } from "@/fetch/Login/signIn/signIn";
 import { passwordValidation } from "@/features/loginSignUp/auth/passwordCheck/passwordValidation";
 import { checkMail } from "@/features/loginSignUp/auth/emailCheck/emailValidation";
-import { loginReturnType } from "@/fetch/signIn/signIn";
 import { useRouter } from "next/navigation";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
-import useTokenStore from "@/stores/tokenStore";
-import { setRefreshToken } from "@/fetch/setRefreshToken/setRefreshToken";
+import { setRefreshToken } from "@/fetch/Token/setRefreshToken/setRefreshToken";
 
 export default function SignInAuth(props: propsType) {
 	const { setModalState } = loginState();
 	const router = useRouter();
-	const { accessToken, setAccessToken } = useTokenStore();
 	const formRef = useRef<HTMLFormElement>(null);
 	const [loginButtonState, setLoginButtonState] = useState<"login" | "lock">(
 		"login",
@@ -33,13 +23,7 @@ export default function SignInAuth(props: propsType) {
 		<form
 			ref={formRef}
 			onSubmit={(event) =>
-				submitHandler(
-					event,
-					setModalState,
-					setLoginButtonState,
-					setAccessToken,
-					router,
-				)
+				submitHandler(event, setModalState, setLoginButtonState, router)
 			}
 			method="post"
 			action={"#"}
@@ -67,7 +51,6 @@ async function submitHandler(
 	event: FormEvent<HTMLFormElement>,
 	setModal: (state: string) => void,
 	setLoginButtonState: Dispatch<SetStateAction<"login" | "lock">>,
-	setAccessToken: (accessToken: string) => void,
 	router: AppRouterInstance,
 ) {
 	event.preventDefault();
@@ -90,9 +73,11 @@ async function submitHandler(
 	const data = await postLoginAuth(emailValue, passwordValue);
 	if (data.ok) {
 		const result = await data.json();
-		setAccessToken(result.accessToken);
-		const refreshTokenResPonse = await setRefreshToken(result.refreshToken);
-		if (!refreshTokenResPonse.ok) {
+		const tokenResPonse = await setRefreshToken(
+			result.refreshToken,
+			result.accessToken,
+		);
+		if (!tokenResPonse.ok) {
 			setRefreshTokenFailed(setModal);
 			return;
 		} else {

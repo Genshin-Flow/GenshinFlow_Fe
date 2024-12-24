@@ -4,7 +4,7 @@ import Input from "@/features/loginSignUp/components/Input/Input";
 import Button from "@/features/loginSignUp/components/button/Button";
 import { FormEvent } from "react";
 import loginState from "@/stores/loginStateStore";
-import { setNewPassword } from "@/fetch/setNewPassword/newPassword";
+import { setNewPassword } from "@/fetch/Login/setNewPassword/newPassword";
 
 export default function ForgotPass() {
 	const { setModalState } = loginState();
