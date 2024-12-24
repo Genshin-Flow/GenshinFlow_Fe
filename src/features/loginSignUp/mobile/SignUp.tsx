@@ -6,7 +6,7 @@ import Input from "@/features/loginSignUp/components/Input/Input";
 import { FormEvent, useState } from "react";
 import Checkbox from "@/features/loginSignUp/components/checkBox/Checkbox";
 import Button from "@/features/loginSignUp/mobile/components/button/Button";
-import { signUp } from "@/fetch/signUp/signUp";
+import { signUp } from "@/fetch/Login/signUp/signUp";
 import loginState from "@/stores/loginStateStore";
 import { useRouter } from "next/navigation";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";

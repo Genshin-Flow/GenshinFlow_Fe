@@ -4,7 +4,7 @@ import SubTitle from "@/features/loginSignUp/components/pageSubTitle/SubTitle";
 import Input from "@/features/loginSignUp/components/Input/Input";
 import Button from "@/features/loginSignUp/mobile/components/button/Button";
 import { Dispatch, FormEvent, SetStateAction, useState } from "react";
-import { postLoginAuth } from "@/fetch/signIn/signIn";
+import { postLoginAuth } from "@/fetch/Login/signIn/signIn";
 import { loginFailed } from "@/features/loginSignUp/components/signIn/SignInAuth";
 import loginState from "@/stores/loginStateStore";
 import { checkMail } from "@/features/loginSignUp/auth/emailCheck/emailValidation";

@@ -2,7 +2,7 @@
 기존에 만들었던 observer 함수를 사용하지 않고 코드가 중복되기는 하지만 
 최대한 깔끔하게 작성하고자 새롭게 observer 파일을 생성
 */
-import { getMainPostList } from "@/fetch/mainPostList/mainPostList";
+import { getMainPostList } from "@/fetch/Main/mainPostList/mainPostList";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { RefObject, useEffect } from "react";
 

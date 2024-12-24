@@ -1,5 +1,3 @@
-import { Dispatch, SetStateAction } from "react";
-
 class MailAuthError extends Error {
 	response: Response;
 	constructor(response: Response) {

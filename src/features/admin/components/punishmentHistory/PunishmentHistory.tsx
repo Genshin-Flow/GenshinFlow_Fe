@@ -3,7 +3,7 @@ import Table from "@/features/admin/components/table/Table";
 import PunishmentList from "@/features/admin/components/punishmentHistory/PunishmentList";
 import { useEffect, useRef, useState } from "react";
 import { useObserver } from "@/hooks/useObserver";
-import { reportManageMentList } from "@/fetch/reportManageMentList/reportManageMentList";
+import { reportManageMentList } from "@/fetch/report/reportManageMentList/reportManageMentList";
 
 export type punishmentHistoryType = {
 	userId: string;

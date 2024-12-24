@@ -6,7 +6,7 @@ import Button from "@/features/loginSignUp/components/button/Button";
 import AuthMail from "@/features/loginSignUp/components/signUp/AuthMail";
 import loginState, { stateType } from "@/stores/loginStateStore";
 import { Dispatch, FormEvent, SetStateAction, useState } from "react";
-import { forgotPasswordAuthCode } from "@/fetch/forgotPasswordAuthCode/forgotPasswordAuthCode";
+import { forgotPasswordAuthCode } from "@/fetch/AuthCode/forgotPasswordAuthCode/forgotPasswordAuthCode";
 
 export default function ForgotPassAuthMail() {
 	const [email, setEmail] = useState("");
