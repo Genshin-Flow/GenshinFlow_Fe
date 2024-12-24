@@ -46,6 +46,8 @@ interface MatchingPostItemProps {
 	selected?: string;
 	isMobile?: boolean;
 	email: string;
+	quest: string;
+	questImage: string;
 }
 
 export default function MatchingPostItem({
@@ -54,6 +56,8 @@ export default function MatchingPostItem({
 	item,
 	isMobile = false,
 	email,
+	quest,
+	questImage,
 }: MatchingPostItemProps) {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -100,9 +104,9 @@ export default function MatchingPostItem({
 					<QuestType selected={selected === "questType"}>
 						<QuestIconWrapper>
 							<QuestIcon />
-							<CenteredImage src={questImage.domain} alt="Quest Type" />
+							<CenteredImage src={questImage} alt="Quest Type" />
 						</QuestIconWrapper>
-						<Text>비경</Text>
+						<Text>{quest}</Text>
 					</QuestType>
 					<WorldLevel selected={selected === "worldLevel"}>
 						<Text>{item.wordLevel}</Text>
@@ -148,7 +152,7 @@ export default function MatchingPostItem({
 						<InfoWrapper>
 							<Info>
 								<CenteredImage
-									src={questImage.domain}
+									src={questImage}
 									alt="Quest Type"
 									isMobile={isMobile}
 								/>
