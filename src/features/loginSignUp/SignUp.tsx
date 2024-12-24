@@ -7,7 +7,7 @@ import Button from "@/features/loginSignUp/components/button/Button";
 import Checkbox from "@/features/loginSignUp/components/checkBox/Checkbox";
 import { FormEvent, useState } from "react";
 import loginState from "@/stores/loginStateStore";
-import { signUp } from "@/fetch/signUp/signUp";
+import { signUp } from "@/fetch/Login/signUp/signUp";
 
 class SignUpError extends Error {
 	response: Response;

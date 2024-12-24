@@ -4,7 +4,7 @@ import Button from "@/features/loginSignUp/components/button/Button";
 import AuthMail from "@/features/loginSignUp/components/signUp/AuthMail";
 import { Dispatch, FormEvent, SetStateAction, useState } from "react";
 import loginState from "@/stores/loginStateStore";
-import { setNewPassword } from "@/fetch/setNewPassword/newPassword";
+import { setNewPassword } from "@/fetch/Login/setNewPassword/newPassword";
 
 export default function ChangePasswordInput() {
 	const { setModalState } = loginState();

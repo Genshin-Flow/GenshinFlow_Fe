@@ -5,8 +5,8 @@ import SubTitle from "@/features/loginSignUp/components/pageSubTitle/SubTitle";
 import AuthMail from "@/features/loginSignUp/components/signUp/AuthMail";
 import Button from "@/features/loginSignUp/mobile/components/button/Button";
 import { FormEvent, useState } from "react";
-import { forgotPasswordAuthCode } from "@/fetch/forgotPasswordAuthCode/forgotPasswordAuthCode";
-import { setNewPassword } from "@/fetch/setNewPassword/newPassword";
+import { forgotPasswordAuthCode } from "@/fetch/AuthCode/forgotPasswordAuthCode/forgotPasswordAuthCode";
+import { setNewPassword } from "@/fetch/Login/setNewPassword/newPassword";
 import loginState from "@/stores/loginStateStore";
 
 export default function ForgotPass() {

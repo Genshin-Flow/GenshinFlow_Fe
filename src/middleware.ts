@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
-import { getUserInfo } from "@/fetch/getUserInfo/getUserInfo";
+import { getUserInfo } from "@/fetch/User/getUserInfo/getUserInfo";
 type tokenType = {
 	name: string;
 	value: string;
 };
-import { reissueToken } from "@/fetch/reissureToken/reissureToken";
+import { reissueToken } from "@/fetch/Token/reissureToken/reissureToken";
 
 // withAuthList : 로그인이 필요한 페이지 url: 추가시 ["/Mypage", "추가 url작성"]
 // withOutAuthList : 로그인을 안한 상태에서만 필요한 페이지 url: 추가시 ["/Login", "추가 url작성"]
