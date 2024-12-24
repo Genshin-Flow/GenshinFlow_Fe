@@ -1,7 +1,7 @@
 import { styled } from "@/../styled-system/jsx";
 import { Dispatch, SetStateAction, useState } from "react";
 import { useAdminSearch } from "@/hooks/useAdminSearch";
-import { adminUserSearch } from "@/fetch/adminUserSearch/adminUserSearch";
+import { adminUserSearch } from "@/fetch/AdminPage/adminUserSearch/adminUserSearch";
 import { nanoid } from "nanoid";
 
 type propsType<T> = {

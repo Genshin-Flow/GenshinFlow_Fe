@@ -1,5 +1,5 @@
 import { checkMail } from "@/features/loginSignUp/auth/emailCheck/emailValidation";
-import { forwardingMailFetch } from "@/fetch/forwardingMailAuth/forwardingMailFetch";
+import { forwardingMailFetch } from "@/fetch/AuthCode/forwardingMailAuth/forwardingMailFetch";
 import { Dispatch, SetStateAction } from "react";
 
 export async function postAuthMail(
