@@ -152,7 +152,7 @@ export default function MatchingPostItem({
 						<InfoWrapper>
 							<Info>
 								<CenteredImage
-									src={questImage.domain}
+									src={questImage}
 									alt="Quest Type"
 									isMobile={isMobile}
 								/>
