@@ -9,8 +9,7 @@ import { passwordValidation } from "@/features/loginSignUp/auth/passwordCheck/pa
 import { checkMail } from "@/features/loginSignUp/auth/emailCheck/emailValidation";
 import { useRouter } from "next/navigation";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
-import { setRefreshToken } from "@/fetch/Token/setRefreshToken/setRefreshToken";
-
+import { setLoginToken } from "@/fetch/Token/setLoginToken/setLoginToken";
 export default function SignInAuth(props: propsType) {
 	const { setModalState } = loginState();
 	const router = useRouter();
@@ -18,7 +17,6 @@ export default function SignInAuth(props: propsType) {
 	const [loginButtonState, setLoginButtonState] = useState<"login" | "lock">(
 		"login",
 	);
-
 	return (
 		<form
 			ref={formRef}
@@ -73,14 +71,17 @@ async function submitHandler(
 	const data = await postLoginAuth(emailValue, passwordValue);
 	if (data.ok) {
 		const result = await data.json();
-		const tokenResPonse = await setRefreshToken(
+		const tokenResPonse = await setLoginToken(
 			result.refreshToken,
 			result.accessToken,
 		);
 		if (!tokenResPonse.ok) {
-			setRefreshTokenFailed(setModal);
+			setLoginTokenFailed(setModal);
 			return;
 		} else {
+			const data = await tokenResPonse.json();
+			// setCookie("RefreshToken", data.token.refreshToken);
+			// setCookie("AccessToken", data.token.accessToken);
 			router.push("/");
 		}
 	}
@@ -111,6 +112,6 @@ export function loginFailed(
 	}
 }
 
-export function setRefreshTokenFailed(setModal: (state: string) => void) {
+export function setLoginTokenFailed(setModal: (state: string) => void) {
 	setModal("토큰 설정에 실패했습니다 다시 시도해주세요");
 }

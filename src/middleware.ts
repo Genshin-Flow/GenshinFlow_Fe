@@ -1,11 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
-import { getUserInfo } from "@/fetch/User/getUserInfo/getUserInfo";
+import { getAccessToken } from "@/fetch/Token/getAccessToken/getAccessToken";
 type tokenType = {
 	name: string;
 	value: string;
 };
 import { reissueToken } from "@/fetch/Token/reissureToken/reissureToken";
+import { getUserInfo } from "@/fetch/User/getUserInfo/getUserInfo";
 
 // withAuthList : 로그인이 필요한 페이지 url: 추가시 ["/Mypage", "추가 url작성"]
 // withOutAuthList : 로그인을 안한 상태에서만 필요한 페이지 url: 추가시 ["/Login", "추가 url작성"]
@@ -15,13 +16,13 @@ const withOutAuthList: string[] = ["/Login", "/MobileLogin"];
 const widthAdminAuthList: string[] = ["/Admin"];
 
 export async function middleware(req: NextRequest) {
-	const token = cookies().get("accessToken") as tokenType;
-
+	const accessToken = cookies().get("AccessToken") as tokenType;
+	const refreshToken = cookies().get("RefreshToken") as tokenType;
 	const { pathname } = req.nextUrl;
 
-	if (withOutAuthList.includes(pathname) && token) {
+	if (withOutAuthList.includes(pathname) && accessToken) {
 		return NextResponse.redirect(new URL("/", req.url));
-	} else if (withAuthList.includes(pathname) && !token) {
+	} else if (withAuthList.includes(pathname) && !accessToken) {
 		return NextResponse.redirect(new URL("/Login", req.url));
 	}
 }
