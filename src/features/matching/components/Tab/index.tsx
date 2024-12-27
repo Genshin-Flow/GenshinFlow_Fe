@@ -100,6 +100,8 @@ export default function Tab({ isMobile = false }: TabProps) {
 	const OauthSignUpModalClose = async () => {
 		await update({
 			user: {
+				email: session?.user.email,
+				provider: session?.user.provider,
 				status: 0,
 				responseOk: false,
 			},
