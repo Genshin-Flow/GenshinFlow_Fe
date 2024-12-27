@@ -11,6 +11,7 @@ import { checkMail } from "@/features/loginSignUp/auth/emailCheck/emailValidatio
 import { passwordValidation } from "@/features/loginSignUp/auth/passwordCheck/passwordValidation";
 import { useRouter } from "next/navigation";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import { Cookies } from "react-cookie";
 
 export default function SignIn() {
 	const { setModalState } = loginState();
@@ -19,7 +20,8 @@ export default function SignIn() {
 	);
 	const router = useRouter();
 	const handler = (event: FormEvent<HTMLFormElement>) =>
-		submitHandler(event, setModalState, setLoginButtonState, router);
+		submitHandler(event, setModalState, setLoginButtonState, router, cookies);
+	const cookies = new Cookies();
 	return (
 		<LoginContainer className="loginContainer">
 			<SubTitle platform="mobile">로그인</SubTitle>
@@ -64,6 +66,7 @@ async function submitHandler(
 	setModal: (state: string) => void,
 	buttonState: Dispatch<SetStateAction<"login" | "lock">>,
 	router: AppRouterInstance,
+	cookies: Cookies,
 ) {
 	event.preventDefault();
 	const target = event.target as HTMLElement;
@@ -80,7 +83,11 @@ async function submitHandler(
 		return;
 	}
 	const data = await postLoginAuth(emailValue, passwordValue);
-	if (data.status !== 200) {
+	if (!data.ok) {
 		loginFailed(data, setModal, buttonState);
 	}
+
+	cookies.set("accessToken", data.accessToken);
+	cookies.set("refreshToken", data.refreshToken);
+	router.push("/");
 }

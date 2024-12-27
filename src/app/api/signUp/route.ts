@@ -44,6 +44,7 @@ export async function POST(req: responseType) {
 		if (response.status !== 200) throw new Error("signUp failed");
 		const accessToken = serialize("AccessToken", data.accessToken, {
 			httpOnly: true,
+
 			secure: process.env.NODE_ENV === "production",
 			maxAge: Number(accessMaxAge),
 			path: "/",
