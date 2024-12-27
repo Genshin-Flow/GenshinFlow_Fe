@@ -8,6 +8,8 @@ import Checkbox from "@/features/loginSignUp/components/checkBox/Checkbox";
 import { FormEvent, useState } from "react";
 import loginState from "@/stores/loginStateStore";
 import { signUp } from "@/fetch/Login/signUp/signUp";
+import { useRouter } from "next/navigation";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
 class SignUpError extends Error {
 	response: Response;
@@ -21,6 +23,7 @@ export default function SignUp() {
 	const [checkState, setCheckState] = useState(false);
 	const [emailValue, setEmailValue] = useState("");
 	const { setModalState } = loginState();
+	const router = useRouter();
 	const variable = checkState === true ? "login" : "deActive";
 	return (
 		<>
@@ -32,7 +35,9 @@ export default function SignUp() {
 					mb={"mb12"}
 				/>
 				<form
-					onSubmit={(event) => submitHandler(event, emailValue, setModalState)}
+					onSubmit={(event) =>
+						submitHandler(event, emailValue, setModalState, router)
+					}
 				>
 					<Input type={"password"} placeholder={"비밀번호"} margin={"mb12"} />
 					<Input type={"text"} placeholder={"인증코드"} margin={"mb12"} />
@@ -49,6 +54,7 @@ async function submitHandler(
 	event: FormEvent<HTMLElement>,
 	emailValue: string,
 	setModalState: (state: string) => void,
+	router: AppRouterInstance,
 ) {
 	try {
 		event.preventDefault();
@@ -65,6 +71,7 @@ async function submitHandler(
 			authCodeValue,
 			uidValue,
 			setModalState,
+			router,
 		);
 
 		if (!response) {

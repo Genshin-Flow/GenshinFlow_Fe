@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { setRefreshToken } from "@/fetch/Token/setRefreshToken/setRefreshToken";
+import { setLoginToken } from "@/fetch/Token/setLoginToken/setLoginToken";
 
 type requestType = NextRequest & {
 	email: string;
@@ -19,7 +19,7 @@ export async function POST(req: requestType) {
 		const refreshCookieTime = process.env
 			.refreshCookieTime as unknown as string;
 		const baseAPi = process.env.NEXT_PUBLIC_BASE_API;
-		const loginApi = process.env.login;
+		const loginApi = process.env.NEXT_PUBLIC_login;
 		if (!accessCookieTime || !refreshCookieTime) {
 			throw new Error(
 				"쿠키 만료시간에 필요한 시간을 환경변수에서 찾을 수 없습니다.",
@@ -33,6 +33,7 @@ export async function POST(req: requestType) {
 		const password = requestBody.password;
 		// 로그인 api
 		const response = await fetch(`${baseAPi}${loginApi}`, {
+			method: "POST",
 			body: JSON.stringify({
 				email,
 				password,
