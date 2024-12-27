@@ -100,8 +100,6 @@ export default function Tab({ isMobile = false }: TabProps) {
 	const OauthSignUpModalClose = async () => {
 		await update({
 			user: {
-				email: "",
-				provider: "",
 				status: 0,
 				responseOk: false,
 			},
@@ -130,11 +128,11 @@ export default function Tab({ isMobile = false }: TabProps) {
 		};
 
 		// 세션 정보가 없는 경우 UID 입력 모달창 닫기
-		if (!session?.user.email || !session?.user.provider) {
+		if (session?.user.status === 0) {
 			setOauthUidModalState(false);
 		}
 		// 이미 회원인경우 로그인 로직 실행하여 쿠키 등록
-
+		console.log(session?.user);
 		if (session?.user.status === 200) {
 			loadingToast(
 				oauthSignIn(session.user.email, () => setOauthUidModalState(true)),
