@@ -22,7 +22,7 @@ export const DropdownButton = styled("button", {
     padding: "10px 8px",
     fontSize: "xs",
     fontWeight: "medium",
-    border: "1px solid",
+    border: "1px solid {colors.gray.04}",
     borderColor: "gray.04",
     borderRadius: "8px",
     cursor: "pointer",

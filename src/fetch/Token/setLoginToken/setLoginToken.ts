@@ -6,17 +6,17 @@ class responseState extends Error {
 	}
 }
 
-export async function setRefreshToken(
+export async function setLoginToken(
 	refreshToken: string,
 	accessToken: string,
 ): Promise<Response> {
 	try {
 		const LocalApi = process.env.NEXT_PUBLIC_LocalBaseApi;
-		const setRefreshTokenApi = process.env.NEXT_PUBLIC_setRefreshTokenApi;
-		if (!LocalApi || !setRefreshTokenApi) {
+		const setLoginTokenApi = process.env.NEXT_PUBLIC_setLoginTokenApi;
+		if (!LocalApi || !setLoginTokenApi) {
 			throw new Error("토큰 설정에 필요한 환경변수를 찾을 수 없습니다.");
 		}
-		const response = await fetch(`${LocalApi}${setRefreshTokenApi}`, {
+		const response = await fetch(`${LocalApi}${setLoginTokenApi}`, {
 			method: "post",
 			body: JSON.stringify({
 				refreshToken: refreshToken,

@@ -15,16 +15,18 @@ export async function POST(request: requestType) {
 		const { refreshToken, accessToken } = await request.json();
 		if (refreshToken === undefined) throw new Error("refreshToken이 없습니다.");
 		if (accessToken === undefined) throw new Error("accessToken이 없습니다.");
-		cookies().set("refreshToken", refreshToken, {
+		cookies().set("RefreshToken", refreshToken, {
 			secure: true,
 			httpOnly: true,
 			sameSite: "strict",
+			path: "/",
 			maxAge: Number(refreshCookieTime),
 		});
-		cookies().set("accessToken", accessToken, {
+		cookies().set("AccessToken", accessToken, {
 			secure: true,
 			httpOnly: true,
 			sameSite: "strict",
+			path: "/",
 			maxAge: Number(accessCookieTime),
 		});
 		return NextResponse.json(

@@ -23,6 +23,15 @@ import MatchingMenu from "@/features/matching/components/MatchingMenu";
 import MobileFilterContainer from "@/features/matching/mobile/components/MobileContainer";
 import MatchingHeader from "@/features/matching/components/MatchingHeader";
 import PostList from "@/features/matching/components/PostList";
+import { OauthSignUpModal } from "@/features/loginSignUp/components/modal/OauthSignUpModal";
+import { useSession } from "next-auth/react";
+import { oauthSignIn } from "@/fetch/Login/oauthSignIn/oauthSignIn";
+import {
+	successToast,
+	errorToast,
+	loadingToast,
+	warningToast,
+} from "@/utils/customToast/customToast";
 
 interface TabProps {
 	isMobile?: boolean;
@@ -58,9 +67,15 @@ interface PostData {
 	totalPages: number;
 }
 
+export interface OauthSignUpModalProps {
+	email: string;
+	provider: string;
+	onClose: () => void;
+	loadingToast: (promise: Promise<any>) => Promise<Response>;
+}
+
 export default function Tab({ isMobile = false }: TabProps) {
 	const [activeTab, setActiveTab] = useState(0);
-
 	const renderContent = () => {
 		switch (activeTab) {
 			case 0:
@@ -73,10 +88,80 @@ export default function Tab({ isMobile = false }: TabProps) {
 
 	// 하이드레이션 에러 방지
 	const [isClient, setIsClient] = useState(false);
+	const [OauthUidModalState, setOauthUidModalState] = useState(false);
+	const [OauthSignUpModalProps, setOauthSignUpModalProps] =
+		useState<OauthSignUpModalProps>({
+			email: "",
+			provider: "",
+			onClose: () => {},
+			loadingToast: (promise: Promise<any>) => loadingToast(promise),
+		});
+
+	const OauthSignUpModalClose = async () => {
+		await update({
+			user: {
+				email: "",
+				provider: "",
+				status: 0,
+				responseOk: false,
+			},
+		});
+		setOauthUidModalState(false);
+	};
+
+	const { data: session, update } = useSession();
 
 	useEffect(() => {
 		setIsClient(true);
 	}, []);
+
+	useEffect(() => {
+		const oauthSignInFetch = async () => {
+			// 회원가입 진행
+			if (session?.user.status === 404) {
+				setOauthSignUpModalProps({
+					email: session.user.email,
+					provider: session.user.provider,
+					onClose: OauthSignUpModalClose,
+					loadingToast: loadingToast,
+				});
+				setOauthUidModalState(true);
+			}
+		};
+
+		// 세션 정보가 없는 경우 UID 입력 모달창 닫기
+		if (!session?.user.email || !session?.user.provider) {
+			setOauthUidModalState(false);
+		}
+		// 이미 회원인경우 로그인 로직 실행하여 쿠키 등록
+
+		if (session?.user.status === 200) {
+			loadingToast(
+				oauthSignIn(session.user.email, () => setOauthUidModalState(true)),
+			)
+				.then((response) => {
+					if (response.status === 404) {
+						setOauthUidModalState(true);
+					} else if (response.status === 403) {
+						throw new Error("이미 가입된 계정입니다");
+					} else if (!response.ok) {
+						throw new Error("토큰을 받아오는데 실패했습니다.");
+					}
+				})
+				.catch((error) => {
+					warningToast(error.message);
+				});
+		}
+
+		// 모든 정보가 들어오면 함수 실행
+		if (
+			session?.user.email &&
+			session?.user.provider &&
+			session?.user.status === 404
+		) {
+			oauthSignInFetch();
+		}
+	}, [update]);
 
 	if (!isClient) {
 		return null;
@@ -101,6 +186,14 @@ export default function Tab({ isMobile = false }: TabProps) {
 				</TabItem>
 			</TabContainer>
 			{renderContent()}
+			{OauthUidModalState && (
+				<OauthSignUpModal
+					onClose={OauthSignUpModalProps.onClose}
+					email={OauthSignUpModalProps.email}
+					provider={OauthSignUpModalProps.provider}
+					loadingToast={OauthSignUpModalProps.loadingToast}
+				/>
+			)}
 		</Container>
 	);
 }

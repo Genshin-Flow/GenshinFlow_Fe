@@ -5,6 +5,9 @@ import JenniperSet from "@/app/nextJenniper/JenniperSet";
 import Loading from "@/components/Loading";
 import QueryProvider from "@/provider/QueryProvider";
 import CookieProvider from "@/provider/CookieProvider";
+import SessionProvider from "@/provider/SessionProvider";
+import { Bounce, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const metadata: Metadata = {
 	manifest: "/manifest.json",
@@ -33,8 +36,20 @@ export default function RootLayout({
 			<body className={pretandard.className}>
 				<CookieProvider>
 					<QueryProvider>
-						{children}
-						<Loading />
+						<SessionProvider>
+							<ToastContainer
+								position="top-right"
+								autoClose={5000}
+								limit={2}
+								newestOnTop={false}
+								closeOnClick={true}
+								pauseOnFocusLoss={false}
+								theme="dark"
+								transition={Bounce}
+							/>
+							{children}
+							<Loading />
+						</SessionProvider>
 					</QueryProvider>
 				</CookieProvider>
 			</body>
