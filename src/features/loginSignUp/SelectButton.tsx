@@ -2,7 +2,7 @@
 import Button from "@/features/loginSignUp/components/button/Button";
 import { styled } from "@/../styled-system/jsx";
 import { useEffect, useRef } from "react";
-import loginState, { stateType } from "@/stores/loginStateStore";
+import loginState, { stateType } from "@/stores/loginPageStateStore";
 
 export default function SelectButton() {
 	const EventTargetRef = useRef<HTMLDivElement>(null);

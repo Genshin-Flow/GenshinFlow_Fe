@@ -7,7 +7,7 @@ import Button from "@/features/loginSignUp/mobile/components/button/Button";
 import { FormEvent, useState } from "react";
 import { forgotPasswordAuthCode } from "@/fetch/AuthCode/forgotPasswordAuthCode/forgotPasswordAuthCode";
 import { setNewPassword } from "@/fetch/Login/setNewPassword/newPassword";
-import loginState from "@/stores/loginStateStore";
+import loginState from "@/stores/loginPageStateStore";
 
 export default function ForgotPass() {
 	const [emailValue, setEmailValue] = useState("");

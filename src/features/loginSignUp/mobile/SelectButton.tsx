@@ -10,7 +10,7 @@ import SignUp from "@/features/loginSignUp/mobile/SignUp";
 import SignIn from "@/features/loginSignUp/mobile/SignIn";
 import ForgotPass from "@/features/loginSignUp/mobile/ForgotPass";
 import { nanoid } from "nanoid";
-import loginState, { stateType } from "@/stores/loginStateStore";
+import loginState, { stateType } from "@/stores/loginPageStateStore";
 import Modal from "@/features/loginSignUp/components/modal/Modal";
 import PrivacyPolicy from "@/features/loginSignUp/components/modal/PrivacyPolicy";
 import { useEffect, useRef } from "react";
@@ -104,7 +104,10 @@ const LoginContainer = styled("div", {
 	base: {
 		width: "100%",
 		height: "100%",
+		maxWidth: "800px",
 		position: "relative",
+		left: "50%",
+		transform: "translate(-50%)",
 		overflow: "hidden",
 	},
 });

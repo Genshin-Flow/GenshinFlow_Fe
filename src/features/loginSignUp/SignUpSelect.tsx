@@ -6,7 +6,7 @@ import Button from "@/features/loginSignUp/components/button/Button";
 import SignUp from "@/features/loginSignUp/SignUp";
 import { useEffect, useRef } from "react";
 import { nanoid } from "nanoid/non-secure";
-import loginState, { stateType } from "@/stores/loginStateStore";
+import loginState, { stateType } from "@/stores/loginPageStateStore";
 
 export default function SignUpSelect() {
 	const { selectBtn, setSelectBtn } = loginState();

@@ -5,7 +5,7 @@ import { loginSvg } from "@/data/SvgUrl/svg";
 import SignInAuth from "@/features/loginSignUp/components/signIn/SignInAuth";
 import ForgotPassword from "@/features/loginSignUp/components/button/ForgotPassword";
 import ForgotPassAuthMail from "@/features/loginSignUp/ForgotPassAuthMail";
-import loginState from "@/stores/loginStateStore";
+import loginState from "@/stores/loginPageStateStore";
 import Line from "@/features/loginSignUp/components/line/line";
 
 type marginType = "mb12" | "mb20" | "mb60";

@@ -6,7 +6,7 @@ import Button from "@/features/loginSignUp/mobile/components/button/Button";
 import { Dispatch, FormEvent, SetStateAction, useState } from "react";
 import { postLoginAuth } from "@/fetch/Login/signIn/signIn";
 import { loginFailed } from "@/features/loginSignUp/components/signIn/SignInAuth";
-import loginState from "@/stores/loginStateStore";
+import loginState from "@/stores/loginPageStateStore";
 import { checkMail } from "@/features/loginSignUp/auth/emailCheck/emailValidation";
 import { passwordValidation } from "@/features/loginSignUp/auth/passwordCheck/passwordValidation";
 import { useRouter } from "next/navigation";
