@@ -22,6 +22,7 @@ export default defineConfig({
 						"03": { value: "#FAD56B" }, // Yellow 01
 						"04": { value: "#F9F6F1" },
 						"05": { value: "#4B54DC" },
+						"06": { value: "#50ACD5" },
 					},
 					secondary: {
 						"01": { value: "#CE7866" },

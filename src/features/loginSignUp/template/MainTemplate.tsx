@@ -6,7 +6,9 @@ type propsType = {
 };
 
 export default function MainTemplate(props: propsType) {
-	return <TemplateContainer>{props.children}</TemplateContainer>;
+	return (
+		<TemplateContainer className="naviaBg">{props.children}</TemplateContainer>
+	);
 }
 
 const TemplateContainer = styled("section", {
@@ -17,16 +19,5 @@ const TemplateContainer = styled("section", {
 		justifyContent: "center",
 		alignItems: "center",
 		position: "relative",
-		background: "url('/img/loginBackground/naviaBg.webp') no-repeat",
-		backgroundSize: "cover",
-		backgroundPosition: "50% 50%",
-		"&:after": {
-			content: "''",
-			position: "absolute",
-			opacity: "0.7",
-			width: "100%",
-			height: "100%",
-			backgroundColor: "#ffffff",
-		},
 	},
 });

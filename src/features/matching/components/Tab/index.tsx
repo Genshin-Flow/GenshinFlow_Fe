@@ -26,12 +26,9 @@ import PostList from "@/features/matching/components/PostList";
 import { OauthSignUpModal } from "@/features/loginSignUp/components/modal/OauthSignUpModal";
 import { useSession } from "next-auth/react";
 import { oauthSignIn } from "@/fetch/Login/oauthSignIn/oauthSignIn";
-import {
-	successToast,
-	errorToast,
-	loadingToast,
-	warningToast,
-} from "@/utils/customToast/customToast";
+import { loadingToast, warningToast } from "@/utils/customToast/customToast";
+import MobileAboutModal from "@/components/Header/modal/mobileAboutModal";
+import mobileAboutStore from "@/stores/mobileAboutStore";
 
 interface TabProps {
 	isMobile?: boolean;
@@ -134,7 +131,6 @@ export default function Tab({ isMobile = false }: TabProps) {
 			setOauthUidModalState(false);
 		}
 		// 이미 회원인경우 로그인 로직 실행하여 쿠키 등록
-		console.log(session?.user);
 		if (session?.user.status === 200) {
 			loadingToast(
 				oauthSignIn(session.user.email, () => setOauthUidModalState(true)),
@@ -208,6 +204,7 @@ function Matching({ isMobile = false }: MatchingProps) {
 	const scrollRef = useRef<HTMLDivElement>(null);
 	const { email } = userStore();
 	const { data, isLoading, hasNextPage } = useMainPostObserve(scrollRef);
+	const { aboutState, setAboutStore } = mobileAboutStore();
 	useEffect(() => {
 		const pageData = data?.pages[0] as unknown as PostData;
 		if (pageData?.content) {
@@ -270,6 +267,9 @@ function Matching({ isMobile = false }: MatchingProps) {
 					<MobileWriteButton onClick={openModal} />
 					{isModalOpen && (
 						<Modal onClose={closeModal} type="write" isMobile={isMobile} />
+					)}
+					{aboutState && (
+						<MobileAboutModal setModalState={() => setAboutStore(false)} />
 					)}
 				</MobileContainer>
 			)}

@@ -4,7 +4,7 @@ import ForgotPass from "@/features/loginSignUp/ForgotPass";
 import Input from "@/features/loginSignUp/components/Input/Input";
 import Button from "@/features/loginSignUp/components/button/Button";
 import AuthMail from "@/features/loginSignUp/components/signUp/AuthMail";
-import loginState, { stateType } from "@/stores/loginStateStore";
+import loginState, { stateType } from "@/stores/loginPageStateStore";
 import { Dispatch, FormEvent, SetStateAction, useState } from "react";
 import { forgotPasswordAuthCode } from "@/fetch/AuthCode/forgotPasswordAuthCode/forgotPasswordAuthCode";
 

@@ -3,7 +3,7 @@ import { styled } from "@/../styled-system/jsx";
 import MypageText from "@/features/mypage/mobile/components/mypageText/MypageText";
 import ChangePasswordInput from "@/features/mypage/mobile/components/changePasswordInput/ChangePasswordInput";
 import Modal from "@/features/loginSignUp/components/modal/Modal";
-import loginState from "@/stores/loginStateStore";
+import loginState from "@/stores/loginPageStateStore";
 
 export default function page() {
 	const { modalText } = loginState();

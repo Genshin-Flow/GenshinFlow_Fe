@@ -2,6 +2,7 @@ import { create } from "zustand";
 
 export type userProfileType = {
 	passwordLeng: string;
+	userProfileUrl: string;
 	uid: string;
 	worldLevel: string;
 	travelLevel: string;
@@ -28,6 +29,7 @@ const defaultUserInfo = {
 	email: "nextconnect.lab@gmail.com",
 	userProfile: {
 		passwordLeng: "10",
+		userProfileUrl: "",
 		uid: "85171071",
 		worldLevel: "9",
 		travelLevel: "60",
