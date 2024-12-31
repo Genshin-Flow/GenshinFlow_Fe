@@ -11,7 +11,7 @@ export default function Exit() {
 
 function clickHandler(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
 	const target = event.target as HTMLElement;
-	const $blurDom = target.parentNode?.parentNode as HTMLElement;
+	const $blurDom = target.parentNode?.previousSibling as HTMLElement;
 	if ($blurDom.classList.contains("active")) {
 		$blurDom.classList.remove("active");
 	} else {

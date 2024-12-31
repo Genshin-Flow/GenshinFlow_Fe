@@ -3,7 +3,7 @@ import Button from "@/features/loginSignUp/components/button/Button";
 import Input from "@/features/loginSignUp/components/Input/Input";
 import { propsType } from "@/features/loginSignUp/SignIn";
 import { Dispatch, FormEvent, SetStateAction, useRef, useState } from "react";
-import loginState from "@/stores/loginStateStore";
+import loginState from "@/stores/loginPageStateStore";
 import { postLoginAuth } from "@/fetch/Login/signIn/signIn";
 import { passwordValidation } from "@/features/loginSignUp/auth/passwordCheck/passwordValidation";
 import { checkMail } from "@/features/loginSignUp/auth/emailCheck/emailValidation";

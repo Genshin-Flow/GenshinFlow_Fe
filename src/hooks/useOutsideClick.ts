@@ -1,15 +1,22 @@
-// 지정된 요소 외부에서 클릭이 감지되면 콜백을 트리거하는 커스텀 훅입니다. 모달이나 메뉴에 사용함.
 import { useEffect } from "react";
 
 export default function useOutsideClick(
 	ref: React.RefObject<HTMLElement>,
 	callback: () => void,
+	menuActiveRef?: React.RefObject<HTMLElement>,
 ) {
 	const handleClickOutside = (e: MouseEvent) => {
-		const target = e.target as HTMLButtonElement;
-		if (ref.current && !ref.current.contains(target)) {
-			callback();
+		const target = e.target as HTMLElement;
+
+		// menuActiveRef가 제공되었고 클릭한 요소가 menuActiveRef 요소라면 동작하지 않음
+		if (
+			(menuActiveRef?.current && menuActiveRef.current.contains(target)) ||
+			(ref.current && ref.current.contains(target))
+		) {
+			return;
 		}
+
+		callback();
 	};
 
 	useEffect(() => {
@@ -17,5 +24,5 @@ export default function useOutsideClick(
 		return () => {
 			document.removeEventListener("mousedown", handleClickOutside);
 		};
-	}, [ref, callback]);
+	}, [ref, callback, menuActiveRef]);
 }

@@ -3,7 +3,7 @@ import { styled } from "@/../styled-system/jsx";
 import Button from "@/features/loginSignUp/components/button/Button";
 import AuthMail from "@/features/loginSignUp/components/signUp/AuthMail";
 import { Dispatch, FormEvent, SetStateAction, useState } from "react";
-import loginState from "@/stores/loginStateStore";
+import loginState from "@/stores/loginPageStateStore";
 import { setNewPassword } from "@/fetch/Login/setNewPassword/newPassword";
 
 export default function ChangePasswordInput() {

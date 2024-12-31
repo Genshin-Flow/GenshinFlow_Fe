@@ -1,6 +1,6 @@
 "use client";
 import { styled } from "@/../styled-system/jsx";
-import loginState from "@/stores/loginStateStore";
+import loginState from "@/stores/loginPageStateStore";
 
 type propsType = {
 	mobile?: "mobile";

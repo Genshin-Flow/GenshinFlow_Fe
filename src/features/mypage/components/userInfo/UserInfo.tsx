@@ -1,8 +1,8 @@
 "use client";
 import { styled } from "@/../styled-system/jsx";
 import UserInfoItem from "@/features/mypage/components/userInfo/UserInfoItem";
-import { stateType } from "@/stores/loginStateStore";
-import loginState from "@/stores/loginStateStore";
+import { stateType } from "@/stores/loginPageStateStore";
+import loginState from "@/stores/loginPageStateStore";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { useRouter } from "next/navigation";
 export default function UserInfo() {

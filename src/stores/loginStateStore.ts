@@ -1,44 +1,13 @@
 import { create } from "zustand";
 
-export type stateType =
-	| "login"
-	| "signUpSelect"
-	| "signUp"
-	| "authMailPassword"
-	| "forgotPassword"
-	| null;
+interface LoginState {
+	isLogin: boolean;
+	setIsLogin: (value: boolean) => void;
+}
 
-type loginPageState = {
-	selectBtn: stateType;
-	modalText: string;
-	policyModalState: boolean;
-};
-
-type stateActive = {
-	setSelectBtn: (state: stateType) => void;
-	setModalState: (state: string) => void;
-	setPolicyModalState: (state: boolean) => void;
-};
-
-const defaultState = {
-	selectBtn: null,
-	modalText: "",
-	policyModalState: false,
-};
-
-const loginState = create<loginPageState & stateActive>((set) => ({
-	selectBtn: defaultState.selectBtn,
-	modalText: defaultState.modalText,
-	policyModalState: defaultState.policyModalState,
-	setSelectBtn: (selectBtn: stateType) => {
-		set({ selectBtn });
-	},
-	setModalState: (modalText: string) => {
-		set({ modalText });
-	},
-	setPolicyModalState: (policyModalState: boolean) => {
-		set({ policyModalState });
-	},
+const useLoginStateStore = create<LoginState>((set) => ({
+	isLogin: false,
+	setIsLogin: (value) => set({ isLogin: value }),
 }));
 
-export default loginState;
+export default useLoginStateStore;
