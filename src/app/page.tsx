@@ -6,16 +6,20 @@ import Tab from "@/features/matching/components/Tab/";
 import Sidebar from "@/features/matching/components/Sidebar";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { getAccessToken } from "@/fetch/Token/getAccessToken/getAccessToken";
 
 export default function Home() {
 	const [mounted, setMounted] = useState(false);
+	const mobileWidth = process.env.NEXT_PUBLIC_startMobileWidth;
+	if (!mobileWidth) throw new Error("모바일 너비 설정이 없습니다.");
 	const isMobile = useMediaQuery({
-		query: "(max-width:1318px)",
+		query: `(max-width:${mobileWidth}px)`,
 	});
 
 	// 컴포넌트가 마운트 되기 전에는 렌더링 하지 않음
 	useEffect(() => {
 		setMounted(true);
+		getAccessToken();
 	}, []);
 
 	if (!mounted) {
@@ -51,6 +55,7 @@ function Mobile() {
 const Main = styled("main", {
 	base: {
 		position: "relative",
+		overflow: "hidden",
 	},
 });
 

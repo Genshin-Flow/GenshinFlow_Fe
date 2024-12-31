@@ -1,7 +1,7 @@
 "use client";
 import { styled } from "@/../styled-system/jsx";
 import { RefObject, useEffect } from "react";
-import loginState from "@/stores/loginStateStore";
+import loginState from "@/stores/loginPageStateStore";
 
 type propsType = {
 	ModalRef: RefObject<HTMLDivElement>;

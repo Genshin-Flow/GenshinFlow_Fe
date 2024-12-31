@@ -1,7 +1,7 @@
 "use client";
 import { styled } from "@/../styled-system/jsx";
 import Input from "@/features/loginSignUp/components/Input/Input";
-import loginState from "@/stores/loginStateStore";
+import loginState from "@/stores/loginPageStateStore";
 import {
 	Dispatch,
 	FormEvent,

@@ -1,6 +1,6 @@
 "use client";
 import Button from "@/features/loginSignUp/components/button/Button";
-import loginState, { stateType } from "@/stores/loginStateStore";
+import loginState, { stateType } from "@/stores/loginPageStateStore";
 import React, { useEffect, useRef } from "react";
 
 type propsType = {

@@ -1,6 +1,6 @@
 import { styled } from "@/../styled-system/jsx";
 import { ReactNode } from "react";
-import loginState from "@/stores/loginStateStore";
+import loginState from "@/stores/loginPageStateStore";
 
 type propsType = {
 	children: ReactNode;
@@ -38,7 +38,8 @@ const SelectContainerStyle = styled("div", {
 		variant: {
 			login: {
 				width: "550px",
-				height: "800px",
+				height: "100%",
+				maxHeight: "800px",
 				"& .LoginContainer": {
 					transform: "translateX(0%)",
 				},

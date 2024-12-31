@@ -2,7 +2,7 @@
 import { styled } from "@/../styled-system/jsx";
 import { Dispatch, SetStateAction } from "react";
 import { checkSvg } from "@/data/SvgUrl/svg";
-import loginState from "@/stores/loginStateStore";
+import loginState from "@/stores/loginPageStateStore";
 
 type propsType = {
 	checkState: boolean;
