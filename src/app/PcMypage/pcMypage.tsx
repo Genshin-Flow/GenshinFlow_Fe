@@ -1,8 +1,8 @@
 import { styled } from "@/../styled-system/jsx";
-import History from "@/features/mypage/components/history/History";
-import UserInfo from "@/features/mypage/components/userInfo/UserInfo";
-import UserProfile from "@/features/mypage/components/userProfile/UserProfile";
-import Exit from "@/features/mypage/components/exitButton/Exit";
+import History from "@/features/mypage/components/historyGroup/history";
+import UserInfo from "@/features/mypage/components/userInfoGroup/userInfo";
+import UserProfile from "@/features/mypage/components/userInfoGroup/userProfile";
+import Exit from "@/features/mypage/components/exitButton";
 import useOutsideClick from "@/hooks/useOutsideClick";
 import { RefObject, useRef } from "react";
 
@@ -44,7 +44,6 @@ function closePcMypage(
 		setIsPcMypageOpen(false);
 	};
 }
-
 
 const BluerBackground = styled("div", {
 	base: {

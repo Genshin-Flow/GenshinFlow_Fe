@@ -1,4 +1,4 @@
-import { listItemType } from "@/features/mypage/components/historyInfo/History";
+import { listItemType } from "@/features/mypage/components/historyGroup/historyInfo";
 
 export function history(historyArray: listItemType[]) {
 	try {

@@ -25,10 +25,10 @@ import {
 	MobileMoreOptions,
 	MobileMessageText,
 } from "./styles";
-import Modal from "../Modal";
+import Modal from "../modal";
 import { useRef, useState } from "react";
 import useOutsideClick from "@/hooks/useOutsideClick";
-import { PostContent } from "@/features/matching/components/Tab";
+import { PostContent } from "@/features/matching/components/tab";
 import dayjs from "dayjs";
 // 퀘스트 종류 이미지
 export const questImage = {
