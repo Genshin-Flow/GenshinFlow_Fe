@@ -2,8 +2,8 @@
 import { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { styled } from "../../styled-system/jsx";
-import Tab from "@/features/matching/components/Tab/";
-import Sidebar from "@/features/matching/components/Sidebar";
+import Tab from "@/features/matching/components/tab";
+import Sidebar from "@/features/matching/components/sidebar";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { getAccessToken } from "@/fetch/Token/getAccessToken/getAccessToken";

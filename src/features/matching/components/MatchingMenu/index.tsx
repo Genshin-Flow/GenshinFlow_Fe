@@ -1,8 +1,8 @@
-import Dropdown from "@/features/matching/components/Dropdown";
+import Dropdown from "@/features/matching/components/dropdown";
 import {
 	MatchingMenuContainer,
 	WriteButton,
-} from "@/features/matching/components/MatchingMenu/style";
+} from "@/features/matching/components/matchingMenu/style";
 import {
 	questOptions,
 	lvOptions,
