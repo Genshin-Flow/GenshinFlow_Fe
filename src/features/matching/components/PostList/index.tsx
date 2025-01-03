@@ -1,7 +1,7 @@
-import MatchingPostItem from "@/features/matching/components/MatchingPostItem";
+import MatchingPostItem from "@/features/matching/components/matchingPostItem";
 import { PostListContainer, VisibleTabList } from "./style";
 import { nanoid } from "nanoid";
-import { PostContent } from "@/features/matching/components/Tab";
+import { PostContent } from "@/features/matching/components/tab";
 
 type PostListProps = {
 	postData: PostContent[] | undefined;

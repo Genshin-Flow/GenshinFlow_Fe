@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import localfont from "next/font/local";
 import "/public/css/core.css";
-import JenniperSet from "@/app/nextJenniper/JenniperSet";
+import JenniperSet from "@/nextJenniper/JenniperSet";
 import Loading from "@/components/Loading";
 import QueryProvider from "@/provider/QueryProvider";
 import CookieProvider from "@/provider/CookieProvider";

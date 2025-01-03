@@ -25,10 +25,10 @@ import {
 	InputWrapper,
 	MobileBtns,
 } from "./styles";
-import { Radio, RadioGroup } from "../Radio";
+import { Radio, RadioGroup } from "../radio";
 import { useState } from "react";
-import Dropdown from "../Dropdown";
-import ReportAttackButton from "../Radio/ReportAttackButton";
+import Dropdown from "../dropdown";
+import ReportAttackButton from "../radio/ReportAttackButton";
 import { report } from "@/fetch/report/report";
 
 interface ModalProps {

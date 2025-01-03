@@ -1,4 +1,4 @@
-import { listItemType } from "@/features/mypage/components/history/History";
+import { listItemType } from "@/features/mypage/components/historyGroup/history";
 
 export function deleteHistory(historyArray: listItemType[]) {
 	try {
