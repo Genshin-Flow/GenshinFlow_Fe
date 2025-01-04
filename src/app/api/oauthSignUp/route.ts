@@ -24,9 +24,7 @@ export async function POST(req: Request) {
 				uid,
 			}),
 		});
-		if (response.status === 404) {
-			throw new returnResponse(response);
-		}
+
 		if (!response.ok) {
 			throw new returnResponse(response);
 		}
@@ -41,6 +39,5 @@ export async function POST(req: Request) {
 		if (error instanceof returnResponse) {
 			return error.response;
 		}
-		console.error(error);
 	}
 }

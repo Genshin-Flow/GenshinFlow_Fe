@@ -73,23 +73,22 @@ async function onSubmitHandler(
 	loadingToast: LoadingToast,
 ) {
 	e.preventDefault();
-	loadingToast(oauthSignUp(email, Number(uid), provider))
-		.then((response) => {
-			if (response.ok) {
-				setStatus("create");
-			}
-		})
-		.catch(async (error) => {
-			const response = await error.response;
-			if (response.status === 409) {
+	const response = await loadingToast(
+		oauthSignUp(email, Number(uid), provider),
+	);
+	if (!response.ok) {
+		switch (response.status) {
+			case 409:
 				setStatus("sameUid");
-			} else if (response.status === 404) {
+				break;
+			case 404:
 				setStatus("sameAccount");
-			} else if (!response.ok) {
+				break;
+			default:
 				setStatus("error");
-				return;
-			}
-		});
+				break;
+		}
+	}
 }
 
 function selectText(status: Status) {

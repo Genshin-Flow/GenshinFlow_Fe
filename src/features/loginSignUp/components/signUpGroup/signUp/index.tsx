@@ -70,8 +70,6 @@ async function submitHandler(
 			passwordValue,
 			authCodeValue,
 			uidValue,
-			setModalState,
-			router,
 		);
 
 		if (!response) {
@@ -88,7 +86,7 @@ async function submitHandler(
 			}
 		}
 		// 성공 케이스
-		setModalState("가입이 완료 되었습니다!");
+		router.push("/Login");
 	} catch (error) {
 		if (error instanceof Error) {
 			setModalState(error.message);
