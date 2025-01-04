@@ -10,7 +10,7 @@ export async function oauthSignUp(
 	email: string,
 	uid: number,
 	provider: string,
-): Promise<Response> {
+): Promise<Response | unknown> {
 	try {
 		const LocalBaseApi = process.env.NEXT_PUBLIC_LocalBaseApi;
 		const OauthSignUpApi = process.env.NEXT_PUBLIC_LocalOauthSignUpApi;
@@ -35,7 +35,7 @@ export async function oauthSignUp(
 		return response;
 	} catch (error) {
 		if (error instanceof OauthSignUpError) {
-			return error.response;
+			throw error.response;
 		}
 		throw error;
 	}
