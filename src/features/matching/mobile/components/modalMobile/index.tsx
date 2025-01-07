@@ -123,20 +123,22 @@ export default function AddPostModalMobile(props: propsType) {
 				<WarningText>
 					설정한 시간이 지나면 자동으로 도움을 받은 것으로 처리 됩니다.
 				</WarningText>
-				<InputContainer isMobile2={props.isMobile}>
-					<div>비밀번호</div>
-					<div className="mobileInputGroup">
-						<PasswordInput
-							type="password"
-							placeholder="4자리 숫자+특수문자로 설정해주세요."
-							isMobile={props.isMobile}
-							{...props.register("password", { required: true })}
-						/>
-						{props.errors?.password && (
-							<ErrorText>비밀번호 입력은 필수입니다.</ErrorText>
-						)}
-					</div>
-				</InputContainer>
+				{!isLogin && (
+					<InputContainer isMobile2={props.isMobile}>
+						<div>비밀번호</div>
+						<div className="mobileInputGroup">
+							<PasswordInput
+								type="password"
+								placeholder="4자리 숫자+특수문자로 설정해주세요."
+								isMobile={props.isMobile}
+								{...props.register("password", { required: true })}
+							/>
+							{props.errors?.password && (
+								<ErrorText>비밀번호 입력은 필수입니다.</ErrorText>
+							)}
+						</div>
+					</InputContainer>
+				)}
 				<WarningText>
 					상대방을 비방하거나 UID 도용, 악용할 경우 차단당할 수 있습니다.
 				</WarningText>
