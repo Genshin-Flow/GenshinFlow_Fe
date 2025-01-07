@@ -24,7 +24,7 @@ export async function adminUserSearch<T>(
 				body: JSON.stringify({ userId }),
 			},
 		);
-		if (response.status !== 200) {
+		if (!response.ok) {
 			throw new Error(
 				`Next server로 전송하는 과정에서 문제가 발생했습니다. 새로고침 후 요청이 전송 되는지 확인하고 문제가 지속될시 개발자에게 알려주세요`,
 			);
