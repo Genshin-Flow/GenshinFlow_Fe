@@ -147,7 +147,11 @@ export default function AddPostModalMobile(props: propsType) {
 				<Button type="cancel" onClick={props.onClose} isMobile={props.isMobile}>
 					취소
 				</Button>
-				<Button type="submit" isMobile={props.isMobile}>
+				<Button
+					type="submit"
+					isMobile={props.isMobile}
+					disabled={props.isSubmitting}
+				>
 					작성
 				</Button>
 			</MobileBtns>
