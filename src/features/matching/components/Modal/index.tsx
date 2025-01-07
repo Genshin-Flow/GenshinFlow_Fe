@@ -8,28 +8,16 @@ import {
 	RadioColumn,
 	ReportInput,
 	ReportButton,
-	UserInfo,
-	InputContainer,
-	TextInput,
-	QuestInfo,
-	UserQuestContainer,
-	Content,
-	ContentInput,
-	Options,
-	PasswordInput,
-	WarningText,
-	Btns,
-	Button,
-	FlexWrapper,
-	MobileText,
-	InputWrapper,
-	MobileBtns,
 } from "./styles";
 import { Radio, RadioGroup } from "../radio";
 import { useState } from "react";
-import Dropdown from "../dropdown";
 import ReportAttackButton from "../radio/ReportAttackButton";
-import { report } from "@/fetch/report/report";
+import { FieldValues, useForm } from "react-hook-form";
+import AddPostModalPC from "./modalPc/index";
+import AddPostModalMobile from "@/features/matching/mobile/components/modalMobile/index";
+import { addPostSignIn } from "@/fetch/Main/addPostList/addPostList";
+import { loadingToast } from "@/utils/customToast/customToast";
+import { loadingToastType } from "@/utils/customToast/customToast";
 
 interface ModalProps {
 	onClose: () => void;
@@ -103,166 +91,53 @@ function WriteModal({
 }) {
 	const [quest, setQuest] = useState("");
 	const [time, setTime] = useState("1시간");
-
-	const questOptions = [
-		{ value: "일반비경", icon: "/svgs/quests/domain.svg" },
-		{ value: "이벤트 퀘스트", icon: "/svgs/quests/event.svg" },
-		{ value: "영역 토벌", icon: "/svgs/quests/mob.svg" },
-		{ value: "일일 임무", icon: "/svgs/quests/mission.svg" },
-		{ value: "맵 탐사", icon: "/svgs/quests/explore.svg" },
-		{ value: "채집", icon: "/svgs/quests/gather.svg" },
-	];
-
-	const timeOptions = [
-		{ value: "30분" },
-		{ value: "1시간" },
-		{ value: "1시간 30분" },
-		{ value: "2시간" },
-	];
+	const {
+		register,
+		handleSubmit,
+		formState: { isSubmitting, errors },
+	} = useForm();
 
 	return (
 		<>
 			{!isMobile ? (
-				<>
-					<UserQuestContainer>
-						<UserInfo>
-							<p>유저 정보</p>
-							<InputContainer>
-								UID
-								<TextInput placeholder="800000000" />
-							</InputContainer>
-							<InputContainer>
-								닉네임
-								<TextInput placeholder="여행자" />
-							</InputContainer>
-							<InputContainer>
-								월드레벨
-								<TextInput placeholder="9" />
-							</InputContainer>
-						</UserInfo>
-						<QuestInfo>
-							<p>퀘스트 정보</p>
-							<Dropdown
-								placeholder="퀘스트 종류"
-								value={quest}
-								setValue={setQuest}
-								options={questOptions}
-							/>
-						</QuestInfo>
-					</UserQuestContainer>
-					<Content>
-						<p>내용</p>
-						<ContentInput placeholder="내용을 입력해주세요" />
-					</Content>
-					<Options>
-						<p>설정</p>
-						<div>
-							<InputContainer>
-								자동 완료 시간
-								<Dropdown
-									value={time}
-									setValue={setTime}
-									options={timeOptions}
-								/>
-							</InputContainer>
-							<InputContainer>
-								비밀번호
-								<PasswordInput
-									type="password"
-									placeholder="4자리 숫자+특수문자로 설정해주세요."
-								/>
-							</InputContainer>
-						</div>
-						<WarningText>
-							설정한 시간이 지나면 자동으로 도움을 받은 것으로 처리 됩니다.
-						</WarningText>
-					</Options>
-					<Btns>
-						<WarningText>
-							상대방을 비방하거나 UID 도용, 악용할 경우 차단당할 수 있습니다.
-						</WarningText>
-						<div>
-							<Button type="cancel" onClick={onClose}>
-								취소
-							</Button>
-							<Button type="submit" onClick={onClose}>
-								작성
-							</Button>
-						</div>
-					</Btns>
-				</>
+				<form
+					action="#"
+					method="post"
+					onSubmit={handleSubmit((data) =>
+						postHandler(data, quest, time, loadingToast, onClose),
+					)}
+				>
+					<AddPostModalPC
+						onClose={onClose}
+						setQuest={setQuest}
+						quest={quest}
+						time={time}
+						setTime={setTime}
+						register={register}
+						errors={errors}
+						isSubmitting={isSubmitting}
+					/>
+				</form>
 			) : (
-				<>
-					<UserQuestContainer isMobile={isMobile}>
-						<UserInfo isMobile={isMobile}>
-							<p>유저 정보</p>
-							<InputContainer isMobile={isMobile}>
-								<div>UID</div>
-								<TextInput placeholder="800000000" isMobile={isMobile} />
-							</InputContainer>
-							<InputContainer isMobile={isMobile}>
-								<div>닉네임</div>
-								<TextInput placeholder="여행자" isMobile={isMobile} />
-							</InputContainer>
-							<InputContainer isMobile={isMobile}>
-								<div>월드레벨</div>
-								<TextInput placeholder="9" isMobile={isMobile} />
-							</InputContainer>
-						</UserInfo>
-						<QuestInfo isMobile={isMobile}>
-							<p>퀘스트 정보</p>
-							<Dropdown
-								placeholder="퀘스트 종류"
-								value={quest}
-								setValue={setQuest}
-								options={questOptions}
-							/>
-						</QuestInfo>
-					</UserQuestContainer>
-					<Content isMobile={isMobile}>
-						<p>내용</p>
-						<ContentInput
-							placeholder="맵 밀어주실 착한 분 구해요. 한 5판 할 것 같아요."
-							isMobile={isMobile}
-						/>
-					</Content>
-					<Options isMobile={isMobile}>
-						<p>설정</p>
-						<FlexWrapper>
-							<MobileText>자동완료시간</MobileText>
-							<InputWrapper>
-								<Dropdown
-									value={time}
-									setValue={setTime}
-									options={timeOptions}
-									isMobile2={isMobile}
-								/>
-							</InputWrapper>
-						</FlexWrapper>
-						<WarningText>
-							설정한 시간이 지나면 자동으로 도움을 받은 것으로 처리 됩니다.
-						</WarningText>
-						<InputContainer isMobile2={isMobile}>
-							<div>비밀번호</div>
-							<PasswordInput
-								type="password"
-								placeholder="4자리 숫자+특수문자로 설정해주세요."
-								isMobile={isMobile}
-							/>
-						</InputContainer>
-						<WarningText>
-							상대방을 비방하거나 UID 도용, 악용할 경우 차단당할 수 있습니다.
-						</WarningText>
-					</Options>
-					<MobileBtns>
-						<Button type="cancel" onClick={onClose} isMobile={isMobile}>
-							취소
-						</Button>
-						<Button type="submit" onClick={onClose} isMobile={isMobile}>
-							작성
-						</Button>
-					</MobileBtns>
-				</>
+				<form
+					action="#"
+					method="post"
+					onSubmit={handleSubmit((data) =>
+						postHandler(data, quest, time, loadingToast, onClose),
+					)}
+				>
+					<AddPostModalMobile
+						isMobile={isMobile}
+						onClose={onClose}
+						setQuest={setQuest}
+						quest={quest}
+						time={time}
+						setTime={setTime}
+						register={register}
+						errors={errors}
+						isSubmitting={isSubmitting}
+					/>
+				</form>
 			)}
 		</>
 	);
@@ -276,4 +151,28 @@ async function reportSubmitHandler(
 	// id 추가되면 신고자 , 신고받은 대상 id를 함게 넘김
 	// const fetchResult = await report(value, image);
 	// if (!fetchResult) alert("신고 진행중 문제가 발생했습니다.");
+}
+
+async function postHandler(
+	data: FieldValues,
+	quest: string,
+	time: string,
+	loadingToast: loadingToastType,
+	onClose: () => void,
+) {
+	await loadingToast(
+		addPostSignIn(data, quest, time),
+		"등록 중입니다",
+		"등록 완료!",
+		"등록에 실패했습니다.",
+	)
+		.then((response) => {
+			if (response.ok) {
+				onClose();
+			}
+		})
+		.catch((error) => {
+			const responseCode = error.status;
+			// 코드에 따른 예외처리리
+		});
 }
