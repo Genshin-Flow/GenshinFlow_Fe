@@ -204,13 +204,21 @@ export const InputContainer = styled("div", {
 		justifyContent: "space-between",
 		textStyle: "sm",
 		color: "gray.01",
+
+		"& .mobileInputGroup": {
+			width: "100%",
+		},
+		"& input": {
+			width: "100%",
+		},
 	},
 	variants: {
 		isMobile: {
 			true: {
 				alignItems: "center",
+				justifyContent: "flex-start",
 				width: "100%",
-				"& div": {
+				"& div:not(.mobileInputGroup)": {
 					textStyle: "sm",
 					color: "gray.01",
 					width: "80px",

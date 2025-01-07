@@ -12,10 +12,9 @@ import {
 	StatusText,
 	OauthSubmitButton,
 } from "./style";
+import { LoadingToastType } from "@/features/matching/components/tab";
 
 type Status = "wait" | "sameAccount" | "create" | "error" | "sameUid";
-
-type LoadingToast = OauthSignUpModalProps["loadingToast"];
 
 export function OauthSignUpModal({
 	email,
@@ -70,7 +69,7 @@ async function onSubmitHandler(
 	uid: string,
 	provider: string,
 	setStatus: (status: Status) => void,
-	loadingToast: LoadingToast,
+	loadingToast: LoadingToastType,
 ) {
 	e.preventDefault();
 	loadingToast(oauthSignUp(email, Number(uid), provider))
@@ -80,12 +79,14 @@ async function onSubmitHandler(
 			}
 		})
 		.catch(async (error) => {
-			const response = await error.response;
-			if (response.status === 409) {
+			const responseCode = await error.status;
+			if (responseCode === 409) {
 				setStatus("sameUid");
-			} else if (response.status === 404) {
+				return;
+			} else if (responseCode === 404) {
 				setStatus("sameAccount");
-			} else if (!response.ok) {
+				return;
+			} else if (!responseCode.ok) {
 				setStatus("error");
 				return;
 			}

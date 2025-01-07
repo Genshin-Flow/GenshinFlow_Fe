@@ -71,6 +71,8 @@ export interface OauthSignUpModalProps {
 	loadingToast: (promise: Promise<any>) => Promise<Response>;
 }
 
+export type LoadingToastType = OauthSignUpModalProps["loadingToast"];
+
 export default function Tab({ isMobile = false }: TabProps) {
 	const [activeTab, setActiveTab] = useState(0);
 	const renderContent = () => {
@@ -213,8 +215,15 @@ function Matching({ isMobile = false }: MatchingProps) {
 		}
 	}, [data]);
 
-	const openModal = () => setIsModalOpen(true);
-	const closeModal = () => setIsModalOpen(false);
+	const openModal = () => {
+		setIsModalOpen(true);
+		// 스크롤 2개가 생기는 현상 제거거
+		document.body.style.overflow = "hidden";
+	};
+	const closeModal = () => {
+		setIsModalOpen(false);
+		document.body.style.overflow = "auto";
+	};
 	const handleSelectType = (type: string) => {
 		setSelectType((prevType) => (prevType === type ? "" : type));
 	};
