@@ -30,12 +30,12 @@ export default function Header({ isMobile = false }: HeaderProps) {
 	const [menuOpen, setMenuOpen] = useState(false);
 
 	const { isLogin } = useLoginStateStore();
-	const { userProfile } = userStore();
+	const { image } = userStore();
 
 	const menuRef = useRef(null);
 	const menuActiveRef = useRef(null);
 
-	const profile = userProfile.userProfileUrl;
+	const profile = image;
 	const defaultUserProfile = "/svgs/defaultUserProfile";
 	const myPageOpenFn = () => setIsPcMypageOpen(true);
 	const menuToggleFn = () => setMenuOpen((prev) => !prev);
