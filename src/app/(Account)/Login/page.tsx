@@ -25,8 +25,12 @@ export default function Login() {
 	const RenderState = RenderBackButton(selectBtn);
 	// 임시로 추가 크기는 변경되면 수정
 	const mobileWidth = process.env.NEXT_PUBLIC_startMobileWidth;
-	if (!mobileWidth) throw new Error("모바일 너비 설정이 없습니다.");
-	const isPc = useMediaQuery({ query: `(max-width:${mobileWidth}px)` });
+	const mobileHeight = process.env.NEXT_PUBLIC_startMobileHeight;
+	if (!mobileWidth || !mobileHeight)
+		throw new Error("모바일 크기 설정이 없습니다.");
+	const isPc = useMediaQuery({
+		query: `(max-width:${mobileWidth}px) or (max-height:${mobileHeight}px)`,
+	});
 	const [desktop, setDesktop] = useState(false);
 	useEffect(() => {
 		setDesktop(!isPc);
