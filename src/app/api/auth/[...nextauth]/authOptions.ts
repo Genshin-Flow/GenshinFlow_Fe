@@ -99,32 +99,29 @@ const authOptions: NextAuthOptions = {
 						provider: account?.provider,
 					}),
 				});
+
 				if (response.ok) {
 					user.status = response.status;
 					user.responseOk = true;
 					return true; // 로그인 성공
 				}
 
-				// 계정이 없는 경우
-				if (response.status === 404) {
-					user.status = response.status;
-					user.responseOk = false;
-					return true;
-				}
-				// 이미 가입된 이메일
-				else if (response.status === 403) {
-					user.status = response.status;
-					user.responseOk = false;
-					return "/error?errorMessage=이미 가입된 계정입니다.";
-				}
-				// 기타 에러
-				else if (!response.ok) {
-					throw new Error("Oauth 로그인에 실패했습니다.");
-				}
-
 				// account 객체에 토큰 설정
 				if (account && user.email) {
 					account.email = user.email;
+				}
+
+				switch (response.status) {
+					case 404:
+						user.status = response.status;
+						user.responseOk = false;
+						return true;
+					case 403:
+						user.status = response.status;
+						user.responseOk = false;
+						return "/error?errorMessage=이미 가입된 계정입니다.";
+					default:
+						throw new Error("Oauth 로그인에 실패했습니다.");
 				}
 			} catch (error) {
 				if (error instanceof Error) {
@@ -133,8 +130,6 @@ const authOptions: NextAuthOptions = {
 				}
 				return "/error";
 			}
-			// 어떤 예상치 못한 상황이 발생시 메인 페이지 이동
-			return "/";
 		},
 
 		// JWT 토큰에 AccessToken 및 RefreshToken 저장

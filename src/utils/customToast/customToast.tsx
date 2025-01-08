@@ -8,8 +8,8 @@ export type loadingToastType = (
 ) => Promise<any>;
 
 class customError extends Error {
-	response: Promise<Response>;
-	constructor(response: Promise<Response>) {
+	response: Response;
+	constructor(response: Response) {
 		super();
 		this.response = response;
 	}
@@ -37,6 +37,7 @@ export function loadingToast(
 		promise
 			.then((response) => {
 				if (!response.ok) {
+
 					throw new customError(Promise.reject(response)); // Promise로 감싸기
 				}
 				return response;
