@@ -1,10 +1,10 @@
 export const questOptions = [
-	{ value: "일반비경" },
-	{ value: "이벤트 퀘스트" },
-	{ value: "영역 토벌" },
-	{ value: "일일 임무" },
-	{ value: "맵 탐사" },
-	{ value: "채집" },
+	{ value: "일반비경", icon: "/svgs/quests/domain.svg" },
+	{ value: "이벤트 퀘스트", icon: "/svgs/quests/event.svg" },
+	{ value: "영역 토벌", icon: "/svgs/quests/mob.svg" },
+	{ value: "일일 임무", icon: "/svgs/quests/mission.svg" },
+	{ value: "맵 탐사", icon: "/svgs/quests/explore.svg" },
+	{ value: "채집", icon: "/svgs/quests/gather.svg" },
 ];
 
 export const lvOptions = [
@@ -25,4 +25,11 @@ export const regionOptions = [
 	{ value: "EUROPE" },
 	{ value: "CHINA" },
 	{ value: "TW, HK, MO" },
+];
+
+export const timeOptions = [
+	{ value: "30분" },
+	{ value: "1시간" },
+	{ value: "1시간 30분" },
+	{ value: "2시간" },
 ];

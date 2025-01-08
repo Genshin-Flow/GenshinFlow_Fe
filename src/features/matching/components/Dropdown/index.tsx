@@ -57,6 +57,7 @@ export default function Dropdown({
 				style={style}
 				isOpen={isOpen}
 				isMobile={isMobile}
+				type="button"
 			>
 				{value || placeholder}
 				{isOpen ? (
