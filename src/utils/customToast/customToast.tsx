@@ -1,5 +1,12 @@
 import { toast } from "react-toastify";
 
+export type loadingToastType = (
+	promise: Promise<any>,
+	pendingMessage?: string,
+	successMessage?: string,
+	errorMessage?: string,
+) => Promise<any>;
+
 class customError extends Error {
 	response: Response;
 	constructor(response: Response) {
@@ -30,15 +37,15 @@ export function loadingToast(
 		promise
 			.then((response) => {
 				if (!response.ok) {
-					throw new customError(response); // promise 대신 response 전달
+
+					throw new customError(Promise.reject(response)); // Promise로 감싸기
 				}
-				return response; // response 반환
+				return response;
 			})
 			.catch((error) => {
 				if (error instanceof customError) {
-					throw error.response;
+					return error.response; // customError의 response 반환
 				}
-
 				return error;
 			}),
 		{

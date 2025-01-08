@@ -1,3 +1,4 @@
+import { errorToast } from "@/utils/customToast/customToast";
 type propsType = {
 	page: number;
 	size: number;
@@ -12,6 +13,15 @@ export async function getMainPostList({ page, size }: propsType) {
 			method: "get",
 		},
 	);
+
+	if (!response.ok) {
+		switch (response.status) {
+			default:
+				errorToast("서버에러가 발생했습니다. 새로고침 후 다시 이용해주세요요");
+				throw new Error("서버에러가 발생했습니다. 잠시 후 다시 시도해주세요.");
+		}
+	}
+
 	const data = await response.json();
 	return data;
 }
