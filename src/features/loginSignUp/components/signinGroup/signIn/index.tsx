@@ -3,7 +3,7 @@ import { nanoid } from "nanoid";
 import { loginSvg } from "@/data/SvgUrl/svg";
 import SignInAuth from "@/features/loginSignUp/components/signinGroup/signInAuth";
 import ForgotPassword from "@/features/loginSignUp/components/forgotPassGroup/forgotPasswordButton";
-import ForgotPassAuthMail from "@/features/loginSignUp/components/forgotPassGroup/forgorPasswordAuth";
+import ForgotPassAuthMail from "@/features/loginSignUp/components/forgotPassGroup/forgotPassword";
 import loginState from "@/stores/loginPageStateStore";
 import Line from "@/features/loginSignUp/components/line";
 import { LoginContainer } from "./style";

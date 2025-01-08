@@ -38,6 +38,10 @@ export default function SelectButton() {
 	}, [selectBtn]);
 
 	useEffect(() => {
+		setSelectBtn(null);
+	}, []);
+
+	useEffect(() => {
 		setModalState("");
 	}, [selectBtn]);
 
