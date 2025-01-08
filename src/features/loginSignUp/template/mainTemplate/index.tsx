@@ -7,6 +7,8 @@ type propsType = {
 
 export default function MainTemplate(props: propsType) {
 	return (
-		<TemplateContainer className="naviaBg">{props.children}</TemplateContainer>
+		<TemplateContainer className="naviaBg loginTemplate">
+			{props.children}
+		</TemplateContainer>
 	);
 }
