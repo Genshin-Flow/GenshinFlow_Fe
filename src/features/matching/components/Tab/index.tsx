@@ -138,12 +138,14 @@ export default function Tab({ isMobile = false }: TabProps) {
 				oauthSignIn(session.user.email, () => setOauthUidModalState(true)),
 			)
 				.then((response) => {
-					if (response.status === 404) {
-						setOauthUidModalState(true);
-					} else if (response.status === 403) {
-						throw new Error("이미 가입된 계정입니다");
-					} else if (!response.ok) {
-						throw new Error("토큰을 받아오는데 실패했습니다.");
+					switch (response.status) {
+						case 404:
+							setOauthUidModalState(true);
+							break;
+						case 403:
+							throw new Error("이미 가입된 계정입니다");
+						default:
+							throw new Error("토큰을 받아오는데 실패했습니다.");
 					}
 				})
 				.catch((error) => {

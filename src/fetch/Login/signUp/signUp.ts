@@ -1,7 +1,5 @@
 import { checkMail } from "@/features/loginSignUp/auth/emailCheck/emailValidation";
 import { passwordValidation } from "@/features/loginSignUp/auth/passwordCheck/passwordValidation";
-import { redirect } from "next/navigation";
-import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 /**
  *
  * @param email
@@ -30,8 +28,6 @@ export async function signUp(
 	password: string,
 	authCodeValue: string,
 	uidValue: string,
-	setModalState: (state: string) => void,
-	clientRouter?: AppRouterInstance,
 ) {
 	try {
 		const mailState = checkMail(email);
@@ -44,15 +40,13 @@ export async function signUp(
 		}
 
 		if (!mailState) {
-			setModalState("이메일의 형식이 올바른지 확인해주십시오");
-			return;
+			throw new Error("이메일의 형식이 올바른지 확인해주십시오");
 		}
 
 		if (!passwordCheck) {
-			setModalState(
+			throw new Error(
 				"비밀번호는 소문자와 특수기호 1개 이상이 포함되어야 합니다",
 			);
-			return;
 		}
 
 		if (mailState && passwordCheck && authCodeValue) {
@@ -71,12 +65,6 @@ export async function signUp(
 
 			if (!response.ok) {
 				throw new SignUpError(response);
-			}
-
-			if (clientRouter) {
-				clientRouter?.push("/Login");
-			} else {
-				redirect("/Login");
 			}
 
 			return response;

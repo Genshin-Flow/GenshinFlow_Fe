@@ -80,8 +80,6 @@ async function submitHandler(
 			return;
 		} else {
 			const data = await tokenResPonse.json();
-			// setCookie("RefreshToken", data.token.refreshToken);
-			// setCookie("AccessToken", data.token.accessToken);
 			router.push("/");
 		}
 	}
