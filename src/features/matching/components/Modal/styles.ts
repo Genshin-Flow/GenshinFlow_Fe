@@ -211,6 +211,13 @@ export const InputContainer = styled("div", {
 		"& input": {
 			width: "100%",
 		},
+		"& > div.width80": {
+			width: "80%",
+		},
+
+		"& > p": {
+			marginBottom: "0",
+		},
 	},
 	variants: {
 		isMobile: {

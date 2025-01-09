@@ -41,8 +41,8 @@ export default function AddPostModalPC(props: propsType) {
 				<UserInfo>
 					<p>유저 정보</p>
 					<InputContainer>
-						UID
-						<div>
+						<p>UID</p>
+						<div className="width80">
 							<TextInput
 								placeholder="800000000"
 								defaultValue={uid === 0 ? "" : uid}
@@ -56,7 +56,7 @@ export default function AddPostModalPC(props: propsType) {
 					</InputContainer>
 					<InputContainer>
 						<p>닉네임</p>
-						<div>
+						<div className="width80">
 							<TextInput
 								placeholder="여행자"
 								defaultValue={name === "" ? "" : name}
@@ -70,7 +70,7 @@ export default function AddPostModalPC(props: propsType) {
 					</InputContainer>
 					<InputContainer>
 						<p>월드레벨</p>
-						<div>
+						<div className="width80">
 							<TextInput
 								placeholder="9"
 								defaultValue={worldLevel === 0 ? "" : worldLevel}
