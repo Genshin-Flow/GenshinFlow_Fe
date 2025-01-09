@@ -6,19 +6,14 @@ import { FormEvent, useState } from "react";
 import Checkbox from "@/features/loginSignUp/components/checkBox";
 import Button from "@/features/loginSignUp/mobile/components/button";
 import { signUp } from "@/fetch/Login/signUp/signUp";
-import loginState from "@/stores/loginPageStateStore";
-import { useRouter } from "next/navigation";
-import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { SignUpContainer } from "./style";
 
 export default function SignUp() {
 	const [email, setEmail] = useState("");
 	const [checkState, setCheckState] = useState(false);
-	const { setModalState } = loginState();
-	const router = useRouter();
 	const variable = checkState === true ? "login" : "deActive";
 	const submitHandler = (event: FormEvent<HTMLFormElement>) =>
-		SubmitHandler(event, email, setModalState, router);
+		SubmitHandler(event, email);
 	return (
 		<SignUpContainer className="signUpContainer">
 			<SubTitle platform="mobile">계정 만들기</SubTitle>
@@ -61,8 +56,6 @@ export default function SignUp() {
 async function SubmitHandler(
 	event: FormEvent<HTMLFormElement>,
 	emailValue: string,
-	setModal: (state: string) => void,
-	router: AppRouterInstance,
 ) {
 	event.preventDefault();
 	const target = event.target as HTMLElement;
@@ -72,5 +65,5 @@ async function SubmitHandler(
 	const passwordValue = $password.value;
 	const authCodeValue = $authCode.value;
 	const uidValue = $uid.value;
-	signUp(emailValue, passwordValue, authCodeValue, uidValue, setModal, router);
+	signUp(emailValue, passwordValue, authCodeValue, uidValue);
 }

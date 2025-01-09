@@ -88,9 +88,9 @@ async function onSubmitHandler(
 				return;
 			} else if (!responseCode.ok) {
 				setStatus("error");
-				break;
-		}
-	}
+				return;
+			}
+		});
 }
 
 function selectText(status: Status) {

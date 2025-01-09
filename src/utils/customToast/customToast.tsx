@@ -37,8 +37,7 @@ export function loadingToast(
 		promise
 			.then((response) => {
 				if (!response.ok) {
-
-					throw new customError(Promise.reject(response)); // Promise로 감싸기
+					throw new customError(response);
 				}
 				return response;
 			})
