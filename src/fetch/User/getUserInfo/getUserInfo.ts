@@ -1,22 +1,33 @@
-export async function getUserInfo() {
+class returnResponse extends Error {
+	response: Response;
+	constructor(response: Response) {
+		super();
+		this.response = response;
+	}
+}
+
+export async function getUserInfo(accessToken: string): Promise<Response> {
 	try {
 		const baseApi = process.env.NEXT_PUBLIC_BaseApi;
-		const getMyInfoApi = process.env.myInfo;
+		const getMyInfoApi = process.env.NEXT_PUBLIC_myInfoApi;
 		if (!baseApi || !getMyInfoApi) {
 			throw new Error("정보를 조회하는데 필요한 환경변수를 찾지 못했습니다.");
 		}
 		const response = await fetch(`${baseApi}${getMyInfoApi}`, {
-			method: "get",
+			headers: {
+				Authorization: `Bearer ${accessToken}`,
+				"Content-Type": "application/json",
+			},
 		});
 		if (response.status !== 200) {
-			throw new Error("내 정보를 조회하는데 실패했습니다.");
+			throw new returnResponse(response);
 		}
-		const data = await response.json();
-		return data;
+		return response;
 	} catch (error) {
-		if (error instanceof Error) {
-			console.error(error);
+		const err = error as Error;
+		if (error instanceof returnResponse) {
+			return error.response;
 		}
-		return "";
+		return new Response(err.message, { status: 500 });
 	}
 }

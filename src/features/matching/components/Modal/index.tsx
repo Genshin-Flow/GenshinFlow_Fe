@@ -18,6 +18,7 @@ import AddPostModalMobile from "@/features/matching/mobile/components/modalMobil
 import { addPostSignIn } from "@/fetch/Main/addPostList/addPostList";
 import { loadingToast } from "@/utils/customToast/customToast";
 import { loadingToastType } from "@/utils/customToast/customToast";
+import useLoginStateStore from "@/stores/loginStateStore";
 
 interface ModalProps {
 	onClose: () => void;
@@ -91,6 +92,7 @@ function WriteModal({
 }) {
 	const [quest, setQuest] = useState("");
 	const [time, setTime] = useState("1시간");
+	const { isLogin } = useLoginStateStore();
 	const {
 		register,
 		handleSubmit,
@@ -104,7 +106,7 @@ function WriteModal({
 					action="#"
 					method="post"
 					onSubmit={handleSubmit((data) =>
-						postHandler(data, quest, time, loadingToast, onClose),
+						postHandler(data, quest, time, loadingToast, onClose, isLogin),
 					)}
 				>
 					<AddPostModalPC
@@ -123,7 +125,7 @@ function WriteModal({
 					action="#"
 					method="post"
 					onSubmit={handleSubmit((data) =>
-						postHandler(data, quest, time, loadingToast, onClose),
+						postHandler(data, quest, time, loadingToast, onClose, isLogin),
 					)}
 				>
 					<AddPostModalMobile
@@ -159,20 +161,23 @@ async function postHandler(
 	time: string,
 	loadingToast: loadingToastType,
 	onClose: () => void,
+	isLogin: boolean,
 ) {
 	await loadingToast(
-		addPostSignIn(data, quest, time),
+		addPostSignIn(data, quest, time, isLogin),
 		"등록 중입니다",
 		"등록 완료!",
 		"등록에 실패했습니다.",
 	)
 		.then((response) => {
+			console.log(response);
 			if (response.ok) {
 				onClose();
 			}
 		})
 		.catch((error) => {
 			const responseCode = error.status;
+			console.log(error.response);
 			// 코드에 따른 예외처리리
 		});
 }
