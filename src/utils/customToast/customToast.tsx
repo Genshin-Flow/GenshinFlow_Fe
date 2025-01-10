@@ -37,7 +37,7 @@ export function loadingToast(
 		promise
 			.then((response) => {
 				if (!response.ok) {
-					throw new customError(response);
+					throw Promise.reject(new customError(response));
 				}
 				return response;
 			})

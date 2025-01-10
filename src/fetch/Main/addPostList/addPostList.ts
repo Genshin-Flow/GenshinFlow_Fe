@@ -1,4 +1,6 @@
 import { FieldValues } from "react-hook-form";
+import { getAccessToken } from "@/fetch/Token/getAccessToken/getAccessToken";
+import useLoginStateStore from "@/stores/loginStateStore";
 
 class returnResponse extends Error {
 	response: Response;
@@ -12,35 +14,73 @@ export async function addPostSignIn(
 	data: FieldValues,
 	quest: string,
 	time: string,
+	loginState: boolean,
 ) {
 	try {
 		const baseApi = process.env.NEXT_PUBLIC_BaseApi;
 		const signInPostApi = process.env.NEXT_PUBLIC_posting_user;
+		const withOutSignIn = process.env.NEXT_PUBLIC_posting_guest;
 		let autoCompleteTime: number | unknown = "";
+		const defaultQuestCategory = "NORMAL_DOMAIN";
+		const { setIsLogin } = useLoginStateStore();
 		if (!baseApi || !signInPostApi) {
 			throw new Error("api 주소가 없습니다.");
 		}
 		autoCompleteTime = Number(await changeTime(time));
 
 		const changeData = {
-			...data,
-			uid: Number(data.uid),
-			worldLevel: Number(data.worldLevel),
-			questCategory: quest,
 			autoCompleteTime,
+			content: data.content,
+			name: data.name,
+			questCategory: quest || defaultQuestCategory,
+			worldLevel: Number(data.worldLevel),
 		};
 
-		const response = await fetch(`${baseApi}${signInPostApi}`, {
-			method: "POST",
-			body: JSON.stringify({
-				...changeData,
-			}),
-		});
-		if (!response.ok) {
-			switch (response.status) {
-				// 코드에 따른 추가 예외처리
-				default:
-					throw new returnResponse(response);
+		// 로그인후 포스트 등록시 fetch
+		if (loginState) {
+			// 토큰을 가져온 뒤 포스트작성 api 실행
+			const tokenResponse = await getAccessToken(setIsLogin);
+			if (!tokenResponse.ok) {
+				throw new returnResponse(tokenResponse);
+			}
+			const result = await tokenResponse.json();
+			const response = await fetch(`${baseApi}${signInPostApi}`, {
+				method: "POST",
+				headers: {
+					Authorization: `${result.accessToken}`,
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					...changeData,
+				}),
+			});
+			if (!response.ok) {
+				switch (response.status) {
+					// 코드에 따른 추가 예외처리
+					default:
+						throw new returnResponse(response);
+				}
+			}
+		}
+		// 로그아웃 상태에서 포스트 등록시 fetch
+		else {
+			if (!withOutSignIn) {
+				throw new Error("api 주소가 없습니다.");
+			}
+			const response = await fetch(`${baseApi}${withOutSignIn}`, {
+				method: "POST",
+				body: JSON.stringify({
+					...changeData,
+					uid: Number(data.uid),
+					password: data.password,
+				}),
+			});
+			if (!response.ok) {
+				switch (response.status) {
+					// 코드에 따른 추가 예외처리
+					default:
+						throw new returnResponse(response);
+				}
 			}
 		}
 	} catch (error) {
