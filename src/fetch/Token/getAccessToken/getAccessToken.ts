@@ -1,5 +1,3 @@
-import useLoginStateStore from "@/stores/loginStateStore";
-
 class getAccessTokenError extends Error {
 	response: Response;
 	constructor(response: Response) {
@@ -8,31 +6,36 @@ class getAccessTokenError extends Error {
 	}
 }
 
-export async function getAccessToken() {
+export async function getAccessToken(
+	setIsLogin?: (value: boolean) => void,
+): Promise<Response> {
 	try {
-		const baseApi = process.env.NEXT_PUBLIC_BaseApi;
+		const localBaseApi = process.env.NEXT_PUBLIC_LocalBaseApi;
 		const tokenReissue = process.env.NEXT_PUBLIC_getAccessTokenApi;
-		const { setIsLogin } = useLoginStateStore();
-		if (!baseApi || !tokenReissue) {
+		if (!localBaseApi || !tokenReissue) {
 			throw new Error("토큰 재발급에 필요한 환경변수를 찾을 수 없습니다.");
 		}
-		const response = await fetch(`${baseApi}${tokenReissue}`, {
-			method: "POST",
+		const response = await fetch(`${localBaseApi}${tokenReissue}`, {
+			method: "GET",
 			headers: {
 				"Content-Type": "application/json",
 			},
 		});
 		if (!response.ok) {
-			setIsLogin(false);
+			if (setIsLogin) {
+				setIsLogin(false);
+			}
 			throw new getAccessTokenError(response);
 		}
-		const data = await response.json();
-		setIsLogin(true);
-		return data;
+		if (setIsLogin) {
+			setIsLogin(true);
+		}
+		return response;
 	} catch (error) {
+		const err = error as Error;
 		if (error instanceof getAccessTokenError) {
 			return error.response;
 		}
-		return error;
+		return new Response(err.message, { status: 500 });
 	}
 }
