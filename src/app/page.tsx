@@ -7,6 +7,11 @@ import Sidebar from "@/features/matching/components/sidebar";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { getAccessToken } from "@/fetch/Token/getAccessToken/getAccessToken";
+import useLoginStateStore from "@/stores/loginStateStore";
+import { errorToast } from "@/utils/customToast/customToast";
+import { useRouter } from "next/navigation";
+import userStore from "@/stores/userStore";
+import { getUserInfo } from "@/fetch/User/getUserInfo/getUserInfo";
 
 export default function Home() {
 	const [mounted, setMounted] = useState(false);
@@ -15,11 +20,43 @@ export default function Home() {
 	const isMobile = useMediaQuery({
 		query: `(max-width:${mobileWidth}px)`,
 	});
+	const { setIsLogin } = useLoginStateStore();
+	const { setUserInfo, uid } = userStore();
+
+	const router = useRouter();
 
 	// 컴포넌트가 마운트 되기 전에는 렌더링 하지 않음
 	useEffect(() => {
 		setMounted(true);
-		getAccessToken();
+		const responseData = async () => {
+			const tokenResponse = await getAccessToken(setIsLogin);
+			const tokenResult = await tokenResponse.json();
+			const accessToken = tokenResult.accessToken;
+			if (!tokenResponse.ok) {
+				switch (tokenResponse.status) {
+					// 에러 핸들러
+					default:
+						return;
+				}
+			}
+			const userProfileDataResponse = await getUserInfo(accessToken);
+			if (!userProfileDataResponse.ok) {
+				switch (tokenResponse.status) {
+					// 에러 핸들러
+					case 404:
+						errorToast("유저 정보를 찾을 수 없습니다.");
+						break;
+					default:
+						return;
+				}
+			}
+			const result = await userProfileDataResponse.json();
+			setUserInfo({ ...result });
+		};
+		// 정보가 갱신되지 않았을때만 fetch 실행행
+		if (uid === 0) {
+			responseData();
+		}
 	}, []);
 
 	if (!mounted) {

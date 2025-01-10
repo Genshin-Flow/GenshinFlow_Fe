@@ -68,8 +68,9 @@ async function adminPageController(
 		const accessToken = cookies().get("AccessToken") as tokenType;
 		// 	리프레시 토큰으로 얻어온 엑세스 토큰 혹은 기존의 엑세스 토큰을 이용하여 유저 정보를 조회해 등급을 확인
 		if (accessToken) {
-			const userInfo = await getUserInfo();
-			if (userInfo.role !== "관리자") {
+			const userInfo = await getUserInfo(accessToken.value);
+			const result = await userInfo.json();
+			if (result.role !== "ADMIN") {
 				// 관리자가 아닐시 redirect
 				return NextResponse.redirect(new URL("/", req.url));
 			}
