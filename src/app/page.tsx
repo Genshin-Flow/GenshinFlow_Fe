@@ -27,37 +27,35 @@ export default function Home() {
 
 	// 컴포넌트가 마운트 되기 전에는 렌더링 하지 않음
 	useEffect(() => {
-		try {
-			setMounted(true);
-			const responseData = async () => {
-				const tokenResponse = await getAccessToken(setIsLogin);
-				const tokenResult = await tokenResponse.json();
-				const accessToken = tokenResult.accessToken;
-				if (!tokenResponse.ok) {
-					switch (
-						tokenResponse.status
-						// 에러 핸들러
-					) {
-					}
+		setMounted(true);
+		const responseData = async () => {
+			const tokenResponse = await getAccessToken(setIsLogin);
+			const tokenResult = await tokenResponse.json();
+			const accessToken = tokenResult.accessToken;
+			if (!tokenResponse.ok) {
+				switch (tokenResponse.status) {
+					// 에러 핸들러
+					default:
+						return;
 				}
-				const userProfileDataResponse = await getUserInfo(accessToken);
-				if (!userProfileDataResponse.ok) {
-					switch (tokenResponse.status) {
-						// 에러 핸들러
-						case 404:
-							errorToast("유저 정보를 찾을 수 없습니다.");
-							break;
-					}
-				}
-				const result = await userProfileDataResponse.json();
-				setUserInfo({ ...result });
-			};
-			// 정보가 갱신되지 않았을때만 fetch 실행행
-			if (uid === 0) {
-				responseData();
 			}
-		} catch (error) {
-			router.push("/error");
+			const userProfileDataResponse = await getUserInfo(accessToken);
+			if (!userProfileDataResponse.ok) {
+				switch (tokenResponse.status) {
+					// 에러 핸들러
+					case 404:
+						errorToast("유저 정보를 찾을 수 없습니다.");
+						break;
+					default:
+						return;
+				}
+			}
+			const result = await userProfileDataResponse.json();
+			setUserInfo({ ...result });
+		};
+		// 정보가 갱신되지 않았을때만 fetch 실행행
+		if (uid === 0) {
+			responseData();
 		}
 	}, []);
 
