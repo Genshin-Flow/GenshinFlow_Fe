@@ -14,11 +14,13 @@ export async function getUserInfo(accessToken: string): Promise<Response> {
 			throw new Error("정보를 조회하는데 필요한 환경변수를 찾지 못했습니다.");
 		}
 		const response = await fetch(`${baseApi}${getMyInfoApi}`, {
+			method: "GET",
 			headers: {
 				Authorization: `Bearer ${accessToken}`,
 				"Content-Type": "application/json",
 			},
 		});
+
 		if (response.status !== 200) {
 			throw new returnResponse(response);
 		}
