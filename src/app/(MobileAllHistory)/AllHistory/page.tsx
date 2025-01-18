@@ -5,7 +5,7 @@ import MypageText from "@/features/mypage/mobile/components/mypageText";
 import HistoryData from "@/app/(MobileAllHistory)/AllHistory/HistoryData";
 import Button from "@/features/loginSignUp/mobile/components/button";
 import { listItemType } from "@/features/mypage/components/historyGroup/historyInfo";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { historySubmitHandler } from "@/features/mypage/mobile/components/historyMoreButton";
 export default function page() {
 	const [listData, setListData] = useState<listItemType[]>(data);

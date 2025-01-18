@@ -25,13 +25,13 @@ export async function POST(req: NextRequest) {
 
 		const requestHeaders = {
 			"content-type": "application/json",
+			RefreshToken: refreshToken,
 		};
 
 		// API 요청
 		const response = await fetch(`${baseApi}${ReRegisterTokenApi}`, {
 			method: "POST",
 			headers: requestHeaders,
-			body: JSON.stringify({ refreshToken }),
 			cache: "no-cache",
 		});
 

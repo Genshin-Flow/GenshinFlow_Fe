@@ -23,7 +23,7 @@ export async function middleware(req: NextRequest) {
 	if (withOutAuthList.includes(pathname) && refreshToken) {
 		return NextResponse.redirect(new URL("/", req.url));
 	}
-	// 로그인이 필요한 서비스에 접근하였을때때
+	// 로그인이 필요한 서비스에 접근하였을때
 	else if (withAuthList.includes(pathname) && !accessToken) {
 		// accessToken이 없을 때 재발급 시도
 		if (!refreshToken) {
@@ -65,7 +65,6 @@ export async function middleware(req: NextRequest) {
 			return res;
 		}
 	} else if (withAuthList.includes(pathname) && accessToken) {
-		// .위의 코드와 겹치지만 리다이렉트를 상단에서 처리하기 위해 사용
 		if (widthAdminAuthList.includes(pathname)) {
 			const permissionResponse = await checkAuthPermission(accessToken.value);
 
@@ -83,8 +82,9 @@ export async function middleware(req: NextRequest) {
 					new URL(`/error?message=접근 권한이 없습니다.`, req.url),
 				);
 			}
+		} else {
+			return NextResponse.next();
 		}
-		return NextResponse.next();
 	}
 
 	return NextResponse.next();
@@ -100,6 +100,7 @@ export const config = {
 async function ReRegisterToken(refreshToken: string) {
 	const requestHeaders = {
 		"content-type": "application/json",
+		RefreshToken: refreshToken,
 	};
 
 	const response = await fetch(`http://localhost:3000/api/refreshAccessToken`, {
