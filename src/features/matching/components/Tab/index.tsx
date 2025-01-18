@@ -29,8 +29,7 @@ import { oauthSignIn } from "@/fetch/Login/oauthSignIn/oauthSignIn";
 import { loadingToast, warningToast } from "@/utils/customToast/customToast";
 import MobileAboutModal from "@/components/Header/modal/mobileAboutModal";
 import mobileAboutStore from "@/stores/mobileAboutStore";
-import { reissueToken } from "@/fetch/Token/reissureToken/reissureToken";
-import { Cookies } from "react-cookie";
+import PcAbout from "@/features/matching/components/About";
 
 interface TabProps {
 	isMobile?: boolean;
@@ -82,7 +81,7 @@ export default function Tab({ isMobile = false }: TabProps) {
 			case 0:
 				return <Matching isMobile={isMobile} />;
 			case 1:
-				return <>{isMobile ? <Event /> : <div>ABOUT</div>}</>;
+				return <>{isMobile ? <Event /> : <PcAbout />}</>;
 			case 2:
 		}
 	};
@@ -211,7 +210,6 @@ function Matching({ isMobile = false }: MatchingProps) {
 	const { email } = userStore();
 	const { data, isLoading, hasNextPage } = useMainPostObserve(scrollRef);
 	const { aboutState, setAboutStore } = mobileAboutStore();
-	const cookie = new Cookies();
 	useEffect(() => {
 		const pageData = data?.pages[0] as unknown as PostData;
 		if (pageData?.content) {
@@ -219,14 +217,6 @@ function Matching({ isMobile = false }: MatchingProps) {
 			setPostData((prev) => (prev ? [...prev, ...newPosts] : newPosts));
 		}
 	}, [data]);
-	useEffect(() => {
-		(async () => {
-			const cookieToken = cookie.get("RefreshToken");
-			const res = await reissueToken(cookieToken);
-			const json = await res.json();
-			console.log(json);
-		})();
-	}, []);
 
 	const openModal = () => {
 		setIsModalOpen(true);
