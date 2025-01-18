@@ -28,6 +28,11 @@ export const Text = styled("p", {
 			gray02: { color: "gray.02" },
 			gray03: { color: "gray.03" },
 		},
+		questVariants: {
+			true: {
+				minWidth: "60px",
+			},
+		},
 	},
 	defaultVariants: {
 		size: "sm",

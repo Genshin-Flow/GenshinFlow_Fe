@@ -106,7 +106,7 @@ export default function MatchingPostItem({
 							<QuestIcon />
 							<CenteredImage src={questImage} alt="Quest Type" />
 						</QuestIconWrapper>
-						<Text>{quest}</Text>
+						<Text questVariants={true}>{quest}</Text>
 					</QuestType>
 					<WorldLevel selected={selected === "worldLevel"}>
 						<Text>{item.wordLevel}</Text>
