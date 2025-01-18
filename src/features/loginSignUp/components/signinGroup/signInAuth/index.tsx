@@ -78,10 +78,8 @@ async function submitHandler(
 		if (!tokenResPonse.ok) {
 			setLoginTokenFailed(setModal);
 			return;
-		} else {
-			const data = await tokenResPonse.json();
-			router.push("/");
 		}
+		router.push("/");
 	}
 	if (!data.ok) {
 		loginFailed(data, setModal, setLoginButtonState);
