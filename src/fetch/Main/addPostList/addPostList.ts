@@ -1,6 +1,5 @@
 import { FieldValues } from "react-hook-form";
 import { getAccessToken } from "@/fetch/Token/getAccessToken/getAccessToken";
-import useLoginStateStore from "@/stores/loginStateStore";
 
 class returnResponse extends Error {
 	response: Response;
@@ -15,6 +14,7 @@ export async function addPostSignIn(
 	quest: string,
 	time: string,
 	loginState: boolean,
+	setIsLogin: (value: boolean) => void,
 ) {
 	try {
 		const baseApi = process.env.NEXT_PUBLIC_BaseApi;
@@ -22,7 +22,6 @@ export async function addPostSignIn(
 		const withOutSignIn = process.env.NEXT_PUBLIC_posting_guest;
 		let autoCompleteTime: number | unknown = "";
 		const defaultQuestCategory = "NORMAL_DOMAIN";
-		const { setIsLogin } = useLoginStateStore();
 		if (!baseApi || !signInPostApi) {
 			throw new Error("api 주소가 없습니다.");
 		}
@@ -31,7 +30,7 @@ export async function addPostSignIn(
 		const changeData = {
 			autoCompleteTime,
 			content: data.content,
-			name: data.name,
+			writerName: data.name,
 			questCategory: quest || defaultQuestCategory,
 			worldLevel: Number(data.worldLevel),
 		};

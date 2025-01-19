@@ -92,7 +92,7 @@ function WriteModal({
 }) {
 	const [quest, setQuest] = useState("");
 	const [time, setTime] = useState("1시간");
-	const { isLogin } = useLoginStateStore();
+	const { isLogin, setIsLogin } = useLoginStateStore();
 	const {
 		register,
 		handleSubmit,
@@ -106,7 +106,15 @@ function WriteModal({
 					action="#"
 					method="post"
 					onSubmit={handleSubmit((data) =>
-						postHandler(data, quest, time, loadingToast, onClose, isLogin),
+						postHandler(
+							data,
+							quest,
+							time,
+							loadingToast,
+							onClose,
+							isLogin,
+							setIsLogin,
+						),
 					)}
 				>
 					<AddPostModalPC
@@ -125,7 +133,15 @@ function WriteModal({
 					action="#"
 					method="post"
 					onSubmit={handleSubmit((data) =>
-						postHandler(data, quest, time, loadingToast, onClose, isLogin),
+						postHandler(
+							data,
+							quest,
+							time,
+							loadingToast,
+							onClose,
+							isLogin,
+							setIsLogin,
+						),
 					)}
 				>
 					<AddPostModalMobile
@@ -162,9 +178,10 @@ async function postHandler(
 	loadingToast: loadingToastType,
 	onClose: () => void,
 	isLogin: boolean,
+	setIsLogin: (value: boolean) => void,
 ) {
 	await loadingToast(
-		addPostSignIn(data, quest, time, isLogin),
+		addPostSignIn(data, quest, time, isLogin, setIsLogin),
 		"등록 중입니다",
 		"등록 완료!",
 		"등록에 실패했습니다.",
