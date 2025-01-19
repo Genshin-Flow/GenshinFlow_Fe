@@ -18,8 +18,8 @@ export async function reissueToken(refreshToken: string): Promise<Response> {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
-				Authentication: refreshToken,
 			},
+			body: JSON.stringify({ refreshToken }),
 		});
 		if (!response.ok) throw new returnResponse(response);
 		return response;

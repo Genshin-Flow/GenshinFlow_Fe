@@ -37,7 +37,6 @@ export async function POST(req: NextRequest) {
 
 		const results = await response.json();
 		if (!response.ok) {
-			console.log("false");
 			throw new returnResponse(response);
 		}
 		return NextResponse.json(
