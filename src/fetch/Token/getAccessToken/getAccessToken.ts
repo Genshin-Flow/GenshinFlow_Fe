@@ -30,6 +30,7 @@ export async function getAccessToken(
 		if (setIsLogin) {
 			setIsLogin(true);
 		}
+
 		return response;
 	} catch (error) {
 		const err = error as Error;

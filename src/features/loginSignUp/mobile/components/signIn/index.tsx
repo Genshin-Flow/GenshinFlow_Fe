@@ -74,8 +74,9 @@ async function submitHandler(
 	if (!data.ok) {
 		loginFailed(data, setModal, buttonState);
 	}
+	const result = await data.json();
 
-	cookies.set("accessToken", data.accessToken);
-	cookies.set("refreshToken", data.refreshToken);
+	cookies.set("AccessToken", result.accessToken);
+	cookies.set("RefreshToken", result.refreshToken);
 	router.push("/");
 }
