@@ -50,7 +50,8 @@ export default function Home() {
 			const result = await userProfileDataResponse.json();
 			setUserInfo({ ...result });
 		};
-		// 정보가 갱신되지 않았을때만 fetch 실행행
+		// 정보가 갱신되지 않았을때만 fetch 실행
+
 		if (uid === 0) {
 			responseData();
 		}

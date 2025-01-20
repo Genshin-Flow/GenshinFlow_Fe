@@ -7,11 +7,3 @@ export const MyPageContainer = styled("article", {
 		position: "relative",
 	},
 });
-
-export const ExitButton = styled("figure", {
-	base: {
-		position: "absolute",
-		top: "16px",
-		right: "20px",
-	},
-});
