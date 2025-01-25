@@ -1,10 +1,8 @@
-/*
-기존에 만들었던 observer 함수를 사용하지 않고 코드가 중복되기는 하지만 
-최대한 깔끔하게 작성하고자 새롭게 observer 파일을 생성
-*/
-import { getMainPostList } from "@/fetch/Main/mainPostList/mainPostList";
-import { useInfiniteQuery } from "@tanstack/react-query";
 import { RefObject, useEffect } from "react";
+import { useInfiniteTanStack } from "@/hooks/userMainPageList";
+import { getMainPostList } from "@/fetch/Main/mainPostList/mainPostList";
+import { getFilterMainPostList } from "@/fetch/Main/mainPostList/filterMainPostList";
+import { QueryFilters } from "@tanstack/react-query";
 
 const observerOption = {
 	root: null,
@@ -12,18 +10,26 @@ const observerOption = {
 	threshold: 0,
 };
 
-export function useMainPostObserve(scrollRef: RefObject<HTMLDivElement>) {
-	const { data, isLoading, fetchNextPage, hasNextPage } = useInfiniteQuery({
-		queryKey: ["getMainPostList"],
-		queryFn: ({ pageParam = 1 }) =>
-			getMainPostList({ page: pageParam, size: 20 }),
-		initialPageParam: 1,
-		getNextPageParam: (lastPage) => {
-			if (!lastPage || lastPage.page >= lastPage.totalPages) return undefined;
-			return lastPage.page + 1;
-		},
-		staleTime: 1000 * 60 * 5,
-	});
+export function useMainPostObserve(
+	scrollRef: RefObject<HTMLDivElement>,
+	region: string[],
+	questCategory: string[],
+	worldLevel: string[],
+) {
+	const staleTime = 1000 * 60 * 10;
+	const pagesize = 10;
+
+	// 조건에 따라 API 함수를 선택
+	const filterBool =
+		region?.length > 0 || questCategory?.length > 0 || worldLevel?.length > 0;
+	const fetchFn = filterBool ? getFilterMainPostList : getMainPostList;
+	const queryFilter = "getMainPost" as QueryFilters;
+	const { data, isLoading, fetchNextPage, hasNextPage, refetch } =
+		useInfiniteTanStack(queryFilter, pagesize, staleTime, fetchFn, [
+			region,
+			questCategory,
+			worldLevel,
+		]);
 
 	useEffect(() => {
 		if (!scrollRef.current || !hasNextPage) return;
@@ -34,7 +40,6 @@ export function useMainPostObserve(scrollRef: RefObject<HTMLDivElement>) {
 			}
 		}, observerOption);
 
-		console.log(scrollRef.current);
 		observer.observe(scrollRef.current);
 
 		return () => {
@@ -42,7 +47,11 @@ export function useMainPostObserve(scrollRef: RefObject<HTMLDivElement>) {
 				observer.unobserve(scrollRef.current);
 			}
 		};
-	}, [scrollRef.current]);
+	}, [scrollRef, hasNextPage, isLoading, fetchNextPage]);
+
+	useEffect(() => {
+		refetch();
+	}, [region, questCategory, worldLevel]); // 필터 변경 시 refetch 실행
 
 	return { data, isLoading, hasNextPage };
 }
