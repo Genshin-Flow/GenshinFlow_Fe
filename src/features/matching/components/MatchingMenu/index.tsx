@@ -11,21 +11,15 @@ import {
 
 type MatchingMenuProps = {
 	openModal: () => void;
-	quest: string;
-	setQuest: (value: string) => void;
-	lv: string;
-	setLv: (value: string) => void;
-	region: string;
-	setRegion: (value: string) => void;
+	setQuest: (value: string[]) => void;
+	setLv: (value: string[]) => void;
+	setRegion: (value: string[]) => void;
 };
 
 export default function MatchingMenu({
 	openModal,
-	quest,
 	setQuest,
-	lv,
 	setLv,
-	region,
 	setRegion,
 }: MatchingMenuProps) {
 	return (
@@ -33,14 +27,12 @@ export default function MatchingMenu({
 			<div>
 				<Dropdown
 					placeholder="퀘스트 종류"
-					value={quest}
 					setValue={setQuest}
 					options={questOptions}
 					style="genshin"
 				/>
 				<Dropdown
 					placeholder="월드 레벨"
-					value={lv}
 					setValue={setLv}
 					options={lvOptions}
 					style="genshin"
@@ -48,7 +40,7 @@ export default function MatchingMenu({
 			</div>
 			<div>
 				<Dropdown
-					value={region}
+					placeholder="지역"
 					setValue={setRegion}
 					options={regionOptions}
 					style="genshin"

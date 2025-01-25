@@ -1,25 +1,28 @@
-import { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
 	DropdownContainer,
 	DropdownButton,
 	DropdownList,
 	DropdownItem,
-	DropdownIcon,
+	CheckBox,
 	Arrow,
+	CenterBox,
+	TextBox,
 } from "./styles";
-import useOutsideClick from "@/hooks/useOutsideClick";
 import { nanoid } from "nanoid";
+import { findChild } from "@/utils/findChildren/findChildren";
+import useOutsideClick from "@/hooks/useOutsideClick";
 
 type Option = {
 	value: string;
 	icon?: string;
+	data?: string;
 };
 
 interface DropdownProps {
 	options: Option[];
 	placeholder?: string;
-	value: string;
-	setValue: (value: string) => void;
+	setValue: (value: string[]) => void;
 	style?: "default" | "genshin";
 	isMobile?: boolean;
 	isMobile2?: boolean;
@@ -28,27 +31,44 @@ interface DropdownProps {
 export default function Dropdown({
 	options,
 	placeholder = "",
-	value,
 	setValue,
 	style = "default",
 	isMobile = false,
 	isMobile2 = false,
 }: DropdownProps) {
 	const [isOpen, setIsOpen] = useState(false);
+	const [selectButtonValue, setButtonValue] = useState<string[]>([]);
 	const dropdownRef = useRef<HTMLDivElement>(null);
 
 	const toggleDropdown = () => {
 		setIsOpen(!isOpen);
 	};
 
-	const selectOption = (option: string) => {
-		setValue(option);
-		setIsOpen(false);
+	useOutsideClick(dropdownRef, () => setIsOpen(false));
+
+	const selectOption = (event: React.MouseEvent) => {
+		const target = event.target as HTMLElement;
+		const $parentElement = target.closest("li") as HTMLLIElement;
+		const $targetChildren = findChild<HTMLInputElement>(
+			$parentElement,
+			"input",
+		);
+		if ($targetChildren) {
+			const childrenDataValue = $targetChildren.dataset.itemdata;
+			$targetChildren.checked = !$targetChildren.checked;
+			if (childrenDataValue && $targetChildren.checked) {
+				setButtonValue((prev) => [...prev, childrenDataValue]);
+			} else {
+				setButtonValue((prev) => {
+					return prev.filter((item) => item !== childrenDataValue);
+				});
+			}
+		}
 	};
 
-	useOutsideClick(dropdownRef, () => {
-		setIsOpen(false);
-	});
+	useEffect(() => {
+		setValue(selectButtonValue);
+	}, [selectButtonValue]);
 
 	return (
 		<DropdownContainer ref={dropdownRef} isMobile={isMobile2}>
@@ -59,7 +79,7 @@ export default function Dropdown({
 				isMobile={isMobile}
 				type="button"
 			>
-				{value || placeholder}
+				{placeholder}
 				{isOpen ? (
 					<Arrow direction="up" style={style} />
 				) : (
@@ -69,15 +89,21 @@ export default function Dropdown({
 			{isOpen && (
 				<DropdownList style={style}>
 					{options.map((option) => (
-						<DropdownItem
-							key={nanoid()}
-							onClick={() => selectOption(option.value)}
-							style={style}
-						>
-							{option.value}
-							{option.icon && (
-								<DropdownIcon src={option.icon} alt={option.value} />
-							)}
+						<DropdownItem key={nanoid()} onClick={selectOption} style={style}>
+							<CenterBox>
+								<TextBox>
+									<CheckBox
+										type="checkBox"
+										data-itemdata={option.data}
+										defaultChecked={
+											option.data
+												? selectButtonValue.includes(option.data)
+												: false
+										}
+									/>
+									<span>{option.value}</span>
+								</TextBox>
+							</CenterBox>
 						</DropdownItem>
 					))}
 				</DropdownList>
