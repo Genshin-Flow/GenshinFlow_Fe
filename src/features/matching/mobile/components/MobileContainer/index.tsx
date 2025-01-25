@@ -8,12 +8,12 @@ import {
 
 type MobileFilterContainerProps = {
 	isMobile: boolean;
-	quest: string;
-	setQuest: (value: string) => void;
-	lv: string;
-	setLv: (value: string) => void;
-	region: string;
-	setRegion: (value: string) => void;
+	quest: string[];
+	setQuest: (value: string[]) => void;
+	lv: string[];
+	setLv: (value: string[]) => void;
+	region: string[];
+	setRegion: (value: string[]) => void;
 };
 
 export default function MobileFilterContainer({

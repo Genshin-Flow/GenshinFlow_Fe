@@ -200,16 +200,22 @@ export default function Tab({ isMobile = false }: TabProps) {
 }
 
 function Matching({ isMobile = false }: MatchingProps) {
+	const scrollRef = useRef<HTMLDivElement>(null);
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [selectType, setSelectType] = useState("");
 	const [postData, setPostData] = useState<PostContent[]>();
-	const [quest, setQuest] = useState("");
-	const [lv, setLv] = useState("");
-	const [region, setRegion] = useState("ASIA");
-	const scrollRef = useRef<HTMLDivElement>(null);
+	const [quest, setQuest] = useState<string[]>([]);
+	const [lv, setLv] = useState<string[]>([]);
+	const [region, setRegion] = useState<string[]>([]);
 	const { email } = userStore();
-	const { data, isLoading, hasNextPage } = useMainPostObserve(scrollRef);
 	const { aboutState, setAboutStore } = mobileAboutStore();
+	const { data, isLoading, hasNextPage } = useMainPostObserve(
+		scrollRef,
+		region,
+		quest,
+		lv,
+	);
+
 	useEffect(() => {
 		const pageData = data?.pages[0] as unknown as PostData;
 		if (pageData?.content) {
@@ -220,7 +226,7 @@ function Matching({ isMobile = false }: MatchingProps) {
 
 	const openModal = () => {
 		setIsModalOpen(true);
-		// 스크롤 2개가 생기는 현상 제거거
+		// 스크롤 2개가 생기는 현상 제거
 		document.body.style.overflow = "hidden";
 	};
 	const closeModal = () => {
@@ -236,11 +242,8 @@ function Matching({ isMobile = false }: MatchingProps) {
 				<>
 					<MatchingMenu
 						openModal={openModal}
-						quest={quest}
 						setQuest={setQuest}
-						lv={lv}
 						setLv={setLv}
-						region={region}
 						setRegion={setRegion}
 					/>
 					<MatchingHeader
