@@ -214,6 +214,7 @@ function Matching({ isMobile = false }: MatchingProps) {
 		region,
 		quest,
 		lv,
+		setPostData,
 	);
 
 	useEffect(() => {

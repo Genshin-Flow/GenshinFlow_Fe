@@ -15,7 +15,6 @@ export default function PcMypage(props: propsType) {
 	const blurBackgroundRef = useRef<HTMLDivElement>(null);
 	const modalRef = useRef<HTMLDivElement>(null);
 	const closePageFn = closePcMypage(blurBackgroundRef, props.setIsPcMypageOpen);
-	console.log(modalRef.current);
 	useOutsideClick(modalRef, closePageFn);
 	return (
 		<>
