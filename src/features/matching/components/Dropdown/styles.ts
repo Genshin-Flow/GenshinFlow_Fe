@@ -121,10 +121,11 @@ export const Arrow = styled("div", {
 
 export const DropdownList = styled("ul", {
 	base: {
+		width: "100%",
 		position: "absolute",
 		top: "100%",
 		left: "0%",
-		width: "130px",
+		minWidth: "130px",
 		backgroundColor: "gray.06",
 		boxShadow: "0px 4px 20px 0px rgba(22, 22, 22, 0.2)",
 		zIndex: 1,

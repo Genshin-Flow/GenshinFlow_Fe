@@ -46,28 +46,28 @@ function filterQuest(questOption: string) {
 	let quest = "";
 	let questImage = "";
 	switch (questOption) {
-		case "NORMAL_DOMAIN":
-			quest = "비경";
+		case "일반 비경":
+			quest = questOption;
 			questImage = "/svgs/quests/domain.svg";
 			break;
-		case "EVENT_QUEST":
-			quest = "이벤트";
+		case "이벤트 퀘스트":
+			quest = questOption;
 			questImage = "/svgs/quests/event.svg";
 			break;
-		case "AREA_CONQUEST":
-			quest = "토벌";
-			questImage = "/svgs/quests/gather.svg";
+		case "영역 토벌":
+			quest = questOption;
+			questImage = "/svgs/quests/mob.svg";
 			break;
-		case "DAILY_QUEST":
-			quest = "일일 임무";
+		case "일일 임무":
+			quest = questOption;
 			questImage = "/svgs/quests/mission.svg";
 			break;
-		case "MAP_EXPLORATION":
-			quest = "맵 탐사";
+		case "맵 탐사":
+			quest = questOption;
 			questImage = "/svgs/quests/explore.svg";
 			break;
-		case "GATHERING":
-			quest = "채집";
+		case "채집":
+			quest = questOption;
 			questImage = "/svgs/quests/gather.svg";
 			break;
 	}

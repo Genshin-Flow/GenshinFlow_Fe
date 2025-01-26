@@ -32,6 +32,10 @@ type propsType = {
 	isSubmitting: boolean;
 };
 
+/*
+	addPost에 필요한 컴포넌트와 메인 페이지의 필터컴포넌트를 분리하여 관리하는게 더 편리하고 알아보기 쉬울거라 예상
+*/
+
 export default function AddPostModalPC(props: propsType) {
 	const { uid, name, worldLevel } = userStore();
 	const { isLogin } = useLoginStateStore();
