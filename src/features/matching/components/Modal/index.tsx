@@ -193,6 +193,6 @@ async function postHandler(
 		})
 		.catch((error) => {
 			const responseCode = error.status;
-			// 코드에 따른 예외처리리
+			// 코드에 따른 예외처리
 		});
 }
