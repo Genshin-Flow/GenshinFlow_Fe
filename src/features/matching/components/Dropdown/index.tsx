@@ -12,7 +12,6 @@ import {
 import { nanoid } from "nanoid";
 import { findChild } from "@/utils/findChildren/findChildren";
 import useOutsideClick from "@/hooks/useOutsideClick";
-import MainDropDown from "@/features/matching/components/dropdown/mainDropdown";
 
 export type Option = {
 	value: string;

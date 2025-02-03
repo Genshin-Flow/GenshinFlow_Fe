@@ -273,7 +273,7 @@ export const QuestInfo = styled("div", {
 		display: "flex",
 		flexDirection: "column",
 		width: "360px",
-		"& p": {
+		"& > p": {
 			fontSize: "sm",
 			fontWeight: "bold",
 			color: "gray.01",
@@ -284,7 +284,7 @@ export const QuestInfo = styled("div", {
 		isMobile: {
 			true: {
 				width: "100%",
-				"& p": {
+				"& > p": {
 					fontSize: "20px",
 				},
 			},
