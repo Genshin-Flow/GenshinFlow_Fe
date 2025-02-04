@@ -29,7 +29,6 @@ export default function MobileFilterContainer({
 		<FilterContainer>
 			<Dropdown
 				placeholder="퀘스트 종류"
-				value={quest}
 				setValue={setQuest}
 				options={questOptions}
 				style="genshin"
@@ -37,14 +36,13 @@ export default function MobileFilterContainer({
 			/>
 			<Dropdown
 				placeholder="월드 레벨"
-				value={lv}
 				setValue={setLv}
 				options={lvOptions}
 				style="genshin"
 				isMobile={isMobile}
 			/>
 			<Dropdown
-				value={region}
+				placeholder="지역"
 				setValue={setRegion}
 				options={regionOptions}
 				style="genshin"

@@ -44,7 +44,6 @@ export async function report(
 			});
 		}
 	} catch (error) {
-		console.log(error);
 		return false;
 	}
 }

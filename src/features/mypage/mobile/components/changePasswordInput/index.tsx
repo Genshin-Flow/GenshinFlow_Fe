@@ -57,7 +57,6 @@ function submitHandler(
 	if (email === "") {
 		setModalState("메일을 입력해주세요");
 	} else if (passwordVerifyValue === "") {
-		console.log(passwordVerifyValue);
 		setModalState("인증코드를 입력해주세요");
 	} else {
 		setNewPassword(newPasswordValue, passwordVerifyValue, setModalState);

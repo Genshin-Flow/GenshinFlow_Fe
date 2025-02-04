@@ -187,14 +187,12 @@ async function postHandler(
 		"등록에 실패했습니다.",
 	)
 		.then((response) => {
-			console.log(response);
 			if (response.ok) {
 				onClose();
 			}
 		})
 		.catch((error) => {
 			const responseCode = error.status;
-			console.log(error.response);
-			// 코드에 따른 예외처리리
+			// 코드에 따른 예외처리
 		});
 }

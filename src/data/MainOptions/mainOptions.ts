@@ -32,10 +32,10 @@ export const regionOptions = [
 ];
 
 export const timeOptions = [
-	{ value: "30분" },
-	{ value: "1시간" },
-	{ value: "1시간 30분" },
-	{ value: "2시간" },
+	{ value: "30분", data: "30분" },
+	{ value: "1시간", data: "1시간" },
+	{ value: "1시간 30분", data: "1시간 30분" },
+	{ value: "2시간", data: "2시간" },
 ];
 
 export const stateQuestArray = [
