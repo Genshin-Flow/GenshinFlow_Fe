@@ -13,7 +13,7 @@ import { nanoid } from "nanoid";
 import { findChild } from "@/utils/findChildren/findChildren";
 import useOutsideClick from "@/hooks/useOutsideClick";
 
-type Option = {
+export type Option = {
 	value: string;
 	icon?: string;
 	data?: string;
@@ -24,6 +24,7 @@ interface DropdownProps {
 	placeholder?: string;
 	setValue: (value: string[]) => void;
 	style?: "default" | "genshin";
+	useArea?: "main" | "addPost";
 	isMobile?: boolean;
 	isMobile2?: boolean;
 }

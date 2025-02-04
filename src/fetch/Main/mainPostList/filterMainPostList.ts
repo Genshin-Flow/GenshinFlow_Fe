@@ -15,8 +15,8 @@ export async function getFilterMainPostList({
 	worldLevel,
 }: propsType) {
 	const baseApi = process.env.NEXT_PUBLIC_BaseApi;
-	const filterPostApi = process.env.NEXT_PUBLIC_mainPostListApi;
-	if (!process.env.NEXT_PUBLIC_mainPostListApi)
+	const filterPostApi = process.env.NEXT_PUBLIC_mainPostListFilterApi;
+	if (!process.env.NEXT_PUBLIC_mainPostListFilterApi)
 		throw new Error("메인페이지 리스트 api가 없습니다.");
 	const response = await fetch(
 		`${baseApi}${filterPostApi}?&page=${page}&size=${size}&questCategory=${questCategory}&region=${region}&worldLevel=${worldLevel}`,

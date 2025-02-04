@@ -30,7 +30,7 @@ export const Text = styled("p", {
 		},
 		questVariants: {
 			true: {
-				minWidth: "60px",
+				minWidth: "80px",
 			},
 		},
 	},
@@ -131,7 +131,7 @@ export const QuestIconWrapper = styled("div", {
 		position: "relative",
 		width: "30px",
 		height: "30px",
-		marginRight: "20px",
+		marginRight: "10px",
 	},
 });
 

@@ -22,6 +22,12 @@ import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
 import ErrorText from "@/features/matching/components/modalErrorText";
 import useLoginStateStore from "@/stores/loginStateStore";
 import userStore from "@/stores/userStore";
+import AddPostDropDown from "@/features/matching/components/dropdown/addPostDropdown";
+import {
+	uidPattern,
+	modalPasswordRegular,
+	modalWorldLevelRegular,
+} from "@/features/loginSignUp/regularExpression/RegularExpression";
 
 type propsType = {
 	isMobile: boolean;
@@ -51,9 +57,15 @@ export default function AddPostModalMobile(props: propsType) {
 								isMobile={props.isMobile}
 								defaultValue={uid === 0 ? "" : uid}
 								autoComplete="off"
-								{...props.register("uid", { required: true })}
+								{...props.register("uid", {
+									required: true,
+									pattern: uidPattern,
+								})}
 							/>
-							{props.errors?.uid && (
+							{props.errors?.uid?.type === "pattern" && (
+								<ErrorText>숫자만 입력이 가능합니다.</ErrorText>
+							)}
+							{props.errors?.uid?.type === "required" && (
 								<ErrorText>uid의 입력은 필수입니다</ErrorText>
 							)}
 						</div>
@@ -68,7 +80,7 @@ export default function AddPostModalMobile(props: propsType) {
 								autoComplete="off"
 								{...props.register("name", { required: true })}
 							/>
-							{props.errors?.name && (
+							{props.errors?.name?.type === "required" && (
 								<ErrorText>닉네임 입력이 필수입니다.</ErrorText>
 							)}
 						</div>
@@ -81,9 +93,15 @@ export default function AddPostModalMobile(props: propsType) {
 								isMobile={props.isMobile}
 								defaultValue={worldLevel === 0 ? "" : worldLevel}
 								autoComplete="off"
-								{...props.register("worldLevel", { required: true })}
+								{...props.register("worldLevel", {
+									required: true,
+									pattern: modalWorldLevelRegular,
+								})}
 							/>
-							{props.errors?.worldLevel && (
+							{props.errors?.worldLevel?.type === "pattern" && (
+								<ErrorText>한 글자의 숫자만 입력할 수 있습니다</ErrorText>
+							)}
+							{props.errors?.worldLevel?.type === "required" && (
 								<ErrorText>월드레벨 입력은 필수입니다</ErrorText>
 							)}
 						</div>
@@ -91,11 +109,11 @@ export default function AddPostModalMobile(props: propsType) {
 				</UserInfo>
 				<QuestInfo isMobile={props.isMobile}>
 					<p>퀘스트 정보</p>
-					<Dropdown
-						placeholder="퀘스트 종류"
-						value={props.quest}
-						setValue={props.setQuest}
-						options={questOptions}
+					<AddPostDropDown
+						placeHolder="퀘스트 종류"
+						select={props.quest}
+						setSelect={props.setQuest}
+						itemOptionList={questOptions}
 					/>
 				</QuestInfo>
 			</UserQuestContainer>
@@ -112,11 +130,10 @@ export default function AddPostModalMobile(props: propsType) {
 				<FlexWrapper>
 					<MobileText>자동완료시간</MobileText>
 					<InputWrapper>
-						<Dropdown
-							value={props.time}
-							setValue={props.setTime}
-							options={timeOptions}
-							isMobile2={props.isMobile}
+						<AddPostDropDown
+							select={props.time}
+							setSelect={props.setTime}
+							itemOptionList={timeOptions}
 						/>
 					</InputWrapper>
 				</FlexWrapper>
@@ -131,10 +148,16 @@ export default function AddPostModalMobile(props: propsType) {
 								type="password"
 								placeholder="4자리 숫자+특수문자로 설정해주세요."
 								isMobile={props.isMobile}
-								{...props.register("password", { required: true })}
+								{...props.register("password", {
+									required: true,
+									pattern: modalPasswordRegular,
+								})}
 							/>
-							{props.errors?.password && (
+							{props.errors?.password?.type === "required" && (
 								<ErrorText>비밀번호 입력은 필수입니다.</ErrorText>
+							)}
+							{props.errors?.password?.type === "pattern" && (
+								<ErrorText>4자리 숫자 + 특수문자로 입력 가능합니다.</ErrorText>
 							)}
 						</div>
 					</InputContainer>
