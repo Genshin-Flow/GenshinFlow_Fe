@@ -1,5 +1,5 @@
-import MobileMypage from "@/features/mypage/mobile/components/mobileMyPage/index.ts";
-import React from "react";
+"use client";
+import MobileMypage from "@/features/mypage/mobile/components/mobileMyPage/index";
 import { styled } from "@/../styled-system/jsx";
 
 export default function page() {

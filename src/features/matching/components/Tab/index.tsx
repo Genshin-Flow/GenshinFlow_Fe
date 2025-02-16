@@ -30,6 +30,15 @@ import { loadingToast, warningToast } from "@/utils/customToast/customToast";
 import MobileAboutModal from "@/components/Header/modal/mobileAboutModal";
 import mobileAboutStore from "@/stores/mobileAboutStore";
 import PcAbout from "@/features/matching/components/About";
+import {
+	InfiniteData,
+	QueryObserverResult,
+	RefetchOptions,
+} from "@tanstack/react-query";
+
+export type refetchType = (
+	options?: RefetchOptions,
+) => Promise<QueryObserverResult<InfiniteData<any, unknown>, Error>>;
 
 interface TabProps {
 	isMobile?: boolean;
@@ -43,6 +52,7 @@ export interface PostContent {
 	title: string;
 	writerName: string;
 	writerEmail: string;
+	writerProfileImg: string;
 	id: number;
 	uid: number;
 	region: string;
@@ -57,7 +67,7 @@ export interface PostContent {
 	updatedAt: string;
 }
 
-interface PostData {
+export interface PostData {
 	content: PostContent[];
 	page: number;
 	size: number;
@@ -203,13 +213,13 @@ function Matching({ isMobile = false }: MatchingProps) {
 	const scrollRef = useRef<HTMLDivElement>(null);
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [selectType, setSelectType] = useState("");
-	const [postData, setPostData] = useState<PostContent[]>();
+	const [postData, setPostData] = useState<PostContent[]>([]);
 	const [quest, setQuest] = useState<string[]>([]);
 	const [lv, setLv] = useState<string[]>([]);
 	const [region, setRegion] = useState<string[]>([]);
 	const { email } = userStore();
 	const { aboutState, setAboutStore } = mobileAboutStore();
-	const { data, isLoading, hasNextPage } = useMainPostObserve(
+	const { data, isLoading, hasNextPage, refetch } = useMainPostObserve(
 		scrollRef,
 		region,
 		quest,
@@ -218,10 +228,10 @@ function Matching({ isMobile = false }: MatchingProps) {
 	);
 
 	useEffect(() => {
-		const pageData = data?.pages[0] as unknown as PostData;
-		if (pageData?.content) {
-			const newPosts = pageData.content;
-			setPostData((prev) => (prev ? [...prev, ...newPosts] : newPosts));
+		if (data) {
+			const contentArray = data.pages.map((items) => items.content);
+			const flatArray = contentArray.flat();
+			setPostData(flatArray);
 		}
 	}, [data]);
 
@@ -258,8 +268,11 @@ function Matching({ isMobile = false }: MatchingProps) {
 						scrollRef={scrollRef}
 						selectType={selectType}
 						email={email}
+						refetch={refetch}
 					/>
-					{isModalOpen && <Modal onClose={closeModal} type="write" />}
+					{isModalOpen && (
+						<Modal onClose={closeModal} type="write" refetch={refetch} />
+					)}
 				</>
 			) : (
 				<MobileContainer>
@@ -279,10 +292,16 @@ function Matching({ isMobile = false }: MatchingProps) {
 						scrollRef={scrollRef}
 						selectType={selectType}
 						email={email}
+						refetch={refetch}
 					/>
 					<MobileWriteButton onClick={openModal} />
 					{isModalOpen && (
-						<Modal onClose={closeModal} type="write" isMobile={isMobile} />
+						<Modal
+							onClose={closeModal}
+							type="write"
+							isMobile={isMobile}
+							refetch={refetch}
+						/>
 					)}
 					{aboutState && (
 						<MobileAboutModal setModalState={() => setAboutStore(false)} />

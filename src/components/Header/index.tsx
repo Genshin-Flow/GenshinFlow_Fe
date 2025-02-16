@@ -19,6 +19,7 @@ import userStore from "@/stores/userStore";
 import PcMypage from "@/app/PcMypage/pcMypage";
 import MobileHeaderModal from "@/components/Header/modal/modal";
 import useOutsideClick from "@/hooks/useOutsideClick";
+
 interface HeaderProps {
 	isMobile?: boolean;
 }
