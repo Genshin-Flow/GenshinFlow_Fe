@@ -16,7 +16,7 @@ export async function setLoginToken(
 				? ""
 				: process.env.NEXT_PUBLIC_LocalBaseApi;
 		const setLoginTokenApi = process.env.NEXT_PUBLIC_setLoginTokenApi;
-		if (!LocalApi || !setLoginTokenApi) {
+		if (!setLoginTokenApi) {
 			throw new Error("토큰 설정에 필요한 환경변수를 찾을 수 없습니다.");
 		}
 		const response = await fetch(`${LocalApi}${setLoginTokenApi}`, {

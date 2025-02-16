@@ -13,7 +13,7 @@ export async function removeToken() {
 				? ""
 				: process.env.NEXT_PUBLIC_LocalBaseApi;
 		const removeTokenApi = process.env.NEXT_PUBLIC_removeTokenApi;
-		if (!localBaseApi || !removeTokenApi) {
+		if (!removeTokenApi) {
 			throw new Error("토큰을 삭제하기 위한 환경변수를 찾을 수 없습니다.");
 		}
 		const response = await fetch(`${localBaseApi}${removeTokenApi}`);

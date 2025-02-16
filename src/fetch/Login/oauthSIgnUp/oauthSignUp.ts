@@ -17,8 +17,8 @@ export async function oauthSignUp(
 				? ""
 				: process.env.NEXT_PUBLIC_LocalBaseApi;
 		const OauthSignUpApi = process.env.NEXT_PUBLIC_LocalOauthSignUpApi;
-		if (!LocalBaseApi && !OauthSignUpApi) {
-			throw new Error("BaseApi 혹은 OauthSignUpApi를 찾을 수 없습니다.");
+		if (!OauthSignUpApi) {
+			throw new Error("Oauth 로그인을 위한 환경변수를 찾을 수 없습니다.");
 		}
 		const response = await fetch(`${LocalBaseApi}${OauthSignUpApi}`, {
 			method: "POST",

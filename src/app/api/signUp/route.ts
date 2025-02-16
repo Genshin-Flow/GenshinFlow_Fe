@@ -24,7 +24,7 @@ export async function POST(req: responseType) {
 		const loginApi = process.env.NEXT_PUBLIC_login;
 
 		// 회원가입 관련 환경변수 에러 핸들링
-		if (!localBaseApi || !loginApi) {
+		if (!loginApi) {
 			throw new Error("회원가입 환경변수를 찾을 수 없습니다");
 		}
 

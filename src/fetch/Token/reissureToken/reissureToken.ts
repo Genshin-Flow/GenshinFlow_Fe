@@ -14,7 +14,7 @@ export async function reissueToken(refreshToken: string): Promise<Response> {
 				? ""
 				: process.env.NEXT_PUBLIC_LocalBaseApi;
 		const tokenReissue = process.env.NEXT_PUBLIC_refreshAccessTokenApi;
-		if (!localBaseApi || !tokenReissue) {
+		if (!tokenReissue) {
 			throw new Error("토큰 재발급에 필요한 환경변수를 찾을 수 없습니다.");
 		}
 		const response = await fetch(`${localBaseApi}${tokenReissue}`, {
