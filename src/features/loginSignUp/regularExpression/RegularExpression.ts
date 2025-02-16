@@ -6,9 +6,9 @@ export const passwordPattern =
 // uid 숫자만 허용하는 정규식
 export const uidPattern = /^[0-9]/g;
 
-// 포스트 추가 패스워드 최소 5글자자 + 특수문자
+// 포스트 패스워드 문자, 숫자, 기호 중 두 가지 이상을 포함하고 8자 이상 정규식
 export const modalPasswordRegular =
-	/^(?=(?:.*\d){4})(?!.*\d.*\d.*\d.*\d.*\d)(?=.*[^A-Za-z0-9]).+$/;
+	/^(?=(.*[A-Za-z])?(.*\d))(?=(.*[A-Za-z])?(.*[\W_])).{8,}$/;
 
 // 딱 한 숫자만 허용( worldLevel 사용 )
 export const modalWorldLevelRegular = /^[1-9]$/;

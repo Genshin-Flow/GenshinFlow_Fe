@@ -1,5 +1,4 @@
 "use client";
-import { styled } from "@/../styled-system/jsx";
 import { nanoid } from "nanoid";
 import HistoryButton from "@/features/mypage/components/historyGroup/historyDeleteButton";
 import JellyBox from "@/features/mypage/components/jellyCheckbox";
@@ -10,7 +9,6 @@ import {
 	useEffect,
 	useState,
 } from "react";
-import { getHistory } from "@/fetch/history/getHistory";
 import { deleteHistory } from "@/fetch/history/deleteHistory";
 import {
 	HistoryContainer,
@@ -21,7 +19,11 @@ import {
 	Item,
 	ItemLeftBox,
 	ItemRightBox,
+	NextScrollBar,
 } from "./style";
+import { useInfiniteTanStack } from "@/hooks/useQueryInfiniteScroll";
+import { QueryFilters } from "@tanstack/react-query";
+import { getHistory } from "@/fetch/history/getHistory";
 
 export type listItemType = {
 	date: string;
@@ -36,15 +38,19 @@ export type listItemType = {
 */
 
 export default function History() {
+	const postKey = "writeMyPost" as QueryFilters;
+	const pagesize = 10;
+	const staleTime = 1000 * 60 * 10;
+	const { data, isLoading, fetchNextPage, hasNextPage } = useInfiniteTanStack(
+		postKey,
+		pagesize,
+		staleTime,
+		getHistory,
+	);
+
 	const [checkId, setCheckId] = useState<string[]>([]);
-	const [listItem, setItem] = useState<listItemType[]>(data);
-	// useEffect(() => {
-	// 	const fetch = async () => {
-	// 		const data = await getHistory();
-	// 		setItem(data);
-	// 	};
-	// 	fetch();
-	// }, []);
+	const [listItem, setItem] = useState<listItemType[]>([]);
+
 	return (
 		<>
 			<form
@@ -66,20 +72,23 @@ export default function History() {
 					}
 				>
 					<ListItemContainer className="scrollbar">
-						{listItem.map((item, index) => (
-							<Item key={nanoid()} data-id={item.id}>
-								<ItemLeftBox>
-									<JellyBox
-										index={index}
-										listId={item.id}
-										checkboxId={checkId}
-									/>
-									<p>{item.date}</p>
-									<p>{item.quest}</p>
-								</ItemLeftBox>
-								<ItemRightBox>{item.body}</ItemRightBox>
-							</Item>
-						))}
+						{/* {data?.pages.map((page) => {
+							return page.content.map((item: any, index: number) => (
+								<Item key={nanoid()} data-id={index}>
+									<ItemLeftBox>
+										<JellyBox
+											index={index}
+											listId={index}
+											checkboxId={checkId}
+										/>
+										<p>{"none"}</p>
+										<p>{"none"}</p>
+									</ItemLeftBox>
+									<ItemRightBox>{"none"}</ItemRightBox>
+								</Item>
+							));
+						})} */}
+						{isLoading && <NextScrollBar />}
 					</ListItemContainer>
 				</HistoryContainer>
 			</form>
@@ -124,66 +133,3 @@ export function historySubmitHandler(
 	setBoxId([]);
 	deleteHistory(listData);
 }
-
-const data = [
-	{
-		date: "2024-08-09",
-		quest: "비경",
-		body: "맵 밀어주세요맵 밀어주세요맵 밀어주세요맵 밀어주세요",
-		id: 1,
-	},
-	{
-		date: "2024-08-09",
-		quest: "비경",
-		body: "맵 밀어주세요맵 밀어주세요맵 밀어주세요맵 밀어주세요맵 밀어주세요맵 밀어주세요맵 밀어주세요",
-		id: 2,
-	},
-	{
-		date: "2024-08-09",
-		quest: "비경",
-		body: "맵 밀어주세요",
-		id: 3,
-	},
-	{
-		date: "2024-08-09",
-		quest: "비경",
-		body: "맵 밀어주세요",
-		id: 4,
-	},
-	{
-		date: "2024-08-09",
-		quest: "비경",
-		body: "맵 밀어주세요",
-		id: 5,
-	},
-	{
-		date: "2024-08-09",
-		quest: "비경",
-		body: "맵 밀어주세요",
-		id: 6,
-	},
-	{
-		date: "2024-08-09",
-		quest: "비경",
-		body: "맵 밀어주세요",
-		id: 7,
-	},
-	{
-		date: "2024-08-09",
-		quest: "비경",
-		body: "맵 밀어주세요",
-		id: 8,
-	},
-	{
-		date: "2024-08-09",
-		quest: "비경",
-		body: "맵 밀어주세요",
-		id: 9,
-	},
-	{
-		date: "2024-08-09",
-		quest: "비경",
-		body: "맵 밀어주세요",
-		id: 10,
-	},
-];

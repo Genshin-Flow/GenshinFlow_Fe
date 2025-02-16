@@ -2,6 +2,8 @@ import MatchingPostItem from "@/features/matching/components/matchingPostItem";
 import { PostListContainer, VisibleTabList } from "./style";
 import { nanoid } from "nanoid";
 import { PostContent } from "@/features/matching/components/tab";
+import useLoginStateStore from "@/stores/loginStateStore";
+import { refetchType } from "@/features/matching/components/tab";
 
 type PostListProps = {
 	postData: PostContent[] | undefined;
@@ -10,6 +12,7 @@ type PostListProps = {
 	scrollRef: any;
 	selectType: string;
 	email: string;
+	refetch: refetchType;
 };
 
 export default function PostList({
@@ -19,23 +22,41 @@ export default function PostList({
 	scrollRef,
 	selectType,
 	email,
+	refetch,
 }: PostListProps) {
+	const { isLogin } = useLoginStateStore();
 	return (
 		<PostListContainer>
 			{postData &&
 				postData.map((item) => {
 					const { quest, questImage } = filterQuest(item.questCategory);
-					return (
-						<MatchingPostItem
-							key={nanoid()}
-							selected={selectType}
-							type={item.writerEmail === email ? "write" : "report"}
-							item={item}
-							email={email}
-							quest={quest}
-							questImage={questImage}
-						/>
-					);
+					if (isLogin) {
+						return (
+							<MatchingPostItem
+								key={nanoid()}
+								selected={selectType}
+								type={item.writerEmail === email ? "write" : "report"}
+								item={item}
+								email={email}
+								quest={quest}
+								questImage={questImage}
+								refetch={refetch}
+							/>
+						);
+					} else {
+						return (
+							<MatchingPostItem
+								key={nanoid()}
+								selected={selectType}
+								type={"write"}
+								item={item}
+								email={email}
+								quest={quest}
+								questImage={questImage}
+								refetch={refetch}
+							/>
+						);
+					}
 				})}
 			{hasNextPage && !isLoading && <VisibleTabList ref={scrollRef} />}
 		</PostListContainer>

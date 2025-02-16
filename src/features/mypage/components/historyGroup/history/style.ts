@@ -81,3 +81,10 @@ export const ItemRightBox = styled("p", {
 		whiteSpace: "nowrap",
 	},
 });
+
+export const NextScrollBar = styled("div", {
+	base: {
+		width: "100%",
+		height: "1px",
+	},
+});

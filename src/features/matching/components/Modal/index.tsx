@@ -15,18 +15,29 @@ import ReportAttackButton from "../radio/ReportAttackButton";
 import { FieldValues, useForm } from "react-hook-form";
 import AddPostModalPC from "./modalPc/index";
 import AddPostModalMobile from "@/features/matching/mobile/components/modalMobile/index";
-import { addPostSignIn } from "@/fetch/Main/addPostList/addPostList";
+import { addPostSignIn } from "@/fetch/Main/post/addPostList/addPostList";
 import { loadingToast } from "@/utils/customToast/customToast";
 import { loadingToastType } from "@/utils/customToast/customToast";
 import useLoginStateStore from "@/stores/loginStateStore";
+import { PostContent } from "@/features/matching/components/tab";
+import { reportPost } from "@/fetch/report/report";
+import { refetchType } from "@/features/matching/components/tab";
 
 interface ModalProps {
 	onClose: () => void;
 	type: "report" | "write";
+	refetch: refetchType;
 	isMobile?: boolean;
+	postContent?: PostContent;
 }
 
-export default function Modal({ onClose, type, isMobile = false }: ModalProps) {
+export default function Modal({
+	onClose,
+	type,
+	refetch,
+	isMobile = false,
+	postContent,
+}: ModalProps) {
 	return (
 		<ModalBackground onClick={onClose}>
 			<ModalContainer onClick={(e) => e.stopPropagation()} isMobile={isMobile}>
@@ -40,9 +51,14 @@ export default function Modal({ onClose, type, isMobile = false }: ModalProps) {
 				</ModalHeader>
 				<ModalContent type={type} isMobile={isMobile}>
 					{type === "write" ? (
-						<WriteModal onClose={onClose} isMobile={isMobile} />
+						<WriteModal
+							onClose={onClose}
+							isMobile={isMobile}
+							postContent={postContent}
+							refetch={refetch}
+						/>
 					) : (
-						<ReportModal />
+						<ReportModal postContent={postContent} />
 					)}
 				</ModalContent>
 			</ModalContainer>
@@ -51,13 +67,36 @@ export default function Modal({ onClose, type, isMobile = false }: ModalProps) {
 }
 
 // 신고 모달
-function ReportModal() {
+function ReportModal({ postContent }: { postContent?: PostContent }) {
 	// 데이터를 바로 submitHandler에 전달하기 위해  0,1,2... -> 상업적/홍보성, 불법정보, 개인정보누출... 로 변경
 	const [value, setValue] = useState("상업적/홍보성");
 	const [image, setImage] = useState<File[]>([]);
+	const { setIsLogin } = useLoginStateStore();
+	const {
+		register,
+		handleSubmit,
+		formState: { isSubmitting },
+	} = useForm();
+	const fileName = image.flatMap((item) => item.name);
 	return (
 		<>
-			<form action="#" onSubmit={(e) => reportSubmitHandler(e, value)}>
+			<form
+				action="#"
+				onSubmit={handleSubmit((data) =>
+					loadingToast(
+						reportPost(
+							data.etc ? data.etc : value,
+							fileName,
+							data,
+							postContent?.writerEmail,
+							setIsLogin,
+						),
+						"포스트 신고 전송중",
+						"포스트 신고 완료!",
+						"포스트 신고 실패패",
+					),
+				)}
+			>
 				<RadioGroup value={value} onChange={setValue}>
 					<RadioGroupContainer>
 						<RadioColumn>
@@ -73,10 +112,12 @@ function ReportModal() {
 						</RadioColumn>
 					</RadioGroupContainer>
 				</RadioGroup>
-				<ReportInput placeholder="기타사항 입력" />
+				{value === "기타" && (
+					<ReportInput placeholder="기타사항 입력" {...register("etc")} />
+				)}
 				{/* 이미지 첨부 버튼 추가 */}
 				<ReportAttackButton image={image} setImage={setImage} />
-				<ReportButton>신고하기</ReportButton>
+				<ReportButton disabled={isSubmitting}>신고하기</ReportButton>
 			</form>
 		</>
 	);
@@ -86,11 +127,15 @@ function ReportModal() {
 function WriteModal({
 	onClose,
 	isMobile = false,
+	postContent,
+	refetch,
 }: {
 	onClose: () => void;
+	refetch: refetchType;
 	isMobile?: boolean;
+	postContent?: PostContent;
 }) {
-	const [quest, setQuest] = useState("");
+	const [quest, setQuest] = useState(postContent?.questCategory ?? "");
 	const [time, setTime] = useState("1시간");
 	const { isLogin, setIsLogin } = useLoginStateStore();
 	const {
@@ -98,7 +143,6 @@ function WriteModal({
 		handleSubmit,
 		formState: { isSubmitting, errors },
 	} = useForm();
-
 	return (
 		<>
 			{!isMobile ? (
@@ -114,6 +158,8 @@ function WriteModal({
 							onClose,
 							isLogin,
 							setIsLogin,
+							refetch,
+							postContent,
 						),
 					)}
 				>
@@ -126,6 +172,7 @@ function WriteModal({
 						register={register}
 						errors={errors}
 						isSubmitting={isSubmitting}
+						postContent={postContent ?? ""}
 					/>
 				</form>
 			) : (
@@ -141,6 +188,8 @@ function WriteModal({
 							onClose,
 							isLogin,
 							setIsLogin,
+							refetch,
+							postContent,
 						),
 					)}
 				>
@@ -161,16 +210,6 @@ function WriteModal({
 	);
 }
 
-async function reportSubmitHandler(
-	e: React.FormEvent<HTMLFormElement>,
-	value: string,
-) {
-	e.preventDefault();
-	// id 추가되면 신고자 , 신고받은 대상 id를 함게 넘김
-	// const fetchResult = await report(value, image);
-	// if (!fetchResult) alert("신고 진행중 문제가 발생했습니다.");
-}
-
 async function postHandler(
 	data: FieldValues,
 	quest: string,
@@ -179,17 +218,18 @@ async function postHandler(
 	onClose: () => void,
 	isLogin: boolean,
 	setIsLogin: (value: boolean) => void,
+	refetch: refetchType,
+	postContent?: PostContent,
 ) {
 	await loadingToast(
-		addPostSignIn(data, quest, time, isLogin, setIsLogin),
+		addPostSignIn(data, quest, time, isLogin, setIsLogin, postContent),
 		"등록 중입니다",
 		"등록 완료!",
 		"등록에 실패했습니다.",
 	)
-		.then((response) => {
-			if (response.ok) {
-				onClose();
-			}
+		.then(() => {
+			refetch();
+			onClose();
 		})
 		.catch((error) => {
 			const responseCode = error.status;

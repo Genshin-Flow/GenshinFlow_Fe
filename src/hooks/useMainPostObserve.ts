@@ -1,5 +1,5 @@
 import { Dispatch, RefObject, SetStateAction, useEffect } from "react";
-import { useInfiniteTanStack } from "@/hooks/userMainPageList";
+import { useInfiniteTanStack } from "@/hooks/useQueryInfiniteScroll";
 import { getMainPostList } from "@/fetch/Main/mainPostList/mainPostList";
 import { getFilterMainPostList } from "@/fetch/Main/mainPostList/filterMainPostList";
 import { QueryFilters } from "@tanstack/react-query";
@@ -16,30 +16,32 @@ export function useMainPostObserve(
 	region: string[],
 	questCategory: string[],
 	worldLevel: string[],
-	setPostData: Dispatch<SetStateAction<PostContent[] | undefined>>,
+	setPostData: Dispatch<SetStateAction<PostContent[]>>,
 ) {
 	const staleTime = 1000 * 60 * 10;
-	const pagesize = 10;
+	const pagesize = 20;
 
-	// 조건에 따라 API 함수를 선택
+	// 필터 활성 여부 판단
 	const filterBool =
-		region?.length > 0 || questCategory?.length > 0 || worldLevel?.length > 0;
+		(region && region.length > 0) ||
+		(questCategory && questCategory.length > 0) ||
+		(worldLevel && worldLevel.length > 0);
+
+	// 필터 활성 여부에 따라 사용할 API 함수와 queryKey 문자열 결정
 	const fetchFn = filterBool ? getFilterMainPostList : getMainPostList;
 	const queryFilter = filterBool
-		? ("getMainPost" as QueryFilters)
-		: ("getMainPostFilter" as QueryFilters);
-	const {
-		data,
-		isLoading,
-		fetchNextPage,
-		hasNextPage,
-		fetchPreviousPage,
-		refetch,
-	} = useInfiniteTanStack(queryFilter, pagesize, staleTime, fetchFn, [
-		region,
-		questCategory,
-		worldLevel,
-	]);
+		? ("getMainPostFilter" as QueryFilters)
+		: ("getMainPost" as QueryFilters);
+
+	const { data, isLoading, fetchNextPage, hasNextPage, refetch } =
+		useInfiniteTanStack(
+			queryFilter,
+			pagesize,
+			staleTime,
+			fetchFn,
+			[region, questCategory, worldLevel],
+			filterBool,
+		);
 
 	useEffect(() => {
 		if (!scrollRef.current || !hasNextPage) return;
@@ -59,12 +61,5 @@ export function useMainPostObserve(
 		};
 	}, [scrollRef, hasNextPage, isLoading, fetchNextPage]);
 
-	useEffect(() => {
-		if (filterBool) {
-			setPostData([]);
-		}
-		refetch();
-	}, [region, questCategory, worldLevel]); // 필터 변경 시 refetch 실행
-
-	return { data, isLoading, hasNextPage };
+	return { data, isLoading, hasNextPage, refetch };
 }
