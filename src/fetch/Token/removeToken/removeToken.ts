@@ -8,7 +8,10 @@ class returnResponse extends Error {
 
 export async function removeToken() {
 	try {
-		const localBaseApi = process.env.NEXT_PUBLIC_LocalBaseApi;
+		const localBaseApi =
+			process.env.NODE_ENV === "production"
+				? "/api"
+				: process.env.NEXT_PUBLIC_LocalBaseApi;
 		const removeTokenApi = process.env.NEXT_PUBLIC_removeTokenApi;
 		if (!localBaseApi || !removeTokenApi) {
 			throw new Error("토큰을 삭제하기 위한 환경변수를 찾을 수 없습니다.");

@@ -11,7 +11,10 @@ export async function setLoginToken(
 	accessToken: string,
 ): Promise<Response> {
 	try {
-		const LocalApi = process.env.NEXT_PUBLIC_LocalBaseApi;
+		const LocalApi =
+			process.env.NODE_ENV === "production"
+				? "/api"
+				: process.env.NEXT_PUBLIC_LocalBaseApi;
 		const setLoginTokenApi = process.env.NEXT_PUBLIC_setLoginTokenApi;
 		if (!LocalApi || !setLoginTokenApi) {
 			throw new Error("토큰 설정에 필요한 환경변수를 찾을 수 없습니다.");

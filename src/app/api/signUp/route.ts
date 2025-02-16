@@ -17,7 +17,10 @@ export async function POST(req: responseType) {
 		const userUid = requestBodyData.userUid;
 		const accessMaxAge = process.env.accessCookieTime;
 		const refreshMaxAge = process.env.refreshCookieTime;
-		const localBaseApi = process.env.NEXT_PUBLIC_LocalBaseApi;
+		const localBaseApi =
+			process.env.NODE_ENV === "production"
+				? "/api"
+				: process.env.NEXT_PUBLIC_LocalBaseApi;
 		const loginApi = process.env.NEXT_PUBLIC_login;
 
 		// 회원가입 관련 환경변수 에러 핸들링

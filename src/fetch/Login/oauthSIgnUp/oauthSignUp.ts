@@ -12,7 +12,10 @@ export async function oauthSignUp(
 	provider: string,
 ): Promise<Response | unknown> {
 	try {
-		const LocalBaseApi = process.env.NEXT_PUBLIC_LocalBaseApi;
+		const LocalBaseApi =
+			process.env.NODE_ENV === "production"
+				? "/api"
+				: process.env.NEXT_PUBLIC_LocalBaseApi;
 		const OauthSignUpApi = process.env.NEXT_PUBLIC_LocalOauthSignUpApi;
 		if (!LocalBaseApi && !OauthSignUpApi) {
 			throw new Error("BaseApi 혹은 OauthSignUpApi를 찾을 수 없습니다.");
