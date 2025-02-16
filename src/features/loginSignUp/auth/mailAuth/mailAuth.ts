@@ -8,8 +8,9 @@ export async function postAuthMail(
 	setCount: Dispatch<SetStateAction<number>>,
 ) {
 	const mailState = checkMail(emailValue);
+	const rePostAuthCode = 180;
 	if (mailState) {
-		setCount(60);
+		setCount(rePostAuthCode);
 		setModal("인증코드가 발송 되었습니다");
 		const data = await forwardingMailFetch(emailValue);
 		if (!data?.ok) {

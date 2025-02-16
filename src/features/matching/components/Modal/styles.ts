@@ -258,6 +258,10 @@ export const TextInput = styled("input", {
 		color: "gray.03",
 		outline: "none",
 		borderRadius: "0",
+
+		"&.disable": {
+			backgroundColor: "gray.05",
+		},
 	},
 	variants: {
 		isMobile: {

@@ -146,7 +146,7 @@ export default function AddPostModalMobile(props: propsType) {
 						<div className="mobileInputGroup">
 							<PasswordInput
 								type="password"
-								placeholder="4자리 숫자+특수문자로 설정해주세요."
+								placeholder="문자, 숫자, 기호 중 두 가지 이상을 포함하고 8자 이상"
 								isMobile={props.isMobile}
 								{...props.register("password", {
 									required: true,
@@ -157,7 +157,10 @@ export default function AddPostModalMobile(props: propsType) {
 								<ErrorText>비밀번호 입력은 필수입니다.</ErrorText>
 							)}
 							{props.errors?.password?.type === "pattern" && (
-								<ErrorText>4자리 숫자 + 특수문자로 입력 가능합니다.</ErrorText>
+								<ErrorText>
+									비밀번호는 문자, 숫자, 기호 중 두 가지 이상을 포함하고 8자
+									이상이어야 합니다.
+								</ErrorText>
 							)}
 						</div>
 					</InputContainer>

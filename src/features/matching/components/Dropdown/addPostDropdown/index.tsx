@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { nanoid } from "nanoid";
 import {
 	PostDropdownContainer,
@@ -6,6 +6,7 @@ import {
 	SortingBox,
 	TextBox,
 } from "@/features/matching/components/dropdown/addPostDropdown/style";
+import useOutsideClick from "@/hooks/useOutsideClick";
 
 type propsType = {
 	select: string;
@@ -18,9 +19,17 @@ type propsType = {
 };
 
 export default function AddPostDropDown(props: propsType) {
+	const dropDownRef = useRef(null);
+	const dropDownContainer = useRef(null);
+	const [modalOpen, setModalOpen] = useState(false);
+	const closeModal = () => setModalOpen(false);
+	const openModal = () => setModalOpen(true);
+	const toggle = modalOpen ? closeModal : openModal;
+	useOutsideClick(dropDownRef, closeModal, dropDownContainer);
 	return (
 		<PostDropdownContainer
-			onClick={(event) => clickHandler(event, props.setSelect)}
+			ref={dropDownContainer}
+			onClick={(event) => clickHandler(event, props.setSelect, toggle)}
 		>
 			<SortingBox className="postContainer">
 				{!props.select ? (
@@ -30,17 +39,19 @@ export default function AddPostDropDown(props: propsType) {
 				)}
 				<img src="/svgs/arrow.svg" alt="화살표" />
 			</SortingBox>
-			<PostDropDownItemContainer>
-				{props.itemOptionList.map((item) => (
-					<li
-						key={nanoid()}
-						className="dropDownOptions"
-						data-datavalue={item.data}
-					>
-						{item.value}
-					</li>
-				))}
-			</PostDropDownItemContainer>
+			{modalOpen && (
+				<PostDropDownItemContainer ref={dropDownRef}>
+					{props.itemOptionList.map((item) => (
+						<li
+							key={nanoid()}
+							className="dropDownOptions"
+							data-datavalue={item.data}
+						>
+							{item.value}
+						</li>
+					))}
+				</PostDropDownItemContainer>
+			)}
 		</PostDropdownContainer>
 	);
 }
@@ -48,15 +59,12 @@ export default function AddPostDropDown(props: propsType) {
 function clickHandler(
 	event: React.MouseEvent<HTMLDivElement, MouseEvent>,
 	setSelect: Dispatch<SetStateAction<string>>,
+	toggleModal: () => void,
 ) {
 	const target = event.target as HTMLLIElement;
-	if (target.classList.contains("postContainer")) {
-		const nextSibling = target.nextSibling as HTMLElement;
-		nextSibling.classList.toggle("active");
-	}
+	toggleModal();
 	if (target.classList.contains("dropDownOptions")) {
 		const dataValue = target.dataset.datavalue as string;
-		console.log(dataValue);
 		setSelect(dataValue);
 	}
 }

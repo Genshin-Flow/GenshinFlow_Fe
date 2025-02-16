@@ -1,33 +1,29 @@
 "use client";
 import UserInfoItem from "@/features/mypage/components/userInfoGroup/userInfoItem";
-import { stateType } from "@/stores/loginPageStateStore";
 import loginState from "@/stores/loginPageStateStore";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { useRouter } from "next/navigation";
 import { UserInfoContainer } from "./style";
+import userStore from "@/stores/userStore";
 export default function UserInfo() {
-	const { setSelectBtn } = loginState();
+	const { uid, email } = userStore();
 	const route = useRouter();
+	const pushFn = () => LinkClickHandler(route);
 	return (
 		<UserInfoContainer>
-			<UserInfoItem name={"이메일"} children={"cankyu6@gmail.com"} />
+			<UserInfoItem name={"이메일"} children={email} />
 			<UserInfoItem
 				name={"비밀번호"}
-				children={"1004ff1!"}
+				children={"0000000"}
 				password={true}
 				buttonText="변경"
-				onClick={() => LinkClickHandler(setSelectBtn, route)}
+				onClick={pushFn}
 			/>
-			<UserInfoItem name={"UID"} children={"12345678"} />
+			<UserInfoItem name={"UID"} children={`${uid}`} />
 		</UserInfoContainer>
 	);
 }
 
-function LinkClickHandler(
-	setSelectBtn: (state: stateType) => void,
-	router: AppRouterInstance,
-) {
-	// 아직 깃허브에 머지가 안 되서 추가된 페이지가 없음 합쳐지면 아이디 찾기 페이지로 변경 필요
+function LinkClickHandler(router: AppRouterInstance) {
 	router.push("/Login");
-	setSelectBtn("forgotPassword");
 }

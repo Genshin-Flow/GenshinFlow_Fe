@@ -5,6 +5,8 @@ import { cookies } from "next/headers";
 export async function GET(req: NextRequest) {
 	const accessToken = req.cookies.get("AccessToken")?.value;
 	const refreshToken = req.cookies.get("RefreshToken")?.value;
+	const accessCookieTime = process.env.accessCookieTime;
+	const refreshCookieTime = process.env.refreshCookieTime;
 
 	try {
 		if (!accessToken) throw new Error("AccessToken이 없습니다.");
@@ -20,12 +22,14 @@ export async function GET(req: NextRequest) {
 				secure: process.env.NODE_ENV === "production",
 				sameSite: "strict",
 				path: "/",
+				maxAge: Number(accessCookieTime),
 			});
-			cookies().set("AccessToken", result.refreshToken, {
+			cookies().set("RefreshToken", result.refreshToken, {
 				httpOnly: true,
 				secure: process.env.NODE_ENV === "production",
 				sameSite: "strict",
 				path: "/",
+				maxAge: Number(refreshCookieTime),
 			});
 			return NextResponse.json(
 				{ message: err.message, accessToken: result.accessToken },

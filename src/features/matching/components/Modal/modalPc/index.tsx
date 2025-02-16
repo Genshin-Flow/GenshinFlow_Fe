@@ -25,6 +25,7 @@ import {
 	modalPasswordRegular,
 	modalWorldLevelRegular,
 } from "@/features/loginSignUp/regularExpression/RegularExpression";
+import { PostContent } from "@/features/matching/components/tab";
 
 type propsType = {
 	onClose: () => void;
@@ -35,6 +36,7 @@ type propsType = {
 	register: UseFormRegister<FieldValues>;
 	errors: FieldErrors<FieldValues>;
 	isSubmitting: boolean;
+	postContent?: PostContent | "";
 };
 
 /*
@@ -44,6 +46,23 @@ type propsType = {
 export default function AddPostModalPC(props: propsType) {
 	const { uid, name, worldLevel } = userStore();
 	const { isLogin } = useLoginStateStore();
+	const editData = props.postContent
+		? {
+				uid: props.postContent.uid,
+				name: props.postContent.writerName,
+				worldLevel: props.postContent.wordLevel,
+				quest: props.quest,
+				content: props.postContent.content,
+				time: props.time,
+			}
+		: {
+				uid,
+				name,
+				worldLevel,
+				quest: props.quest,
+				content: "",
+				time: props.time,
+			};
 	return (
 		<>
 			<UserQuestContainer>
@@ -54,12 +73,14 @@ export default function AddPostModalPC(props: propsType) {
 						<div className="width80">
 							<TextInput
 								placeholder="800000000"
-								defaultValue={uid === 0 ? "" : uid}
+								defaultValue={editData.uid}
 								autoComplete="off"
 								{...props.register("uid", {
 									required: true,
 									pattern: uidPattern,
 								})}
+								disabled={props.postContent ? true : false}
+								className={props.postContent && "disable"}
 							/>
 							{props.errors?.uid?.type === "pattern" && (
 								<ErrorText>숫자만 입력이 가능합니다.</ErrorText>
@@ -74,9 +95,11 @@ export default function AddPostModalPC(props: propsType) {
 						<div className="width80">
 							<TextInput
 								placeholder="여행자"
-								defaultValue={name === "" ? "" : name}
+								defaultValue={editData.name}
 								autoComplete="off"
 								{...props.register("name", { required: true })}
+								disabled={props.postContent ? true : false}
+								className={props.postContent && "disable"}
 							/>
 							{props.errors?.name?.type === "required" && (
 								<ErrorText>닉네임 입력이 필수입니다.</ErrorText>
@@ -88,12 +111,14 @@ export default function AddPostModalPC(props: propsType) {
 						<div className="width80">
 							<TextInput
 								placeholder="9"
-								defaultValue={worldLevel === 0 ? "" : worldLevel}
+								defaultValue={editData.worldLevel}
 								autoComplete="off"
 								{...props.register("worldLevel", {
 									required: true,
 									pattern: modalWorldLevelRegular,
 								})}
+								disabled={props.postContent ? true : false}
+								className={props.postContent && "disable"}
 							/>
 							{props.errors?.worldLevel?.type === "pattern" && (
 								<ErrorText>한 글자의 숫자만 입력할 수 있습니다</ErrorText>
@@ -108,7 +133,7 @@ export default function AddPostModalPC(props: propsType) {
 					<p>퀘스트 정보</p>
 					<AddPostDropDown
 						placeHolder="퀘스트 종류"
-						select={props.quest}
+						select={editData.quest}
 						setSelect={props.setQuest}
 						itemOptionList={questOptions}
 					/>
@@ -118,6 +143,7 @@ export default function AddPostModalPC(props: propsType) {
 				<p>내용</p>
 				<ContentInput
 					placeholder="내용을 입력해주세요"
+					defaultValue={editData.content}
 					{...props.register("content")}
 				/>
 			</Content>
@@ -127,7 +153,7 @@ export default function AddPostModalPC(props: propsType) {
 					<InputContainer>
 						자동 완료 시간
 						<AddPostDropDown
-							select={props.time}
+							select={editData.time}
 							itemOptionList={timeOptions}
 							setSelect={props.setTime}
 						/>
@@ -138,7 +164,7 @@ export default function AddPostModalPC(props: propsType) {
 							<div>
 								<PasswordInput
 									type="password"
-									placeholder="4자리 숫자+특수문자로 설정해주세요."
+									placeholder="문자, 숫자, 기호 중 두 가지 이상을 포함하고 8자 이상"
 									{...props.register("password", {
 										required: true,
 										pattern: modalPasswordRegular,
@@ -149,7 +175,8 @@ export default function AddPostModalPC(props: propsType) {
 								)}
 								{props.errors?.password?.type === "pattern" && (
 									<ErrorText>
-										4자리 숫자 + 특수문자로 입력 가능합니다.
+										비밀번호는 문자, 숫자, 기호 중 두 가지 이상을 포함하고 8자
+										이상이어야 합니다.
 									</ErrorText>
 								)}
 							</div>
