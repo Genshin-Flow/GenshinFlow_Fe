@@ -19,7 +19,7 @@ export async function POST(req: responseType) {
 		const refreshMaxAge = process.env.refreshCookieTime;
 		const localBaseApi =
 			process.env.NODE_ENV === "production"
-				? "/api"
+				? ""
 				: process.env.NEXT_PUBLIC_LocalBaseApi;
 		const loginApi = process.env.NEXT_PUBLIC_login;
 

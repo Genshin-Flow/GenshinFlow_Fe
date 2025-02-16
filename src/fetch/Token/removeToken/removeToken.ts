@@ -10,7 +10,7 @@ export async function removeToken() {
 	try {
 		const localBaseApi =
 			process.env.NODE_ENV === "production"
-				? "/api"
+				? ""
 				: process.env.NEXT_PUBLIC_LocalBaseApi;
 		const removeTokenApi = process.env.NEXT_PUBLIC_removeTokenApi;
 		if (!localBaseApi || !removeTokenApi) {

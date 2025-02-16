@@ -11,7 +11,7 @@ export async function reissueToken(refreshToken: string): Promise<Response> {
 		if (!refreshToken) throw new Error("리프레시 토큰을 찾을 수 없습니다.");
 		const localBaseApi =
 			process.env.NODE_ENV === "production"
-				? "/api"
+				? ""
 				: process.env.NEXT_PUBLIC_LocalBaseApi;
 		const tokenReissue = process.env.NEXT_PUBLIC_refreshAccessTokenApi;
 		if (!localBaseApi || !tokenReissue) {

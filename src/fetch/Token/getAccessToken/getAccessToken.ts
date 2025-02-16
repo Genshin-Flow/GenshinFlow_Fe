@@ -12,7 +12,7 @@ export async function getAccessToken(
 	try {
 		const localBaseApi =
 			process.env.NODE_ENV === "production"
-				? "/api"
+				? ""
 				: process.env.NEXT_PUBLIC_LocalBaseApi;
 		const tokenReissue = process.env.NEXT_PUBLIC_getAccessTokenApi;
 		if (!localBaseApi || !tokenReissue) {

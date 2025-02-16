@@ -14,7 +14,7 @@ export async function oauthSignUp(
 	try {
 		const LocalBaseApi =
 			process.env.NODE_ENV === "production"
-				? "/api"
+				? ""
 				: process.env.NEXT_PUBLIC_LocalBaseApi;
 		const OauthSignUpApi = process.env.NEXT_PUBLIC_LocalOauthSignUpApi;
 		if (!LocalBaseApi && !OauthSignUpApi) {

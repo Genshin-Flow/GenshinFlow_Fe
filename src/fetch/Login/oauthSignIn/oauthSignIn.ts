@@ -14,7 +14,7 @@ export async function oauthSignIn(
 	try {
 		const baseApi =
 			process.env.NODE_ENV === "production"
-				? "/api"
+				? ""
 				: process.env.NEXT_PUBLIC_LocalBaseApi;
 		const oauthLoginApi = process.env.NEXT_PUBLIC_LocalOauthLoginApi;
 		const response = await fetch(`${baseApi}${oauthLoginApi}`, {

@@ -13,7 +13,7 @@ export async function setLoginToken(
 	try {
 		const LocalApi =
 			process.env.NODE_ENV === "production"
-				? "/api"
+				? ""
 				: process.env.NEXT_PUBLIC_LocalBaseApi;
 		const setLoginTokenApi = process.env.NEXT_PUBLIC_setLoginTokenApi;
 		if (!LocalApi || !setLoginTokenApi) {
