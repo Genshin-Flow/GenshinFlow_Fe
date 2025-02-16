@@ -27,7 +27,7 @@ export const PostDropDownItemContainer = styled("ul", {
 	base: {
 		width: "100%",
 		minWidth: "120px",
-		display: "none",
+		display: "block",
 		position: "absolute",
 		left: "0",
 		top: "100%",
@@ -37,9 +37,7 @@ export const PostDropDownItemContainer = styled("ul", {
 		padding: "8px 10px",
 		boxShadow: "0px 4px 20px 0px rgba(22, 22, 22, 0.2)",
 		textStyle: "xs",
-		"&.active": {
-			display: "block",
-		},
+
 		"& > li": {
 			cursor: "pointer",
 			marginTop: "10px",

@@ -14,7 +14,17 @@ const flexItem = {
 
 export const Text = styled("p", {
 	base: {
+		pointerEvents: "none",
+		minWidth: "100px",
+		maxWidth: "100px",
 		margin: 0,
+
+		"&.pointerNone": {
+			pointerEvents: "none",
+		},
+		"&.textCenter": {
+			textAlign: "center",
+		},
 	},
 	variants: {
 		size: {
@@ -81,20 +91,30 @@ const selectedVariant = {
 
 export const UserName = styled("div", {
 	base: {
+		minWidth: "100px",
 		...flexItem,
 		flex: "1 1 200px",
+		columnGap: "8px",
 	},
 	...selectedVariant,
 });
 
-export const ProfileImage = styled("div", {
+export const ProfileImageContainer = styled("div", {
 	base: {
 		backgroundColor: "gray.04",
 		borderRadius: "50%",
 		height: "36px",
 		width: "36px",
 		objectFit: "cover",
-		marginRight: "8px",
+		overflow: "hidden",
+	},
+});
+
+export const ProfileImg = styled("img", {
+	base: {
+		width: "100%",
+		height: "100%",
+		display: "block",
 	},
 });
 
@@ -108,14 +128,15 @@ export const UserInfo = styled("div", {
 
 export const UserIdButton = styled("button", {
 	base: {
+		...flexItem,
+		justifyContent: "flex-start",
+		width: "100%",
 		cursor: "pointer",
 		textStyle: "xs",
 		color: "gray.03",
-		paddingLeft: "16px",
-		backgroundImage: 'url("/svgs/clarity_paste-line.svg")',
-		backgroundSize: "12px 12px",
-		backgroundRepeat: "no-repeat",
-		backgroundPosition: "left center",
+		"& > span": {
+			pointerEvents: "none",
+		},
 	},
 });
 

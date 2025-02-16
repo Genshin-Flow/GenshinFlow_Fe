@@ -10,7 +10,7 @@ type tokenType = {
 
 // withAuthList : 로그인이 필요한 페이지 url
 const withAuthList: string[] = ["/Mypage", "/Admin"];
-const withOutAuthList: string[] = ["/Login", "/MobileLogin"];
+const withOutAuthList: string[] = ["/MobileLogin"];
 const widthAdminAuthList: string[] = ["/Admin"];
 
 export async function middleware(req: NextRequest) {

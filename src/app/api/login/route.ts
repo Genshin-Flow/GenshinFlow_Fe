@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { setLoginToken } from "@/fetch/Token/setLoginToken/setLoginToken";
 
 type requestType = NextRequest & {
 	email: string;

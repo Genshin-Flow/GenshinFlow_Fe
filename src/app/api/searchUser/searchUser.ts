@@ -18,7 +18,7 @@ export async function adminSearchUser(req: NextRequest) {
 			const response = await fetch(`${baseApi}/${adminSearchUserResult}`, {
 				method: "POST",
 				headers: {
-					Authorization: `${accessToken}`,
+					Authorization: `Bearer ${accessToken}`,
 					"Content-Type": "application/json",
 				},
 				body: JSON.stringify({ userId }),
@@ -38,7 +38,6 @@ export async function adminSearchUser(req: NextRequest) {
 		}
 		// merge 이후 reissueToken 함수 작성 필요
 	} catch (err) {
-		console.error(err);
 		NextResponse.json({ ok: false }, { status: 400 });
 	}
 }
