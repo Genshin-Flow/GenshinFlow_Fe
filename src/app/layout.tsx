@@ -8,7 +8,6 @@ import CookieProvider from "@/provider/CookieProvider";
 import SessionProvider from "@/provider/SessionProvider";
 import { Bounce, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Head from "next/head";
 
 export const metadata: Metadata = {
 	manifest: "/manifest.json",
@@ -33,12 +32,6 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="ko">
-			<Head>
-				<meta
-					http-equiv="Content-Security-Policy"
-					content="upgrade-insecure-requests"
-				/>
-			</Head>
 			<JenniperSet />
 			<body className={pretandard.className}>
 				<CookieProvider>
