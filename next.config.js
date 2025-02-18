@@ -10,7 +10,7 @@ const nextConfig = {
 	async rewrites() {
 		return [
 			{
-				source: `/${process.env.NEXT_PUBLIC_BaseApi}/:path*`,
+				source: `/:path*`,
 				destination: `https://genshin-flow-git-fix-casesensitive-fefdfea1s-projects.vercel.app/:path*`,
 			},
 			// {
