@@ -11,7 +11,7 @@ const nextConfig = {
 		return [
 			{
 				source: `/${process.env.NEXT_PUBLIC_BaseApi}/:path/`,
-				destination: `/${process.env.NEXT_PUBLIC_BaseApi}:path/`,
+				destination: `https://genshin-flow-git-fix-casesensitive-fefdfea1s-projects.vercel.app/`,
 			},
 			// {
 			// 	source: "/get/:path*",
