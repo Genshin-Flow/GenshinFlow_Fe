@@ -10,17 +10,13 @@ const nextConfig = {
 	async rewrites() {
 		return [
 			{
-				source: "/post/:path*",
-				destination: "http://localhost:3000/:path*",
+				source: `${process.env.NEXT_PUBLIC_BaseApi}/:path`,
+				destination: `${process.env.NEXT_PUBLIC_BaseApi}`,
 			},
-		];
-	},
-	async rewrites() {
-		return [
-			{
-				source: "/get/:path*",
-				destination: "http://localhost:3000/:path*",
-			},
+			// {
+			// 	source: "/get/:path*",
+			// 	destination: "http://localhost:3000/:path*",
+			// },
 		];
 	},
 };
