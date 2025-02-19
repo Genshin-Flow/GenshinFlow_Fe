@@ -7,18 +7,6 @@ const withPWA = require("@ducanh2912/next-pwa").default({
 
 const nextConfig = {
 	reactStrictMode: false,
-	async rewrites() {
-		return [
-			{
-				source: `/postings:path*`,
-				destination: `${process.env.NEXT_PUBLIC_BaseApi}:path*`,
-			},
-			// {
-			// 	source: "/get/:path*",
-			// 	destination: "http://localhost:3000/:path*",
-			// },
-		];
-	},
 };
 
 module.exports = withPWA(nextConfig);
