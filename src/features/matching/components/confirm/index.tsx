@@ -44,7 +44,8 @@ export default function ConfirmModal(props: propsType) {
 	const buttonFn = async (item: PostContent, data: FieldValues) => {
 		try {
 			const tokenResponse = await getAccessToken(setIsLogin);
-			if (!tokenResponse.ok) {
+			// 400때는 로그인이 되어 있지 않은 것으므로 error핸들링을 하지 않고 다음 코드를 실행해야함함
+			if (tokenResponse.status !== 400) {
 				throw new Error("accessToken을 불러오는데 실패 했습니다.");
 			}
 			const tokenResult = await tokenResponse.json();

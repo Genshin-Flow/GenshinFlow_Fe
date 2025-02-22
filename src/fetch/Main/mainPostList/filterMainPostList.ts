@@ -14,16 +14,23 @@ export async function getFilterMainPostList({
 	questCategory,
 	worldLevel,
 }: propsType) {
-	const baseApi = process.env.NEXT_PUBLIC_BaseApi;
-	const filterPostApi = process.env.NEXT_PUBLIC_mainPostListFilterApi;
+	const localBaseApi =
+		process.env.NODE_ENV === "production"
+			? ""
+			: process.env.NEXT_PUBLIC_LocalBaseApi;
+	const filterPostApi = process.env.NEXT_PUBLIC_getFilterPageListApi;
 	if (!process.env.NEXT_PUBLIC_mainPostListFilterApi)
 		throw new Error("메인페이지 리스트 api가 없습니다.");
-	const response = await fetch(
-		`${baseApi}${filterPostApi}?&page=${page}&size=${size}&questCategory=${questCategory}&region=${region}&worldLevel=${worldLevel}`,
-		{
-			method: "get",
-		},
-	);
+	const response = await fetch(`${localBaseApi}${filterPostApi}`, {
+		method: "post",
+		body: JSON.stringify({
+			page,
+			size,
+			region,
+			questCategory,
+			worldLevel,
+		}),
+	});
 
 	if (!response.ok) {
 		switch (response.status) {

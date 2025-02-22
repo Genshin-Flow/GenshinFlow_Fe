@@ -11,15 +11,13 @@ class returnResponse extends Error {
 async function POST(req: Request) {
 	try {
 		const baseApi = process.env.NEXT_PUBLIC_BaseApi;
-		const mainPostAPi = process.env.NEXT_PUBLIC_mainPostListApi;
-		const { page, size } = await req.json();
-
-		if (!baseApi || !mainPostAPi) {
+		const filterPostApi = process.env.NEXT_PUBLIC_mainPostListFilterApi;
+		const { page, size, region, questCategory, worldLevel } = await req.json();
+		if (!baseApi || !filterPostApi) {
 			throw new Error("메인페이지를 불러오기 위한 환경변수가 없습니다.");
 		}
-
 		const response = await fetch(
-			`${baseApi}${mainPostAPi}?size=${size}&page=${page}`,
+			`${baseApi}${filterPostApi}?&page=${page}&size=${size}&questCategory=${questCategory}&region=${region}&worldLevel=${worldLevel}`,
 			{
 				method: "get",
 			},
@@ -29,7 +27,7 @@ async function POST(req: Request) {
 		}
 		const result = await response.json();
 		return NextResponse.json(
-			{ message: "성공", ...result },
+			{ message: "성공", mainPostList: result },
 			{ status: response.status },
 		);
 	} catch (error) {

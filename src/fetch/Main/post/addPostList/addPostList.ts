@@ -112,7 +112,10 @@ export async function addPostSignIn(
 						...guestModifyData,
 					}),
 				});
-				if (!response.ok) {
+				if (response.status === 400) {
+					errorToast("비밀번호가 일치하지 않습니다.");
+					throw new returnResponse(response);
+				} else if (!response.ok) {
 					throw new returnResponse(response);
 				}
 			}
