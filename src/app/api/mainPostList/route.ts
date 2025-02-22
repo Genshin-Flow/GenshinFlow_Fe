@@ -13,11 +13,12 @@ async function POST(req: Request) {
 		const baseApi = process.env.NEXT_PUBLIC_BaseApi;
 		const mainPostAPi = process.env.NEXT_PUBLIC_mainPostListApi;
 		const { page, size } = await req.json();
-
+		console.log("weqwewqe");
+		console.log(mainPostAPi || baseApi);
 		if (!baseApi || !mainPostAPi) {
 			throw new Error("메인페이지를 불러오기 위한 환경변수가 없습니다.");
 		}
-
+		console.log("sdfsdfsd");
 		const response = await fetch(
 			`${baseApi}${mainPostAPi}?size=${size}&page=${page}`,
 			{
