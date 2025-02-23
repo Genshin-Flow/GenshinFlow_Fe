@@ -43,16 +43,19 @@ export default function ConfirmModal(props: propsType) {
 	} = useForm();
 	const buttonFn = async (item: PostContent, data: FieldValues) => {
 		try {
-			const tokenResponse = await getAccessToken(setIsLogin);
-
-			const tokenResult = await tokenResponse.json();
+			let accessToken = "";
+			if (isLogin) {
+				const tokenResponse = await getAccessToken(setIsLogin);
+				const tokenResult = await tokenResponse.json();
+				accessToken = tokenResult.accessToken;
+			}
 			switch (props.type) {
 				case "complete":
 					await loadingToast(
 						completePost(
 							isLogin,
 							item.id,
-							tokenResult.accessToken,
+							accessToken,
 							props.refetch,
 							data.password,
 						),
@@ -66,7 +69,7 @@ export default function ConfirmModal(props: propsType) {
 						deletePost(
 							isLogin,
 							item.id,
-							tokenResult.accessToken,
+							accessToken,
 							props.refetch,
 							data.password,
 						),
@@ -77,13 +80,7 @@ export default function ConfirmModal(props: propsType) {
 					break;
 				case "postUp":
 					await loadingToast(
-						upPost(
-							isLogin,
-							item.id,
-							tokenResult.accessToken,
-							props.refetch,
-							data.password,
-						),
+						upPost(isLogin, item.id, accessToken, props.refetch, data.password),
 						"끌어올리기 중",
 						"끌어올리기 성공!",
 						"끌어올리기 실패!",
