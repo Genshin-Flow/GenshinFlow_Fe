@@ -14,16 +14,9 @@ class returnState extends Error {
 
 export async function POST(req: requestType) {
 	try {
-		const accessCookieTime = process.env.accessCookieTime as unknown as string;
-		const refreshCookieTime = process.env
-			.refreshCookieTime as unknown as string;
 		const baseAPi = process.env.NEXT_PUBLIC_BASE_API;
 		const loginApi = process.env.NEXT_PUBLIC_login;
-		if (!accessCookieTime || !refreshCookieTime) {
-			throw new Error(
-				"쿠키 만료시간에 필요한 시간을 환경변수에서 찾을 수 없습니다.",
-			);
-		}
+
 		if (!baseAPi || !loginApi) {
 			throw new Error("로그인 요청에 필요한 환경변수를 찾을 수 없습니다.");
 		}
