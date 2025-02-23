@@ -13,7 +13,6 @@ export async function userCompletePost(postId: number, accessToken: string) {
 				? ""
 				: process.env.NEXT_PUBLIC_LocalBaseApi;
 		const completeApi = process.env.NEXT_PUBLIC_user_completePost;
-		console.log(accessToken);
 		if (!completeApi) {
 			throw new Error("옵션 fetch를 위한 환경변수를 찾을 수 없습니다.");
 		}

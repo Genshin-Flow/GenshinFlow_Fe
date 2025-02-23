@@ -49,6 +49,7 @@ export default function ConfirmModal(props: propsType) {
 				const tokenResult = await tokenResponse.json();
 				accessToken = tokenResult.accessToken;
 			}
+
 			switch (props.type) {
 				case "complete":
 					await loadingToast(
