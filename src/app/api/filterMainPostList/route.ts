@@ -27,7 +27,7 @@ async function POST(req: Request) {
 		}
 		const result = await response.json();
 		return NextResponse.json(
-			{ message: "성공", mainPostList: result },
+			{ message: "성공", ...result },
 			{ status: response.status },
 		);
 	} catch (error) {
