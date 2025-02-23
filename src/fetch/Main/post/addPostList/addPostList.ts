@@ -90,7 +90,7 @@ export async function addPostSignIn(
 				}
 			}
 		} // 로그아웃 상태에서 포스트 등록시 fetch
-		else if (!loginState) {
+		else if (!editPostData && !loginState) {
 			if (!withOutSignIn) {
 				throw new Error("api 주소가 없습니다.");
 			}

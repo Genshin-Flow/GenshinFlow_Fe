@@ -25,7 +25,7 @@ export async function guestEditPost(item: editType) {
 		if (!editPostApi) {
 			throw new Error("포스트를 수정하기 위한 환경변수를 찾을 수 없습니다.");
 		}
-		const response = await fetch(`${localApi}/${editPostApi}`, {
+		const response = await fetch(`${localApi}${editPostApi}`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
