@@ -11,16 +11,19 @@ export async function guestCompletePost(
 	password: string | undefined,
 ) {
 	try {
-		const baseApi = process.env.NEXT_PUBLIC_BaseApi;
-		const moreOptionBaseApi = process.env.NEXT_PUBLIC_moreOptionGuestBaseApi;
-		if (!baseApi || !moreOptionBaseApi) {
+		const localApi =
+			process.env.NODE_ENV === "production"
+				? ""
+				: process.env.NEXT_PUBLIC_LocalBaseApi;
+		const completeApi = process.env.NEXT_PUBLIC_guest_completePostApi;
+		if (!completeApi) {
 			throw new Error("옵션 fetch를 위한 환경변수를 찾을 수 없습니다.");
 		}
 		if (!password) {
 			throw new Error("비밀번호를 인식하지 못했습니다. 다시 시도해 주세요");
 		}
-		const response = await fetch(`${baseApi}${moreOptionBaseApi}/complete`, {
-			method: "PATCH",
+		const response = await fetch(`${localApi}${completeApi}`, {
+			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
 			},

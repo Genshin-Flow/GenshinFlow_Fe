@@ -20,6 +20,7 @@ export async function removeToken() {
 		if (!response.ok) {
 			throw new returnResponse(response);
 		}
+		location.reload();
 		return response;
 	} catch (error) {
 		const err = error as Error;
