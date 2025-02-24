@@ -17,14 +17,11 @@ export async function POST(req: responseType) {
 		const userUid = requestBodyData.userUid;
 		const accessMaxAge = process.env.accessCookieTime;
 		const refreshMaxAge = process.env.refreshCookieTime;
-		const localBaseApi =
-			process.env.NODE_ENV === "production"
-				? ""
-				: process.env.NEXT_PUBLIC_LocalBaseApi;
-		const loginApi = process.env.NEXT_PUBLIC_login;
+		const baseApi = process.env.NEXT_PUBLIC_BaseApi;
+		const signUpApi = process.env.signUpApi;
 
 		// 회원가입 관련 환경변수 에러 핸들링
-		if (!loginApi) {
+		if (!signUpApi) {
 			throw new Error("회원가입 환경변수를 찾을 수 없습니다");
 		}
 
@@ -34,20 +31,22 @@ export async function POST(req: responseType) {
 			);
 		}
 
-		const response = await fetch(`${localBaseApi}${loginApi}`, {
+		const response = await fetch(`${baseApi}${signUpApi}`, {
 			method: "post",
+			headers: {
+				"Content-Type": "application/json",
+			},
 			body: JSON.stringify({
 				email,
 				password,
-				authCode,
-				userUid,
+				authNum: authCode,
+				uid: userUid,
 			}),
 		});
 		const data = await response.json();
-		if (response.status !== 200) throw new Error("signUp failed");
+		if (!response.ok) throw new Error("signUp failed");
 		const accessToken = serialize("AccessToken", data.accessToken, {
 			httpOnly: true,
-
 			secure: process.env.NODE_ENV === "production",
 			maxAge: Number(accessMaxAge),
 			path: "/",

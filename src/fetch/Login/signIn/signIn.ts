@@ -28,12 +28,12 @@ export async function postLoginAuth(
 	passwordValue: string,
 ): Promise<fetchReturnType | any> {
 	try {
-		const BaseApi = process.env.NEXT_PUBLIC_BaseApi;
-		const Login = process.env.NEXT_PUBLIC_login;
-		if (!BaseApi && !Login) {
+		const localBaseAPi = process.env.NEXT_PUBLIC_LocalBaseApi;
+		const Login = process.env.NEXT_PUBLIC_signInApi;
+		if (!Login) {
 			throw new Error("로그인 환경변수를 찾을 수 없습니다.");
 		}
-		const response = await fetch(`${BaseApi}${Login}`, {
+		const response = await fetch(`${localBaseAPi}${Login}`, {
 			method: "post",
 			headers: {
 				"Content-Type": "application/json",

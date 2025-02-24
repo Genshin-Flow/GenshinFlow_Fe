@@ -2,13 +2,13 @@ import { styled } from "../../../styled-system/jsx";
 
 export const HeaderContainer = styled("header", {
 	base: {
+		height: "10%",
 		top: "0",
 		left: "0",
 		display: "flex",
 		alignItems: "center",
 		justifyContent: "center",
 		width: "100%",
-		minHeight: "120px",
 	},
 });
 
@@ -17,7 +17,6 @@ export const CenterContainer = styled("div", {
 		display: "flex",
 		maxWidth: "1639px",
 		minWidth: "1318px",
-		height: "64px",
 		flex: "1",
 		padding: "0 40px",
 		alignItems: "center",

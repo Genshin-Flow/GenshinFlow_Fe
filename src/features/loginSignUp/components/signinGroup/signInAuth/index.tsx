@@ -2,14 +2,7 @@
 import Button from "@/features/loginSignUp/components/buttonGroup/defaultButton";
 import Input from "@/features/loginSignUp/components/Input";
 import { propsType } from "@/features/loginSignUp/components/signinGroup/signIn";
-import {
-	Dispatch,
-	FormEvent,
-	SetStateAction,
-	useEffect,
-	useRef,
-	useState,
-} from "react";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import loginState from "@/stores/loginPageStateStore";
 import { postLoginAuth } from "@/fetch/Login/signIn/signIn";
 import { passwordValidation } from "@/features/loginSignUp/auth/passwordCheck/passwordValidation";
@@ -30,14 +23,6 @@ export default function SignInAuth(props: propsType) {
 		handleSubmit,
 		formState: { isSubmitting },
 	} = useForm();
-
-	useEffect(() => {
-		if (isSubmitting) {
-			setLoginButtonState("lock");
-		} else {
-			setLoginButtonState("login");
-		}
-	}, [isSubmitting]);
 
 	return (
 		<form
@@ -64,7 +49,7 @@ export default function SignInAuth(props: propsType) {
 				registerName="password"
 			/>
 			<Button
-				variable={loginButtonState}
+				variable={isSubmitting ? "deActive" : loginButtonState}
 				margin={"mb12"}
 				setSignInButton={setLoginButtonState}
 			>

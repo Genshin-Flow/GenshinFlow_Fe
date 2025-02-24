@@ -89,6 +89,7 @@ function Mobile() {
 
 const Main = styled("main", {
 	base: {
+		height: "120%",
 		position: "relative",
 		overflow: "hidden",
 	},
@@ -97,6 +98,8 @@ const Main = styled("main", {
 const Container = styled("div", {
 	base: {
 		display: "flex",
+		overflow: "hidden",
+		height: "75%",
 		maxWidth: "1639px",
 		minWidth: "1318px",
 		mx: "auto",

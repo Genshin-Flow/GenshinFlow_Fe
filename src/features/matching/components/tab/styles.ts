@@ -28,8 +28,6 @@ export const Container = styled("div", {
 		maxWidth: "1129px",
 		width: "100%",
 		minWidth: "888px",
-		height: "797px",
-		minHeight: "660px",
 		backgroundColor: "primary.02",
 		overflow: "hidden",
 	},
