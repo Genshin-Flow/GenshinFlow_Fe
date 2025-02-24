@@ -2,7 +2,7 @@ import Dropdown from "@/features/matching/components/Dropdown";
 import {
 	MatchingMenuContainer,
 	WriteButton,
-} from "@/features/matching/components/matchingMenu/style";
+} from "@/features/matching/components/MatchingMenu/style";
 import {
 	questOptions,
 	lvOptions,
