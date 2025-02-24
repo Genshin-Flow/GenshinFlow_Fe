@@ -12,7 +12,10 @@ export async function oauthSignIn(
 ): Promise<Response> {
 	// 현재 uid가 겹칠때 에러 처리도 필요
 	try {
-		const baseApi = process.env.NEXT_PUBLIC_LocalBaseApi;
+		const baseApi =
+			process.env.NODE_ENV === "production"
+				? ""
+				: process.env.NEXT_PUBLIC_LocalBaseApi;
 		const oauthLoginApi = process.env.NEXT_PUBLIC_LocalOauthLoginApi;
 		const response = await fetch(`${baseApi}${oauthLoginApi}`, {
 			method: "post",

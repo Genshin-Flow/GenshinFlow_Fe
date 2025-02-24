@@ -80,8 +80,11 @@ const authOptions: NextAuthOptions = {
 			try {
 				const oauthLoginApi = process.env.NEXT_PUBLIC_LocalOauthLoginApi;
 				const baseApi = process.env.NEXT_PUBLIC_BaseApi;
-				const LocalBaseApi = process.env.NEXT_PUBLIC_LocalBaseApi;
-				if (!oauthLoginApi || !baseApi || !LocalBaseApi) {
+				const LocalBaseApi =
+					process.env.NODE_ENV === "production"
+						? "/api"
+						: process.env.NEXT_PUBLIC_LocalBaseApi;
+				if (!oauthLoginApi || !baseApi) {
 					throw new Error("Oauth 로그인 API를 찾을 수 없습니다.");
 				}
 

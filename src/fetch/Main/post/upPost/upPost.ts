@@ -1,6 +1,7 @@
-import { refetchType } from "@/features/matching/components/tab";
+import { refetchType } from "@/features/matching/components/Tab_tmp";
 import { guestUpPost } from "@/fetch/Main/moreOption/guest/guestUpPost";
 import { userUpPost } from "@/fetch/Main/moreOption/user/userUpPost";
+import { errorToast } from "@/utils/customToast/customToast";
 class returnResponse extends Error {
 	response: Response;
 	constructor(response: Response) {
@@ -28,6 +29,9 @@ export async function upPost(
 	} catch (error) {
 		const err = error as Error;
 		if (error instanceof returnResponse) {
+			if (error.response.status === 400) {
+				errorToast("비밀번호가 일치하지 않습니다.");
+			}
 			return error.response;
 		}
 		return new Response(err.message, { status: 500 });
