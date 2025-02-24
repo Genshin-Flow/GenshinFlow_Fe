@@ -5,7 +5,7 @@ import {
 	PostDropDownItemContainer,
 	SortingBox,
 	TextBox,
-} from "@/features/matching/components/Dropdown_tmp/addPostDropdown/style";
+} from "@/features/matching/components/Dropdown/addPostDropdown/style";
 import useOutsideClick from "@/hooks/useOutsideClick";
 
 type propsType = {

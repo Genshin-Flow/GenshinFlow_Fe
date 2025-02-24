@@ -19,7 +19,7 @@ import { questOptions } from "@/data/MainOptions/mainOptions";
 import { timeOptions } from "@/data/MainOptions/mainOptions";
 import useLoginStateStore from "@/stores/loginStateStore";
 import { Dispatch, SetStateAction } from "react";
-import AddPostDropDown from "@/features/matching/components/Dropdown_tmp/addPostDropdown";
+import AddPostDropDown from "@/features/matching/components/Dropdown/addPostDropdown";
 import {
 	uidPattern,
 	modalPasswordRegular,

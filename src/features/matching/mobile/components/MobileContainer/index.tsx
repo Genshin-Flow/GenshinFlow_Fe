@@ -1,4 +1,4 @@
-import Dropdown from "@/features/matching/components/Dropdown_tmp";
+import Dropdown from "@/features/matching/components/Dropdown";
 import { FilterContainer } from "./style";
 import {
 	questOptions,
