@@ -26,7 +26,7 @@ import {
 	MobileMessageText,
 	ProfileImg,
 } from "./styles";
-import Modal from "../modal";
+import Modal from "../Modal";
 import { Dispatch, SetStateAction, useRef, useState } from "react";
 import useOutsideClick from "@/hooks/useOutsideClick";
 import { PostContent } from "@/features/matching/components/Tab";

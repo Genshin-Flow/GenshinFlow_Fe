@@ -5,7 +5,7 @@ import {
 	AttachInput,
 	MoreImagePreview,
 	PreviewImageContainer,
-} from "@/features/matching/components/radio/styles";
+} from "@/features/matching/components/Radio/styles";
 import React, { useEffect } from "react";
 
 const previewImageSize = {
