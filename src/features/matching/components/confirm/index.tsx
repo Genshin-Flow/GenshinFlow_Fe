@@ -11,7 +11,7 @@ import {
 	Content,
 	WaringText,
 } from "./style";
-import { PostContent } from "@/features/matching/components/Tab_tmp";
+import { PostContent } from "@/features/matching/components/Tab";
 import { confirmType } from "@/features/matching/components/matchingPostItem";
 import useOutsideClick from "@/hooks/useOutsideClick";
 import { ModalBackground } from "@/features/matching/components/Modal/styles";
@@ -24,7 +24,7 @@ import { upPost } from "@/fetch/Main/post/upPost/upPost";
 import { FieldValues, useForm } from "react-hook-form";
 import { modalPasswordRegular } from "@/features/loginSignUp/regularExpression/RegularExpression";
 import { getAccessToken } from "@/fetch/Token/getAccessToken/getAccessToken";
-import { refetchType } from "@/features/matching/components/Tab_tmp";
+import { refetchType } from "@/features/matching/components/Tab";
 type propsType = {
 	postInfo: PostContent;
 	type: confirmType;

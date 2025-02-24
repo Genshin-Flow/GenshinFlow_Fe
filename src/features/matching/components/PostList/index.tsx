@@ -1,9 +1,9 @@
 import MatchingPostItem from "@/features/matching/components/matchingPostItem";
 import { PostListContainer, VisibleTabList } from "./style";
 import { nanoid } from "nanoid";
-import { PostContent } from "@/features/matching/components/Tab_tmp";
+import { PostContent } from "@/features/matching/components/Tab";
 import useLoginStateStore from "@/stores/loginStateStore";
-import { refetchType } from "@/features/matching/components/Tab_tmp";
+import { refetchType } from "@/features/matching/components/Tab";
 
 type PostListProps = {
 	postData: PostContent[] | undefined;

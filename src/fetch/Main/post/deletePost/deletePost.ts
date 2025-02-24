@@ -1,4 +1,4 @@
-import { refetchType } from "@/features/matching/components/Tab_tmp";
+import { refetchType } from "@/features/matching/components/Tab";
 import { guestDeletePost } from "@/fetch/Main/moreOption/guest/guestDeletePost";
 import { userDeletePost } from "@/fetch/Main/moreOption/user/userDeletePost";
 import { errorToast } from "@/utils/customToast/customToast";
