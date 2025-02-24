@@ -15,7 +15,7 @@ import {
 	UserInfo,
 	UserQuestContainer,
 	WarningText,
-} from "@/features/matching/components/modal/styles";
+} from "@/features/matching/components/Modal/styles";
 import { Dispatch, SetStateAction } from "react";
 import { questOptions, timeOptions } from "@/data/MainOptions/mainOptions";
 import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
