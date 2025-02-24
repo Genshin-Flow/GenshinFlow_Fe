@@ -16,7 +16,6 @@ type propsType = {
 };
 
 export default function Input(props: propsType) {
-	console.log(props.registerName);
 	return (
 		<DefaultInput
 			type={props.type}
