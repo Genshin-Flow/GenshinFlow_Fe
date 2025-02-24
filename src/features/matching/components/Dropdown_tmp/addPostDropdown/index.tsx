@@ -1,11 +1,11 @@
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
+import { Dispatch, SetStateAction, useRef, useState } from "react";
 import { nanoid } from "nanoid";
 import {
 	PostDropdownContainer,
 	PostDropDownItemContainer,
 	SortingBox,
 	TextBox,
-} from "@/features/matching/components/dropdown/addPostDropdown/style";
+} from "@/features/matching/components/Dropdown_tmp/addPostDropdown/style";
 import useOutsideClick from "@/hooks/useOutsideClick";
 
 type propsType = {

@@ -6,8 +6,8 @@ import {
 	TextListUl,
 	TextListLi,
 } from "./styles";
-import { ModalBackground } from "@/features/matching/components/modal/styles";
-import { useRef, useState } from "react";
+import { ModalBackground } from "@/features/matching/components/Modal/styles";
+import { useRef } from "react";
 
 type propsType = {
 	setModalState: () => void;

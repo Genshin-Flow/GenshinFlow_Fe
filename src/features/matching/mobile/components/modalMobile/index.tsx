@@ -1,4 +1,4 @@
-import Dropdown from "@/features/matching/components/dropdown";
+import Dropdown from "@/features/matching/components/Dropdown_tmp";
 import {
 	Button,
 	Content,
@@ -22,7 +22,7 @@ import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
 import ErrorText from "@/features/matching/components/modalErrorText";
 import useLoginStateStore from "@/stores/loginStateStore";
 import userStore from "@/stores/userStore";
-import AddPostDropDown from "@/features/matching/components/dropdown/addPostDropdown";
+import AddPostDropDown from "@/features/matching/components/Dropdown_tmp/addPostDropdown";
 import {
 	uidPattern,
 	modalPasswordRegular,

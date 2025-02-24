@@ -3,7 +3,7 @@ import {
 	CheckBox,
 	DropdownItem,
 	TextBox,
-} from "@/features/matching/components/dropdown/styles";
+} from "@/features/matching/components/Dropdown_tmp/styles";
 import { nanoid } from "nanoid";
 import { Option } from "../index";
 
