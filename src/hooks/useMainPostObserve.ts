@@ -1,9 +1,8 @@
-import { Dispatch, RefObject, SetStateAction, useEffect } from "react";
+import { RefObject, useEffect } from "react";
 import { useInfiniteTanStack } from "@/hooks/useQueryInfiniteScroll";
 import { getMainPostList } from "@/fetch/Main/mainPostList/mainPostList";
 import { getFilterMainPostList } from "@/fetch/Main/mainPostList/filterMainPostList";
 import { QueryFilters } from "@tanstack/react-query";
-import { PostContent } from "@/features/matching/components/tab";
 
 const observerOption = {
 	root: null,
@@ -16,7 +15,6 @@ export function useMainPostObserve(
 	region: string[],
 	questCategory: string[],
 	worldLevel: string[],
-	setPostData: Dispatch<SetStateAction<PostContent[]>>,
 ) {
 	const staleTime = 1000 * 60 * 10;
 	const pagesize = 20;

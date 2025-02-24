@@ -1,6 +1,6 @@
 import { FieldValues } from "react-hook-form";
 import { getAccessToken } from "@/fetch/Token/getAccessToken/getAccessToken";
-import { PostContent } from "@/features/matching/components/tab";
+import { PostContent } from "@/features/matching/components/Tab_tmp";
 import { errorToast } from "@/utils/customToast/customToast";
 
 class returnResponse extends Error {
@@ -21,13 +21,17 @@ export async function addPostSignIn(
 ) {
 	try {
 		const baseApi = process.env.NEXT_PUBLIC_BaseApi;
-		const signInPostApi = process.env.NEXT_PUBLIC_moreOptionUserBaseApi;
-		const withOutSignIn = process.env.NEXT_PUBLIC_moreOptionGuestBaseApi;
-		const guestPostEdit = process.env.NEXT_PUBLIC_moreOptionGuestBaseApi;
-		const userPostEdit = process.env.NEXT_PUBLIC_moreOptionUserBaseApi;
+		const localBaseApi =
+			process.env.NODE_ENV === "production"
+				? ""
+				: process.env.NEXT_PUBLIC_LocalBaseApi;
+		const postUserEditApi = process.env.NEXT_PUBLIC_user_editPostApi;
+		const postGuestEditApi = process.env.NEXT_PUBLIC_guest_editPostApi;
+		const signInPostApi = process.env.NEXT_PUBLIC_user_registrationPost;
+		const withOutSignIn = process.env.NEXT_PUBLIC_guest_registrationPost;
 		let autoCompleteTime: number | unknown = "";
 		const defaultQuestCategory = "NORMAL_DOMAIN";
-		if (!baseApi || !signInPostApi) {
+		if (!baseApi || !signInPostApi || !postGuestEditApi || !withOutSignIn) {
 			throw new Error("api 주소가 없습니다.");
 		}
 		autoCompleteTime = Number(await changeTime(time));
@@ -43,6 +47,7 @@ export async function addPostSignIn(
 			questCategory: quest || defaultQuestCategory,
 			content: data.content,
 			autoCompleteTime,
+			password: data.password,
 		};
 
 		const guestModifyData = {
@@ -67,10 +72,10 @@ export async function addPostSignIn(
 				throw new returnResponse(tokenResponse);
 			}
 			const result = await tokenResponse.json();
-			const response = await fetch(`${baseApi}${signInPostApi}`, {
+			const response = await fetch(`${localBaseApi}${signInPostApi}`, {
 				method: "POST",
 				headers: {
-					Authorization: `Bearer ${result.accessToken}`,
+					Authorization: `${result.accessToken}`,
 					"Content-Type": "application/json",
 				},
 				body: JSON.stringify({
@@ -84,13 +89,39 @@ export async function addPostSignIn(
 						throw new returnResponse(response);
 				}
 			}
-		} else if (editPostData) {
+		} // 로그아웃 상태에서 포스트 등록시 fetch
+		else if (!editPostData && !loginState) {
+			if (!withOutSignIn) {
+				throw new Error("api 주소가 없습니다.");
+			}
+			const response = await fetch(`${localBaseApi}${withOutSignIn}`, {
+				headers: {
+					"Content-Type": "application/json",
+				},
+				method: "POST",
+				body: JSON.stringify({
+					...NonSignInChangeData,
+				}),
+			});
+			if (!response.ok) {
+				throw new returnResponse(response);
+			}
+		}
+		// 포스트글 수정정
+		else if (editPostData) {
 			if (loginState) {
-				const response = await fetch(`${baseApi}${userPostEdit}/modify`, {
+				// 토큰을 가져온 뒤 포스트작성 api 실행
+				const tokenResponse = await getAccessToken(setIsLogin);
+				if (!tokenResponse.ok) {
+					throw new returnResponse(tokenResponse);
+				}
+				const result = await tokenResponse.json();
+				const response = await fetch(`${localBaseApi}${postUserEditApi}`, {
 					headers: {
 						"Content-Type": "application/json",
+						Authorization: `${result.accessToken}`,
 					},
-					method: "PATCH",
+					method: "POST",
 					body: JSON.stringify({
 						...userModifyData,
 					}),
@@ -103,38 +134,21 @@ export async function addPostSignIn(
 					}
 				}
 			} else {
-				const response = await fetch(`${baseApi}${guestPostEdit}/modify`, {
+				const response = await fetch(`${localBaseApi}${postGuestEditApi}`, {
 					headers: {
 						"Content-Type": "application/json",
 					},
-					method: "PATCH",
+					method: "POST",
 					body: JSON.stringify({
 						...guestModifyData,
 					}),
 				});
-				if (!response.ok) {
+				if (response.status === 400) {
+					errorToast("비밀번호가 일치하지 않습니다.");
+					throw new returnResponse(response);
+				} else if (!response.ok) {
 					throw new returnResponse(response);
 				}
-			}
-		}
-
-		// 로그아웃 상태에서 포스트 등록시 fetch
-		else if (!loginState) {
-			if (!withOutSignIn) {
-				throw new Error("api 주소가 없습니다.");
-			}
-			const response = await fetch(`${baseApi}${withOutSignIn}`, {
-				headers: {
-					"Content-Type": "application/json",
-				},
-				method: "POST",
-				body: JSON.stringify({
-					...NonSignInChangeData,
-					password: data.password,
-				}),
-			});
-			if (!response.ok) {
-				throw new returnResponse(response);
 			}
 		}
 	} catch (error) {

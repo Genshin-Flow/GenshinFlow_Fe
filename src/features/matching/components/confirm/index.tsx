@@ -11,10 +11,10 @@ import {
 	Content,
 	WaringText,
 } from "./style";
-import { PostContent } from "@/features/matching/components/tab";
+import { PostContent } from "@/features/matching/components/Tab_tmp";
 import { confirmType } from "@/features/matching/components/matchingPostItem";
 import useOutsideClick from "@/hooks/useOutsideClick";
-import { ModalBackground } from "@/features/matching/components/modal/styles";
+import { ModalBackground } from "@/features/matching/components/Modal/styles";
 import React, { useRef } from "react";
 import useLoginStateStore from "@/stores/loginStateStore";
 import { loadingToast } from "@/utils/customToast/customToast";
@@ -24,7 +24,7 @@ import { upPost } from "@/fetch/Main/post/upPost/upPost";
 import { FieldValues, useForm } from "react-hook-form";
 import { modalPasswordRegular } from "@/features/loginSignUp/regularExpression/RegularExpression";
 import { getAccessToken } from "@/fetch/Token/getAccessToken/getAccessToken";
-import { refetchType } from "@/features/matching/components/tab";
+import { refetchType } from "@/features/matching/components/Tab_tmp";
 type propsType = {
 	postInfo: PostContent;
 	type: confirmType;
@@ -43,18 +43,20 @@ export default function ConfirmModal(props: propsType) {
 	} = useForm();
 	const buttonFn = async (item: PostContent, data: FieldValues) => {
 		try {
-			const tokenResponse = await getAccessToken(setIsLogin);
-			if (!tokenResponse.ok) {
-				throw new Error("accessToken을 불러오는데 실패 했습니다.");
+			let accessToken = "";
+			if (isLogin) {
+				const tokenResponse = await getAccessToken(setIsLogin);
+				const tokenResult = await tokenResponse.json();
+				accessToken = tokenResult.accessToken;
 			}
-			const tokenResult = await tokenResponse.json();
+
 			switch (props.type) {
 				case "complete":
 					await loadingToast(
 						completePost(
 							isLogin,
 							item.id,
-							tokenResult.accessToken,
+							accessToken,
 							props.refetch,
 							data.password,
 						),
@@ -68,7 +70,7 @@ export default function ConfirmModal(props: propsType) {
 						deletePost(
 							isLogin,
 							item.id,
-							tokenResult.accessToken,
+							accessToken,
 							props.refetch,
 							data.password,
 						),
@@ -79,13 +81,7 @@ export default function ConfirmModal(props: propsType) {
 					break;
 				case "postUp":
 					await loadingToast(
-						upPost(
-							isLogin,
-							item.id,
-							tokenResult.accessToken,
-							props.refetch,
-							data.password,
-						),
+						upPost(isLogin, item.id, accessToken, props.refetch, data.password),
 						"끌어올리기 중",
 						"끌어올리기 성공!",
 						"끌어올리기 실패!",

@@ -32,10 +32,13 @@ export async function signUp(
 	try {
 		const mailState = checkMail(email);
 		const passwordCheck = passwordValidation(password);
-		const localBaseAPi = process.env.NEXT_PUBLIC_BaseApi;
+		const localBaseAPi =
+			process.env.NODE_ENV === "production"
+				? ""
+				: process.env.NEXT_PUBLIC_BaseApi;
 		const SignUp = process.env.NEXT_PUBLIC_signUpApi;
 
-		if (!localBaseAPi && !SignUp) {
+		if (!SignUp) {
 			throw new Error("회원가입 환경변수를 찾을 수 없습니다.");
 		}
 

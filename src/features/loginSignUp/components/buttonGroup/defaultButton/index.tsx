@@ -1,5 +1,4 @@
 "use client";
-import { styled } from "@/../styled-system/jsx";
 import { Dispatch, SetStateAction, useEffect } from "react";
 import { useRef } from "react";
 import { ButtonCompo } from "./style";

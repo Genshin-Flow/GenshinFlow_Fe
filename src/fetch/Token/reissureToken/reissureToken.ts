@@ -9,9 +9,12 @@ class returnResponse extends Response {
 export async function reissueToken(refreshToken: string): Promise<Response> {
 	try {
 		if (!refreshToken) throw new Error("리프레시 토큰을 찾을 수 없습니다.");
-		const localBaseApi = process.env.NEXT_PUBLIC_LocalBaseApi;
+		const localBaseApi =
+			process.env.NODE_ENV === "production"
+				? ""
+				: process.env.NEXT_PUBLIC_LocalBaseApi;
 		const tokenReissue = process.env.NEXT_PUBLIC_refreshAccessTokenApi;
-		if (!localBaseApi || !tokenReissue) {
+		if (!tokenReissue) {
 			throw new Error("토큰 재발급에 필요한 환경변수를 찾을 수 없습니다.");
 		}
 		const response = await fetch(`${localBaseApi}${tokenReissue}`, {

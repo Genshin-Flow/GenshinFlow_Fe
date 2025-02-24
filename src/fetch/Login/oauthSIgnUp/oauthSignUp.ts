@@ -12,10 +12,20 @@ export async function oauthSignUp(
 	provider: string,
 ): Promise<Response | unknown> {
 	try {
+<<<<<<< HEAD
 		const LocalBaseApi = process.env.NEXT_PUBLIC_LocalBaseApi;
 		const OauthSignUpApi = process.env.NEXT_PUBLIC_LocalOauthSignUpApi;
 		if (!LocalBaseApi && !OauthSignUpApi) {
 			throw new Error("BaseApi 혹은 OauthSignUpApi를 찾을 수 없습니다.");
+=======
+		const LocalBaseApi =
+			process.env.NODE_ENV === "production"
+				? ""
+				: process.env.NEXT_PUBLIC_LocalBaseApi;
+		const OauthSignUpApi = process.env.NEXT_PUBLIC_LocalOauthSignUpApi;
+		if (!OauthSignUpApi) {
+			throw new Error("Oauth 로그인을 위한 환경변수를 찾을 수 없습니다.");
+>>>>>>> 663f51d6d1ca89c5a8a95d271f9d5e63d04aa098
 		}
 		const response = await fetch(`${LocalBaseApi}${OauthSignUpApi}`, {
 			method: "POST",
