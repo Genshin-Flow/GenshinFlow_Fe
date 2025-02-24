@@ -67,6 +67,7 @@ const authOptions: NextAuthOptions = {
 			clientSecret: discordSecretPw,
 		}),
 	],
+	debug: process.env.NODE_ENV === "production" ? true : false,
 	pages: {
 		signIn: "/Login",
 		error: "/error",
@@ -90,8 +91,7 @@ const authOptions: NextAuthOptions = {
 
 				// URL 구성 수정
 				const apiUrl = `${LocalBaseApi}${oauthLoginApi}`;
-
-				// 서버 API로 요청 보내기
+				// 서버 API로 보내기
 				const response = await fetch(apiUrl, {
 					method: "POST",
 					headers: {
@@ -102,7 +102,7 @@ const authOptions: NextAuthOptions = {
 						provider: account?.provider,
 					}),
 				});
-
+				console.log(response);
 				if (response.ok) {
 					user.status = response.status;
 					user.responseOk = true;
