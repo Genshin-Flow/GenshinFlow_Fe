@@ -5,7 +5,7 @@ export async function adminUserSearch<T>(
 	setUserList: Dispatch<SetStateAction<T[]>>,
 ) {
 	try {
-		const baseAPI = process.env.NEXT_PUBLIC_LocalBaseApi;
+		const baseAPI = process.env.NEXT_PUBLIC_BaseApi;
 		const adminSearchUserNextServerResult =
 			process.env.adminSearchUserNextServerResult;
 		// 환경변수 에러 핸들링

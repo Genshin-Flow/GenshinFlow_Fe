@@ -1,9 +1,5 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
-type requestType = NextRequest & {
-	email: string;
-	password: string;
-};
 class returnState extends Error {
 	response: Response;
 	constructor(response: Response) {
@@ -12,36 +8,33 @@ class returnState extends Error {
 	}
 }
 
-export async function POST(req: requestType) {
+async function POST(req: Request) {
 	try {
-		const accessCookieTime = process.env.accessCookieTime as unknown as string;
-		const refreshCookieTime = process.env
-			.refreshCookieTime as unknown as string;
-		const baseAPi = process.env.NEXT_PUBLIC_BASE_API;
-		const loginApi = process.env.NEXT_PUBLIC_login;
-		if (!accessCookieTime || !refreshCookieTime) {
-			throw new Error(
-				"쿠키 만료시간에 필요한 시간을 환경변수에서 찾을 수 없습니다.",
-			);
-		}
+		const baseAPi = process.env.NEXT_PUBLIC_BaseApi;
+		const loginApi = process.env.signIn;
+
 		if (!baseAPi || !loginApi) {
 			throw new Error("로그인 요청에 필요한 환경변수를 찾을 수 없습니다.");
 		}
-		const requestBody = await req.json();
-		const email = requestBody.email;
-		const password = requestBody.password;
+		const { email, password } = await req.json();
+		console.log(email, password);
 		// 로그인 api
 		const response = await fetch(`${baseAPi}${loginApi}`, {
 			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
 			body: JSON.stringify({
 				email,
 				password,
 			}),
 		});
+
+		console.log(response);
 		if (!response.ok) throw new returnState(response);
 		const data = await response.json();
 		return NextResponse.json(
-			{ ok: true, data },
+			{ ...data },
 			{
 				status: response.status,
 			},
@@ -55,5 +48,13 @@ export async function POST(req: requestType) {
 				},
 			);
 		}
+		return NextResponse.json(
+			"서버에 오류가 발생했습니다. 잠시후 다시 시도해 주세요",
+			{
+				status: 500,
+			},
+		);
 	}
 }
+
+export { POST };

@@ -25,7 +25,7 @@ import {
 	modalPasswordRegular,
 	modalWorldLevelRegular,
 } from "@/features/loginSignUp/regularExpression/RegularExpression";
-import { PostContent } from "@/features/matching/components/tab";
+import { PostContent } from "@/features/matching/components/Tab";
 
 type propsType = {
 	onClose: () => void;

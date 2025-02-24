@@ -2,7 +2,7 @@
 import Button from "@/features/loginSignUp/components/buttonGroup/defaultButton";
 import Input from "@/features/loginSignUp/components/Input";
 import { propsType } from "@/features/loginSignUp/components/signinGroup/signIn";
-import { Dispatch, FormEvent, SetStateAction, useRef, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import loginState from "@/stores/loginPageStateStore";
 import { postLoginAuth } from "@/fetch/Login/signIn/signIn";
 import { passwordValidation } from "@/features/loginSignUp/auth/passwordCheck/passwordValidation";
@@ -10,6 +10,7 @@ import { checkMail } from "@/features/loginSignUp/auth/emailCheck/emailValidatio
 import { useRouter } from "next/navigation";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { setLoginToken } from "@/fetch/Token/setLoginToken/setLoginToken";
+import { FieldValues, useForm } from "react-hook-form";
 export default function SignInAuth(props: propsType) {
 	const { setModalState } = loginState();
 	const router = useRouter();
@@ -17,12 +18,18 @@ export default function SignInAuth(props: propsType) {
 	const [loginButtonState, setLoginButtonState] = useState<"login" | "lock">(
 		"login",
 	);
+	const {
+		register,
+		handleSubmit,
+		formState: { isSubmitting },
+	} = useForm();
+
 	return (
 		<form
 			ref={formRef}
-			onSubmit={(event) =>
-				submitHandler(event, setModalState, setLoginButtonState, router)
-			}
+			onSubmit={handleSubmit((data) =>
+				submitHandler(data, setModalState, setLoginButtonState, router),
+			)}
 			method="post"
 			action={"#"}
 		>
@@ -31,10 +38,18 @@ export default function SignInAuth(props: propsType) {
 				placeholder="메일주소"
 				{...(props.mb && { margin: props.mb })}
 				margin="mb12"
+				register={register}
+				registerName="email"
 			/>
-			<Input type="password" placeholder="비밀번호" margin="mb40" />
+			<Input
+				type="password"
+				placeholder="비밀번호"
+				margin="mb40"
+				register={register}
+				registerName="password"
+			/>
 			<Button
-				variable={loginButtonState}
+				variable={isSubmitting ? "deActive" : loginButtonState}
 				margin={"mb12"}
 				setSignInButton={setLoginButtonState}
 			>
@@ -46,17 +61,13 @@ export default function SignInAuth(props: propsType) {
 
 // 로그인에 필요한 값을 추출하고 유효성 검사를 실시하는 함수
 async function submitHandler(
-	event: FormEvent<HTMLFormElement>,
+	FieldValues: FieldValues,
 	setModal: (state: string) => void,
 	setLoginButtonState: Dispatch<SetStateAction<"login" | "lock">>,
 	router: AppRouterInstance,
 ) {
-	event.preventDefault();
-	const target = event.target as HTMLFormElement;
-	const $email = target.children[0] as HTMLInputElement;
-	const $password = target.children[1] as HTMLInputElement;
-	const emailValue = $email.value;
-	const passwordValue = $password.value;
+	const emailValue = FieldValues.email;
+	const passwordValue = FieldValues.password;
 
 	// 데이터 fetch를 통한 유저의 로그인 틀린 횟수를 가져와 비교 ( 조건문 작성필요 )
 	//  로그인을 틀리는 횟수를 카운트 하는 방법이 아직 명확하게 정해지지 않아 일단은 서버에서 해당 횟수를 받아오는걸 기준으로 작성

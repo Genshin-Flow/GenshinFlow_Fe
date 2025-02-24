@@ -29,12 +29,12 @@ import {
 import Modal from "../modal";
 import { Dispatch, SetStateAction, useRef, useState } from "react";
 import useOutsideClick from "@/hooks/useOutsideClick";
-import { PostContent } from "@/features/matching/components/tab";
+import { PostContent } from "@/features/matching/components/Tab";
 import dayjs from "dayjs";
 import { copyClipBoard } from "@/utils/clipBoard/clipBoard";
 import ConfirmModal from "@/features/matching/components/confirm";
 import useLoginStateStore from "@/stores/loginStateStore";
-import { refetchType } from "@/features/matching/components/tab";
+import { refetchType } from "@/features/matching/components/Tab";
 // 퀘스트 종류 이미지
 export const questImage = {
 	domain: "/svgs/quests/domain.svg",

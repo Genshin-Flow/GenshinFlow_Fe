@@ -14,15 +14,15 @@ import {
 	MobileWriteButton,
 } from "./styles";
 
-import Modal from "../modal";
+import Modal from "../Modal";
 import { useState, useEffect } from "react";
 import { useRef } from "react";
 import { useMainPostObserve } from "@/hooks/useMainPostObserve";
 import userStore from "@/stores/userStore";
-import MatchingMenu from "@/features/matching/components/matchingMenu";
-import MobileFilterContainer from "@/features/matching/mobile/components/mobileContainer";
-import MatchingHeader from "@/features/matching/components/matchingHeader";
-import PostList from "@/features/matching/components/postList";
+import MatchingMenu from "@/features/matching/components/MatchingMenu";
+import MobileFilterContainer from "@/features/matching/mobile/components/MobileContainer";
+import MatchingHeader from "@/features/matching/components/MatchingHeader";
+import PostList from "@/features/matching/components/PostList";
 import { OauthSignUpModal } from "@/features/loginSignUp/components/modalGroup/oauthSignUpModal";
 import { useSession } from "next-auth/react";
 import { oauthSignIn } from "@/fetch/Login/oauthSignIn/oauthSignIn";
@@ -224,7 +224,6 @@ function Matching({ isMobile = false }: MatchingProps) {
 		region,
 		quest,
 		lv,
-		setPostData,
 	);
 
 	useEffect(() => {

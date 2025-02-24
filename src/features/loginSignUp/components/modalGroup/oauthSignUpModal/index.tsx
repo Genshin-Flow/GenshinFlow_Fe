@@ -2,7 +2,7 @@ import { ModalBackground } from "@/features/matching/components/modal/styles";
 import useOutsideClick from "@/hooks/useOutsideClick";
 import { useRef, useState } from "react";
 import { oauthSignUp } from "@/fetch/Login/oauthSIgnUp/oauthSignUp";
-import { OauthSignUpModalProps } from "@/features/matching/components/tab";
+import { OauthSignUpModalProps } from "@/features/matching/components/Tab";
 import { loadingToast } from "@/utils/customToast/customToast";
 import {
 	OauthSignUpModalContainer,
@@ -12,7 +12,7 @@ import {
 	StatusText,
 	OauthSubmitButton,
 } from "./style";
-import { LoadingToastType } from "@/features/matching/components/tab";
+import { LoadingToastType } from "@/features/matching/components/Tab";
 
 type Status = "wait" | "sameAccount" | "create" | "error" | "sameUid";
 

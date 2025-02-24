@@ -19,9 +19,9 @@ import { addPostSignIn } from "@/fetch/Main/post/addPostList/addPostList";
 import { loadingToast } from "@/utils/customToast/customToast";
 import { loadingToastType } from "@/utils/customToast/customToast";
 import useLoginStateStore from "@/stores/loginStateStore";
-import { PostContent } from "@/features/matching/components/tab";
+import { PostContent } from "@/features/matching/components/Tab";
 import { reportPost } from "@/fetch/report/report";
-import { refetchType } from "@/features/matching/components/tab";
+import { refetchType } from "@/features/matching/components/Tab";
 
 interface ModalProps {
 	onClose: () => void;

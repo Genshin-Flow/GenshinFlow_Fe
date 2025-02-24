@@ -8,21 +8,24 @@ class returnResponse extends Error {
 
 export async function userCompletePost(postId: number, accessToken: string) {
 	try {
-		const baseApi = process.env.NEXT_PUBLIC_BaseApi;
-		const moreOptionBaseApi = process.env.NEXT_PUBLIC_moreOptionUserBaseApi;
-		if (!baseApi || !moreOptionBaseApi) {
+		const localApi =
+			process.env.NODE_ENV === "production"
+				? ""
+				: process.env.NEXT_PUBLIC_LocalBaseApi;
+		const completeApi = process.env.NEXT_PUBLIC_user_completePost;
+		if (!completeApi) {
 			throw new Error("옵션 fetch를 위한 환경변수를 찾을 수 없습니다.");
 		}
-		const response = await fetch(
-			`${baseApi}${moreOptionBaseApi}/${postId}/complete`,
-			{
-				method: "PATCH",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: `Bearer ${accessToken}`,
-				},
+		const response = await fetch(`${localApi}${completeApi}`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `${accessToken}`,
 			},
-		);
+			body: JSON.stringify({
+				postId,
+			}),
+		});
 		if (!response.ok) {
 			throw new returnResponse(response);
 		}

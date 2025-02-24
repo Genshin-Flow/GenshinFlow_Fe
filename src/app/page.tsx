@@ -2,8 +2,8 @@
 import { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { styled } from "../../styled-system/jsx";
-import Tab from "@/features/matching/components/tab";
-import Sidebar from "@/features/matching/components/sidebar";
+import Tab from "@/features/matching/components/Tab";
+import Sidebar from "@/features/matching/components/Sidebar";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { getAccessToken } from "@/fetch/Token/getAccessToken/getAccessToken";
@@ -89,6 +89,7 @@ function Mobile() {
 
 const Main = styled("main", {
 	base: {
+		height: "120%",
 		position: "relative",
 		overflow: "hidden",
 	},
@@ -97,6 +98,8 @@ const Main = styled("main", {
 const Container = styled("div", {
 	base: {
 		display: "flex",
+		overflow: "hidden",
+		height: "75%",
 		maxWidth: "1639px",
 		minWidth: "1318px",
 		mx: "auto",

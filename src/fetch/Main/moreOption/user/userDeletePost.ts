@@ -8,17 +8,23 @@ class returnResponse extends Error {
 
 export async function userDeletePost(postId: number, accessToken: string) {
 	try {
-		const baseApi = process.env.NEXT_PUBLIC_BaseApi;
-		const moreOptionBaseApi = process.env.NEXT_PUBLIC_moreOptionUserBaseApi;
-		if (!baseApi || !moreOptionBaseApi) {
+		const localApi =
+			process.env.NODE_ENV === "production"
+				? ""
+				: process.env.NEXT_PUBLIC_LocalBaseApi;
+		const userPostDelete = process.env.NEXT_PUBLIC_user_deletePostAPi;
+		if (!userPostDelete) {
 			throw new Error("옵션 fetch를 위한 환경변수를 찾을 수 없습니다.");
 		}
-		const response = await fetch(`${baseApi}${moreOptionBaseApi}/${postId}`, {
-			method: "DELETE",
+		const response = await fetch(`${localApi}${userPostDelete}`, {
+			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
-				Authorization: `Bearer ${accessToken}`,
+				Authorization: `${accessToken}`,
 			},
+			body: JSON.stringify({
+				postId,
+			}),
 		});
 		if (!response.ok) {
 			throw new returnResponse(response);
