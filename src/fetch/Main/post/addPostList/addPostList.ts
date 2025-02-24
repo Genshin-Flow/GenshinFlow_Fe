@@ -1,6 +1,6 @@
 import { FieldValues } from "react-hook-form";
 import { getAccessToken } from "@/fetch/Token/getAccessToken/getAccessToken";
-import { PostContent } from "@/features/matching/components/Tab_tmp";
+import { PostContent } from "@/features/matching/components/Tab";
 import { errorToast } from "@/utils/customToast/customToast";
 
 class returnResponse extends Error {
