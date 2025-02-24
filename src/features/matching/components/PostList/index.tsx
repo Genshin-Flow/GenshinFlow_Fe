@@ -1,4 +1,4 @@
-import MatchingPostItem from "@/features/matching/components/MatchingPostItem_ tmp";
+import MatchingPostItem from "@/features/matching/components/MatchingPostItem";
 import { PostListContainer, VisibleTabList } from "./style";
 import { nanoid } from "nanoid";
 import { PostContent } from "@/features/matching/components/Tab";

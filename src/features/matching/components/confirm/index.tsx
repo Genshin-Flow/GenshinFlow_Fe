@@ -12,7 +12,7 @@ import {
 	WaringText,
 } from "./style";
 import { PostContent } from "@/features/matching/components/Tab";
-import { confirmType } from "@/features/matching/components/MatchingPostItem_ tmp";
+import { confirmType } from "@/features/matching/components/MatchingPostItem";
 import useOutsideClick from "@/hooks/useOutsideClick";
 import { ModalBackground } from "@/features/matching/components/Modal/styles";
 import React, { useRef } from "react";
