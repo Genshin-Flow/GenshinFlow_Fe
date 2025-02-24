@@ -1,4 +1,4 @@
-import { ModalBackground } from "@/features/matching/components/modal/styles";
+import { ModalBackground } from "@/features/matching/components/Modal/styles";
 import useOutsideClick from "@/hooks/useOutsideClick";
 import { useRef, useState } from "react";
 import { oauthSignUp } from "@/fetch/Login/oauthSIgnUp/oauthSignUp";

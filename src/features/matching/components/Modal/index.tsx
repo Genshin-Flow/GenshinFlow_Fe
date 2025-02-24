@@ -9,9 +9,9 @@ import {
 	ReportInput,
 	ReportButton,
 } from "./styles";
-import { Radio, RadioGroup } from "../radio";
+import { Radio, RadioGroup } from "../Radio";
 import { useState } from "react";
-import ReportAttackButton from "../radio/ReportAttackButton";
+import ReportAttackButton from "../Radio/ReportAttackButton";
 import { FieldValues, useForm } from "react-hook-form";
 import AddPostModalPC from "./modalPc/index";
 import AddPostModalMobile from "@/features/matching/mobile/components/modalMobile/index";
