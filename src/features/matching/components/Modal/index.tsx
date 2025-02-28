@@ -8,6 +8,7 @@ import {
 	RadioColumn,
 	ReportInput,
 	ReportButton,
+	MobileCloseButtonContainer,
 } from "./styles";
 import { Radio, RadioGroup } from "../Radio";
 import { useState } from "react";
@@ -48,6 +49,11 @@ export default function Modal({
 							? "도움 요청"
 							: "글 작성하고 도와줄 사람 구하기"}
 					{!isMobile && <CloseButton onClick={onClose} />}
+					{isMobile && (
+						<MobileCloseButtonContainer onClick={onClose}>
+							<img src="/svgs/arrow3.svg" alt="모달 닫기 버튼" />
+						</MobileCloseButtonContainer>
+					)}
 				</ModalHeader>
 				<ModalContent type={type} isMobile={isMobile}>
 					{type === "write" ? (
