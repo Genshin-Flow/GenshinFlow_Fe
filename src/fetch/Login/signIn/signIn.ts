@@ -28,7 +28,10 @@ export async function postLoginAuth(
 	passwordValue: string,
 ): Promise<fetchReturnType | any> {
 	try {
-		const localBaseAPi = process.env.NEXT_PUBLIC_LocalBaseApi;
+		const localBaseAPi =
+			process.env.NODE_ENV === "production"
+				? ""
+				: process.env.NEXT_PUBLIC_LocalBaseApi;
 		const Login = process.env.NEXT_PUBLIC_signInApi;
 		if (!Login) {
 			throw new Error("로그인 환경변수를 찾을 수 없습니다.");

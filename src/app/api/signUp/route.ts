@@ -8,13 +8,16 @@ type responseType = NextRequest & {
 	userUid: string;
 };
 
+class returnResponse extends Error {
+	response: Response;
+	constructor(response: Response) {
+		super();
+		this.response = response;
+	}
+}
+
 export async function POST(req: responseType) {
 	try {
-		const requestBodyData = await req.json();
-		const email = requestBodyData.email;
-		const password = requestBodyData.password;
-		const authCode = requestBodyData.authCodeValue;
-		const userUid = requestBodyData.userUid;
 		const accessMaxAge = process.env.accessCookieTime;
 		const refreshMaxAge = process.env.refreshCookieTime;
 		const baseApi = process.env.NEXT_PUBLIC_BaseApi;
@@ -31,6 +34,8 @@ export async function POST(req: responseType) {
 			);
 		}
 
+		const { email, password, authNum, userUid } = await req.json();
+
 		const response = await fetch(`${baseApi}${signUpApi}`, {
 			method: "post",
 			headers: {
@@ -39,7 +44,7 @@ export async function POST(req: responseType) {
 			body: JSON.stringify({
 				email,
 				password,
-				authNum: authCode,
+				authNum,
 				uid: userUid,
 			}),
 		});
@@ -59,9 +64,8 @@ export async function POST(req: responseType) {
 			path: "/",
 		});
 		return NextResponse.json(
-			{
-				ok: true,
-			},
+			"회원가입 성공",
+
 			{
 				status: 200,
 				headers: {
@@ -71,14 +75,17 @@ export async function POST(req: responseType) {
 		);
 	} catch (error) {
 		if (error instanceof Error) {
-			console.error(error);
+			return NextResponse.json(error.message, { status: 500 });
+		}
+		if (error instanceof returnResponse) {
+			return NextResponse.json("회원가입에 실패 했습니다.", {
+				status: error.response.status,
+			});
 		}
 		return NextResponse.json(
+			"서버에 문제가 발생했습니다. 잠시후 다시 시도해주세세요",
 			{
-				ok: false,
-			},
-			{
-				status: 400,
+				status: 500,
 			},
 		);
 	}

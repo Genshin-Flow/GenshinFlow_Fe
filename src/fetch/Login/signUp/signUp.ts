@@ -35,7 +35,7 @@ export async function signUp(
 		const localBaseAPi =
 			process.env.NODE_ENV === "production"
 				? ""
-				: process.env.NEXT_PUBLIC_BaseApi;
+				: process.env.NEXT_PUBLIC_LocalBaseApi;
 		const SignUp = process.env.NEXT_PUBLIC_signUpApi;
 
 		if (!SignUp) {
@@ -70,12 +70,22 @@ export async function signUp(
 				throw new SignUpError(response);
 			}
 
-			return response;
+			return new Response("회원가입에 성공 했습니다.", {
+				status: response.status,
+			});
 		}
 	} catch (error) {
 		if (error instanceof SignUpError) {
-			return error.response;
+			return new Response("회원가입에 실패 했습니다.", {
+				status: error.response.status,
+			});
 		}
-		throw error;
+		if (error instanceof Error) {
+			return new Response(error.message, { status: 500 });
+		}
+		return new Response(
+			"서버에 문제가 발생했습니다. 잠시후 다시 시도해주세요",
+			{ status: 500 },
+		);
 	}
 }
