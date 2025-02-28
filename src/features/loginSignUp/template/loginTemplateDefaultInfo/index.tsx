@@ -6,6 +6,7 @@ import {
 	LogoSvg,
 	LoginText,
 } from "./style";
+import Link from "next/link";
 
 type propsType = {
 	mobile?: "mobile";
@@ -19,7 +20,12 @@ export default function LoginDefaultInfo(props: propsType) {
 			{...(props.mobile && { mobile: "top105" })}
 		>
 			<LogoContainer {...(props.mobile && { platform: "mobile" })}>
-				<LogoSvg src="/icons/logo/GenshinFlowLogo.svg" alt="원신 플로우 로고" />
+				<Link href="/">
+					<LogoSvg
+						src="/icons/logo/GenshinFlowLogo.svg"
+						alt="원신 플로우 로고"
+					/>
+				</Link>
 			</LogoContainer>
 			<LoginText {...(props.mobile && { platform: "mobile" })}>
 				더 나은 인연을 위해
