@@ -66,6 +66,18 @@ export const CloseButton = styled("button", {
 	},
 });
 
+export const MobileCloseButtonContainer = styled("div", {
+	base: {
+		width: "24px",
+		height: "20px",
+		display: "flex",
+		justifyContent: "center",
+		alignItems: "center",
+		cursor: "pointer",
+		transform: "rotate(180deg)",
+	},
+});
+
 export const ModalContent = styled("div", {
 	base: {
 		display: "flex",
