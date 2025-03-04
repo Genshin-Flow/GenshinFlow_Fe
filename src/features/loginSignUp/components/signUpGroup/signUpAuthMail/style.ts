@@ -35,7 +35,7 @@ export const SendMailCount = styled("span", {
 		textStyle: "sm",
 		position: "absolute",
 		top: "50%",
-		right: "130px",
+		right: "30px",
 		transform: "translateY(-50%)",
 		display: "none",
 		color: "gray.04",
