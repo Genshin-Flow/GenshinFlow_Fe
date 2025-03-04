@@ -17,7 +17,6 @@ async function POST(req: Request) {
 			throw new Error("로그인 요청에 필요한 환경변수를 찾을 수 없습니다.");
 		}
 		const { email, password } = await req.json();
-		console.log(email, password);
 		// 로그인 api
 		const response = await fetch(`${baseAPi}${loginApi}`, {
 			method: "POST",
@@ -30,7 +29,6 @@ async function POST(req: Request) {
 			}),
 		});
 
-		console.log(response);
 		if (!response.ok) throw new returnState(response);
 		const data = await response.json();
 		return NextResponse.json(
