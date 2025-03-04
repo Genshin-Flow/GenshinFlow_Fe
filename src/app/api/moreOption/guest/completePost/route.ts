@@ -26,7 +26,6 @@ async function POST(req: Request) {
 				password,
 			}),
 		});
-		console.log(response);
 		if (!response.ok) {
 			throw new returnResponse(response);
 		}
