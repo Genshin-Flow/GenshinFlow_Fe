@@ -12,7 +12,7 @@ class unknownUser extends Error {
 async function POST(req: Request) {
 	try {
 		const baseApi = process.env.NEXT_PUBLIC_BaseApi;
-		const login = process.env.NEXT_PUBLIC_login;
+		const login = process.env.oauthLoginApi;
 		const refreshCookieTime = process.env.refreshCookieTime;
 		const accessCookieTime = process.env.accessCookieTime;
 		if (!baseApi || !login) {
