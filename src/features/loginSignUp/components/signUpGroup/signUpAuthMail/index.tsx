@@ -60,7 +60,7 @@ export default function AuthMail(props: propsType) {
 				type="button"
 				{...(props.platform && { platform: props.platform })}
 			>
-				인증코드 받기
+				{postCodeState === 0 && "인증메일 발송"}
 			</SendMailButton>
 		</AuthMailContainer>
 	);
