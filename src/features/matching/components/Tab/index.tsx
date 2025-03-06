@@ -12,6 +12,7 @@ import {
 	EventDate,
 	EventShortCut,
 	MobileWriteButton,
+	MobilePostListContainer,
 } from "./styles";
 
 import Modal from "../Modal";
@@ -35,6 +36,8 @@ import {
 	QueryObserverResult,
 	RefetchOptions,
 } from "@tanstack/react-query";
+import MobilePostList from "@/features/matching/mobile/components/MobilePostList";
+import { nanoid } from "nanoid";
 
 export type refetchType = (
 	options?: RefetchOptions,
@@ -83,6 +86,27 @@ export interface OauthSignUpModalProps {
 }
 
 export type LoadingToastType = OauthSignUpModalProps["loadingToast"];
+
+export type PostListProps = {
+	postData: PostContent[] | undefined;
+	hasNextPage: boolean;
+	isLoading: boolean;
+	scrollRef: any;
+	selectType: string;
+	email: string;
+	refetch: refetchType;
+};
+
+export type MatchingPostItemProps = {
+	type: "report" | "write";
+	item: PostContent;
+	selected?: string;
+	isMobile?: boolean;
+	email: string;
+	quest: string;
+	questImage: string;
+	refetch: refetchType;
+};
 
 export default function Tab({ isMobile = false }: TabProps) {
 	const [activeTab, setActiveTab] = useState(0);
@@ -284,15 +308,16 @@ function Matching({ isMobile = false }: MatchingProps) {
 						region={region}
 						setRegion={setRegion}
 					/>
-					<PostList
-						postData={postData}
-						hasNextPage={hasNextPage}
-						isLoading={isLoading}
-						scrollRef={scrollRef}
-						selectType={selectType}
-						email={email}
-						refetch={refetch}
-					/>
+					<MobilePostListContainer className="scrollbar">
+						{postData.map((data) => (
+							<MobilePostList
+								key={nanoid()}
+								postData={data}
+								refetch={refetch}
+								isMobile={isMobile}
+							/>
+						))}
+					</MobilePostListContainer>
 					<MobileWriteButton onClick={openModal} />
 					{isModalOpen && (
 						<Modal

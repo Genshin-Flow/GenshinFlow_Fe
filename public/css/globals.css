@@ -10,7 +10,6 @@
 
 	.scrollbar {
 		overflow-y: scroll; /* 세로 스크롤바 */
-		height: 300px; /* 높이 설정 */
 	}
 
 	/* 스크롤바 스타일 */

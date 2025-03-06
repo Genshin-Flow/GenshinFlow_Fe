@@ -295,6 +295,14 @@ export const MenuContainer = styled("div", {
 				top: "30px",
 			},
 		},
+		position: {
+			up: {
+				top: "-150px",
+			},
+			down: {
+				top: "30px",
+			},
+		},
 	},
 });
 
