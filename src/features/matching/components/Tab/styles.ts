@@ -469,3 +469,11 @@ export const MobileWriteButton = styled("button", {
 		zIndex: 2,
 	},
 });
+
+export const MobilePostListContainer = styled("section", {
+	base: {
+		width: "100%",
+		backgroundColor: "primary.04",
+		overflow: "auto",
+	},
+});

@@ -1,19 +1,9 @@
 import MatchingPostItem from "@/features/matching/components/MatchingPostItem";
 import { PostListContainer, VisibleTabList } from "./style";
 import { nanoid } from "nanoid";
-import { PostContent } from "@/features/matching/components/Tab";
 import useLoginStateStore from "@/stores/loginStateStore";
-import { refetchType } from "@/features/matching/components/Tab";
-
-type PostListProps = {
-	postData: PostContent[] | undefined;
-	hasNextPage: boolean;
-	isLoading: boolean;
-	scrollRef: any;
-	selectType: string;
-	email: string;
-	refetch: refetchType;
-};
+import { PostListProps } from "@/features/matching/components/Tab";
+import { filterQuest } from "@/utils/filterQuest/fiilterQuest";
 
 export default function PostList({
 	postData = [],
@@ -28,8 +18,9 @@ export default function PostList({
 	return (
 		<PostListContainer>
 			{postData &&
-				postData.map((item) => {
+				postData.map((item, index) => {
 					const { quest, questImage } = filterQuest(item.questCategory);
+					const totalPost = postData.length;
 					if (isLogin) {
 						return (
 							<MatchingPostItem
@@ -40,6 +31,8 @@ export default function PostList({
 								email={email}
 								quest={quest}
 								questImage={questImage}
+								index={index}
+								totalPost={totalPost}
 								refetch={refetch}
 							/>
 						);
@@ -53,6 +46,8 @@ export default function PostList({
 								email={email}
 								quest={quest}
 								questImage={questImage}
+								index={index}
+								totalPost={totalPost}
 								refetch={refetch}
 							/>
 						);
@@ -61,36 +56,4 @@ export default function PostList({
 			{hasNextPage && !isLoading && <VisibleTabList ref={scrollRef} />}
 		</PostListContainer>
 	);
-}
-
-function filterQuest(questOption: string) {
-	let quest = "";
-	let questImage = "";
-	switch (questOption) {
-		case "일반 비경":
-			quest = questOption;
-			questImage = "/svgs/quests/domain.svg";
-			break;
-		case "이벤트 퀘스트":
-			quest = questOption;
-			questImage = "/svgs/quests/event.svg";
-			break;
-		case "영역 토벌":
-			quest = questOption;
-			questImage = "/svgs/quests/mob.svg";
-			break;
-		case "일일 임무":
-			quest = questOption;
-			questImage = "/svgs/quests/mission.svg";
-			break;
-		case "맵 탐사":
-			quest = questOption;
-			questImage = "/svgs/quests/explore.svg";
-			break;
-		case "채집":
-			quest = questOption;
-			questImage = "/svgs/quests/gather.svg";
-			break;
-	}
-	return { quest, questImage };
 }

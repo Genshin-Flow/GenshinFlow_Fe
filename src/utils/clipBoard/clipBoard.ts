@@ -4,6 +4,7 @@ export async function copyClipBoard(
 ) {
 	const target = event.target as HTMLButtonElement;
 	const $copyTextDom = target.children[1] as HTMLSpanElement;
+	console.log($copyTextDom);
 	const copyText = $copyTextDom.innerText;
 	navigator.clipboard
 		.writeText(copyText)

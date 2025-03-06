@@ -18,12 +18,6 @@ import {
 	Text,
 	MenuContainer,
 	MenuItem,
-	MobileUserName,
-	InfoContainer,
-	Info,
-	InfoWrapper,
-	MobileMoreOptions,
-	MobileMessageText,
 	ProfileImg,
 } from "./styles";
 import Modal from "../Modal";
@@ -53,6 +47,8 @@ interface MatchingPostItemProps {
 	email: string;
 	quest: string;
 	questImage: string;
+	index: number;
+	totalPost: number;
 	refetch: refetchType;
 }
 
@@ -68,14 +64,16 @@ export default function MatchingPostItem({
 	selected,
 	item,
 	isMobile = false,
-	email,
 	quest,
 	questImage,
+	index,
+	totalPost,
 	refetch,
 }: MatchingPostItemProps) {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [isEditPost, setEditPost] = useState(false);
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
+	const [modalPosition, setModalPosition] = useState<"up" | "down">("down");
 	const [isConfirmModalOpen, setConfirmModal] =
 		useState<isConfirmModalOpenType>({
 			confirmState: false,
@@ -111,7 +109,19 @@ export default function MatchingPostItem({
 		});
 	};
 
-	const handleMoreOptionsClick = () => {
+	const handleMoreOptionsClick = (
+		event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+		totalPost: number,
+	) => {
+		const target = event.target as HTMLElement;
+		const closest = target.closest("div[data-postnum]") as HTMLDivElement;
+		const targetPostNum = closest.dataset.postnum as unknown as number;
+		if (totalPost - 4 < targetPostNum) {
+			setModalPosition("up");
+		} else {
+			setModalPosition("down");
+		}
+
 		if (type === "write") {
 			setIsMenuOpen(!isMenuOpen);
 		} else {
@@ -132,116 +142,66 @@ export default function MatchingPostItem({
 
 	return (
 		<>
-			{!isMobile ? (
-				<ItemContainer>
-					<UserName selected={selected === "userName"}>
-						<ProfileImageContainer>
-							<ProfileImg src={item.writerProfileImg} alt="프로필" />
-						</ProfileImageContainer>
-						<UserInfo>
-							<Text className="pointerNone">{item.writerName}</Text>
-							<UserIdButton onClick={copyClipBoard}>
-								<img src="/svgs/clarity_paste-line.svg" alt="copy" />
-								<span>{item.uid}</span>
-							</UserIdButton>
-						</UserInfo>
-					</UserName>
-					<QuestType selected={selected === "questType"}>
-						<QuestIconWrapper>
-							<QuestIcon />
-							<CenteredImage src={questImage} alt="Quest Type" />
-						</QuestIconWrapper>
-						<Text questVariants={true}>{quest}</Text>
-					</QuestType>
-					<WorldLevel selected={selected === "worldLevel"}>
-						<Text className="textCenter">{item.wordLevel}</Text>
-					</WorldLevel>
-					<Message selected={selected === "message"}>
-						<MessageText>{item.content}</MessageText>
-					</Message>
-					<TimeAgo selected={selected === "timeAgo"}>
-						<Text color="gray02">
-							{minutesAgo > 60 ? timeAgo : minutesAgo + "분 전"}
-						</Text>
-					</TimeAgo>
-					<MoreOptions ref={moreButtonContainerRef}>
-						<MoreOptionsButton
-							type={type === "write" || !isLogin ? "moreOption" : "report"}
-							onClick={handleMoreOptionsClick}
-							className="moreOption"
-						/>
-						{isMenuOpen && type === "write" && (
-							<MenuContainer ref={menuRef} isMobile={isMobile}>
-								<MenuItem data-settext={"complete"} onClick={selectModalFn}>
-									완료
-								</MenuItem>
-								<MenuItem data-settext={"delete"} onClick={selectModalFn}>
-									삭제
-								</MenuItem>
-								<MenuItem data-settext={"edit"} onClick={openEditPost}>
-									수정
-								</MenuItem>
-								<MenuItem data-settext={"postUp"} onClick={selectModalFn}>
-									끌올
-								</MenuItem>
-							</MenuContainer>
-						)}
-					</MoreOptions>
-				</ItemContainer>
-			) : (
-				<ItemContainer isMobile={isMobile}>
-					<MobileUserName>
-						<ProfileImageContainer>
-							<ProfileImg src={item.writerProfileImg} alt="프로필" />
-						</ProfileImageContainer>
-						<UserInfo>
-							<Text>유저명</Text>
-							<UserIdButton>UID 80000000</UserIdButton>
-						</UserInfo>
-					</MobileUserName>
-					<MobileMessageText>
-						맵 밀어주실 착한 분 구해요.한 5판 할 것 같아요.
-						가나다라마바사아자차카타파하
-					</MobileMessageText>
-					<InfoContainer>
-						<InfoWrapper>
-							<Info>
-								<CenteredImage
-									src={questImage}
-									alt="Quest Type"
-									isMobile={isMobile}
-								/>
-								퀘스트
-							</Info>
-							<Info>월드레벨 7</Info>
-							<Info>1분전</Info>
-						</InfoWrapper>
-						<MobileMoreOptions>
-							<MoreOptionsButton
-								type={email === item.writerEmail ? "moreOption" : "report"}
-								isMobile={isMobile}
-								onClick={handleMoreOptionsClick}
-							/>
-							{isMenuOpen && type === "write" && (
-								<MenuContainer ref={menuRef} isMobile={isMobile}>
-									<MenuItem data-settext={"complete"} onClick={selectModalFn}>
-										완료
-									</MenuItem>
-									<MenuItem data-settext={"delete"} onClick={selectModalFn}>
-										삭제
-									</MenuItem>
-									<MenuItem data-settext={"edit"} onClick={selectModalFn}>
-										수정
-									</MenuItem>
-									<MenuItem data-settext={"postUp"} onClick={selectModalFn}>
-										끌올
-									</MenuItem>
-								</MenuContainer>
-							)}
-						</MobileMoreOptions>
-					</InfoContainer>
-				</ItemContainer>
-			)}
+			<ItemContainer data-postnum={index + 1}>
+				<UserName selected={selected === "userName"}>
+					<ProfileImageContainer>
+						<ProfileImg src={item.writerProfileImg} alt="프로필" />
+					</ProfileImageContainer>
+					<UserInfo>
+						<Text className="pointerNone">{item.writerName}</Text>
+						<UserIdButton onClick={copyClipBoard}>
+							<img src="/svgs/clarity_paste-line.svg" alt="copy" />
+							<span>{item.uid}</span>
+						</UserIdButton>
+					</UserInfo>
+				</UserName>
+				<QuestType selected={selected === "questType"}>
+					<QuestIconWrapper>
+						<QuestIcon />
+						<CenteredImage src={questImage} alt="Quest Type" />
+					</QuestIconWrapper>
+					<Text questVariants={true}>{quest}</Text>
+				</QuestType>
+				<WorldLevel selected={selected === "worldLevel"}>
+					<Text className="textCenter">{item.wordLevel}</Text>
+				</WorldLevel>
+				<Message selected={selected === "message"}>
+					<MessageText>{item.content}</MessageText>
+				</Message>
+				<TimeAgo selected={selected === "timeAgo"}>
+					<Text color="gray02">
+						{minutesAgo > 60 ? timeAgo : minutesAgo + "분 전"}
+					</Text>
+				</TimeAgo>
+				<MoreOptions ref={moreButtonContainerRef}>
+					<MoreOptionsButton
+						type={type === "write" || !isLogin ? "moreOption" : "report"}
+						onClick={(event) => handleMoreOptionsClick(event, totalPost)}
+						className="moreOption"
+					/>
+					{isMenuOpen && type === "write" && (
+						<MenuContainer
+							ref={menuRef}
+							isMobile={isMobile}
+							position={modalPosition}
+						>
+							<MenuItem data-settext={"complete"} onClick={selectModalFn}>
+								완료
+							</MenuItem>
+							<MenuItem data-settext={"delete"} onClick={selectModalFn}>
+								삭제
+							</MenuItem>
+							<MenuItem data-settext={"edit"} onClick={openEditPost}>
+								수정
+							</MenuItem>
+							<MenuItem data-settext={"postUp"} onClick={selectModalFn}>
+								끌올
+							</MenuItem>
+						</MenuContainer>
+					)}
+				</MoreOptions>
+			</ItemContainer>
+
 			{isModalOpen && (
 				<Modal
 					onClose={closeModal}
