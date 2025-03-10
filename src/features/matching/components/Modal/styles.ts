@@ -171,8 +171,8 @@ export const UserQuestContainer = styled("div", {
 	base: {
 		display: "flex",
 		justifyContent: "space-between",
-		gap: "80px",
-		marginBottom: "16px",
+		gap: "120px",
+		marginBottom: "40px",
 	},
 	variants: {
 		isMobile: {
@@ -312,7 +312,7 @@ export const Content = styled("div", {
 	base: {
 		display: "flex",
 		flexDirection: "column",
-		marginBottom: "20px",
+		marginBottom: "32px",
 		"& p": {
 			fontSize: "sm",
 			fontWeight: "bold",

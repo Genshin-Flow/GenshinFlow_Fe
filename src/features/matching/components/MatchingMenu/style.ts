@@ -28,8 +28,7 @@ export const MatchingMenuContainer = styled("div", {
 		alignItems: "center",
 		justifyContent: "space-between",
 		padding: "0 30px",
-		marginTop: "30px",
-		marginBottom: "30px",
+		margin: "18px 0",
 		flexShrink: 0,
 		"& div": {
 			display: "flex",

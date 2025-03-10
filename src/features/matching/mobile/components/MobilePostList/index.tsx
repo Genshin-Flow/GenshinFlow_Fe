@@ -56,7 +56,7 @@ export default function MobilePostList({
 	const { isLogin } = useLoginStateStore();
 	const menuRef = useRef<HTMLDivElement>(null);
 	const moreButtonContainerRef = useRef<HTMLDivElement>(null);
-	const type = postData.writerEmail === email ? "write" : "report";
+	const type = postData.writerEmail !== email && isLogin ? "report" : "write";
 
 	const openModal = () => {
 		setIsModalOpen(true);
