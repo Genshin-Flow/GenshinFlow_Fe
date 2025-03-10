@@ -1,9 +1,20 @@
 import MatchingPostItem from "@/features/matching/components/MatchingPostItem";
 import { PostListContainer, VisibleTabList } from "./style";
 import { nanoid } from "nanoid";
+import { PostContent } from "@/features/matching/components/Tab";
 import useLoginStateStore from "@/stores/loginStateStore";
-import { PostListProps } from "@/features/matching/components/Tab";
+import { refetchType } from "@/features/matching/components/Tab";
 import { filterQuest } from "@/utils/filterQuest/fiilterQuest";
+
+type PostListProps = {
+	postData: PostContent[] | undefined;
+	hasNextPage: boolean;
+	isLoading: boolean;
+	scrollRef: any;
+	selectType: string;
+	email: string;
+	refetch: refetchType;
+};
 
 export default function PostList({
 	postData = [],

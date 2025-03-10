@@ -1,4 +1,4 @@
-import { styled } from "../../../../../styled-system/jsx";
+import { styled } from "@/../styled-system/jsx";
 
 const flexCenter = {
 	display: "flex",
@@ -50,7 +50,7 @@ export const TabContainer = styled("div", {
 		alignItems: "center",
 		flexDirection: "row",
 		width: "100%",
-		height: "79px",
+		height: "65px",
 		backgroundColor: "primary.01",
 		position: "relative",
 		flexShrink: 0,

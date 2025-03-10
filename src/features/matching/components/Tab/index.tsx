@@ -38,6 +38,7 @@ import {
 } from "@tanstack/react-query";
 import MobilePostList from "@/features/matching/mobile/components/MobilePostList";
 import { nanoid } from "nanoid";
+import PostListFooter from "@/features/matching/components/PostListFooter";
 
 export type refetchType = (
 	options?: RefetchOptions,
@@ -86,27 +87,6 @@ export interface OauthSignUpModalProps {
 }
 
 export type LoadingToastType = OauthSignUpModalProps["loadingToast"];
-
-export type PostListProps = {
-	postData: PostContent[] | undefined;
-	hasNextPage: boolean;
-	isLoading: boolean;
-	scrollRef: any;
-	selectType: string;
-	email: string;
-	refetch: refetchType;
-};
-
-export type MatchingPostItemProps = {
-	type: "report" | "write";
-	item: PostContent;
-	selected?: string;
-	isMobile?: boolean;
-	email: string;
-	quest: string;
-	questImage: string;
-	refetch: refetchType;
-};
 
 export default function Tab({ isMobile = false }: TabProps) {
 	const [activeTab, setActiveTab] = useState(0);
@@ -293,6 +273,7 @@ function Matching({ isMobile = false }: MatchingProps) {
 						email={email}
 						refetch={refetch}
 					/>
+					<PostListFooter />
 					{isModalOpen && (
 						<Modal onClose={closeModal} type="write" refetch={refetch} />
 					)}
