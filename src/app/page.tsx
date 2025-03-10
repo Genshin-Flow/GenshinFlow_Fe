@@ -101,7 +101,7 @@ const Container = styled("div", {
 	base: {
 		display: "flex",
 		overflow: "hidden",
-		height: "75%",
+		height: "78.2%",
 		maxWidth: "1639px",
 		minWidth: "1318px",
 		mx: "auto",
@@ -109,6 +109,7 @@ const Container = styled("div", {
 		gap: "20px",
 		padding: "0 40px",
 		paddingTop: "40px",
+		marginBottom: "20px",
 		flex: "1",
 	},
 });

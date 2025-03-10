@@ -6,7 +6,7 @@ export const FooterContainer = styled("footer", {
 		alignItems: "center",
 		justifyContent: "center",
 		width: "100%",
-		height: "15%",
+		height: "10%",
 		backgroundColor: "primary.01",
 	},
 });
@@ -41,7 +41,7 @@ export const TextGroup = styled("div", {
 
 export const DescText = styled("p", {
 	base: {
-		fontSize: "16px",
+		fontSize: "13px",
 		fontWeight: "medium",
 		color: "#DADADA",
 	},
@@ -79,7 +79,7 @@ export const FlexContainer = styled("div", {
 
 export const TitleText = styled("p", {
 	base: {
-		fontSize: "16px",
+		fontSize: "15px",
 		fontWeight: "medium",
 		color: "#DADADA",
 		width: "115px",
@@ -95,7 +95,7 @@ export const TitleText = styled("p", {
 
 export const Discord = styled("a", {
 	base: {
-		fontSize: "14px",
+		fontSize: "13px",
 		fontWeight: "medium",
 		color: "#B2B2B2",
 		textDecoration: "none",
@@ -116,7 +116,7 @@ export const Discord = styled("a", {
 export const LinkText = styled("a", {
 	base: {
 		cursor: "pointer",
-		fontSize: "14px",
+		fontSize: "13px",
 		fontWeight: "medium",
 		color: "#B2B2B2",
 		textDecoration: "none",

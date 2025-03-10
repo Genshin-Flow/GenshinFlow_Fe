@@ -45,12 +45,12 @@ export default function Footer({ isMobile = false }: FooterProps) {
 								<TitleText>기타 링크</TitleText>
 								<LinkContainer>
 									<LinkGroup>
-										<LinkText href="">문의</LinkText>
-										<LinkText href="">개인정보처리방침</LinkText>
+										<LinkText href="#">문의</LinkText>
+										<LinkText href="#">개인정보처리방침</LinkText>
 									</LinkGroup>
 									<LinkGroup>
-										<LinkText href="">일반 약관</LinkText>
-										<LinkText href="">쿠키 관리</LinkText>
+										<LinkText href="#">일반 약관</LinkText>
+										<LinkText href="#">쿠키 관리</LinkText>
 									</LinkGroup>
 								</LinkContainer>
 							</FlexContainer>
@@ -72,7 +72,11 @@ export default function Footer({ isMobile = false }: FooterProps) {
 					<ShortCutContainer isMobile={isMobile}>
 						<FlexContainer>
 							<TitleText isMobile={isMobile}>커뮤니티</TitleText>
-							<Discord href="https://discord.gg/8E9D896z" target="_blank" isMobile={isMobile}>
+							<Discord
+								href="https://discord.gg/8E9D896z"
+								target="_blank"
+								isMobile={isMobile}
+							>
 								디스코드
 							</Discord>
 						</FlexContainer>
@@ -80,12 +84,20 @@ export default function Footer({ isMobile = false }: FooterProps) {
 							<TitleText isMobile={isMobile}>기타 링크</TitleText>
 							<LinkContainer>
 								<LinkGroup>
-									<LinkText href="" isMobile={isMobile}>문의</LinkText>
-									<LinkText href="" isMobile={isMobile}>개인정보처리방침</LinkText>
+									<LinkText href="" isMobile={isMobile}>
+										문의
+									</LinkText>
+									<LinkText href="" isMobile={isMobile}>
+										개인정보처리방침
+									</LinkText>
 								</LinkGroup>
 								<LinkGroup>
-									<LinkText href="" isMobile={isMobile}>일반 약관</LinkText>
-									<LinkText href="" isMobile={isMobile}>쿠키 관리</LinkText>
+									<LinkText href="" isMobile={isMobile}>
+										일반 약관
+									</LinkText>
+									<LinkText href="" isMobile={isMobile}>
+										쿠키 관리
+									</LinkText>
 								</LinkGroup>
 							</LinkContainer>
 						</FlexContainer>
