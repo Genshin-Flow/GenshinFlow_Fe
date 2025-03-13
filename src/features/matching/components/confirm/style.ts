@@ -2,7 +2,16 @@ import { styled } from "@/../styled-system/jsx";
 export const ConfirmContainer = styled("div", {
 	base: {
 		width: "100%",
-		maxWidth: "320px",
+		minWidth: "280px",
+		maxWidth: "480px",
+	},
+	variants: {
+		isMobile: {
+			true: {
+				minWidth: "150px",
+				maxWidth: "280px",
+			},
+		},
 	},
 });
 
@@ -26,7 +35,7 @@ export const ConfirmBody = styled("div", {
 		height: "100%",
 		background: "#fff",
 		overflow: "hidden",
-		padding: "20px 15px",
+		padding: "45px 30px",
 	},
 });
 
@@ -54,7 +63,7 @@ export const ContentContainer = styled("div", {
 		borderRadius: "6px",
 		backgroundColor: "gray.05",
 		padding: "8px 12px",
-		marginTop: "10px",
+		marginTop: "25px",
 	},
 });
 
@@ -75,7 +84,7 @@ export const ConfirmPasswordInput = styled("input", {
 		display: "block",
 		width: "100%",
 		padding: "9px 10px",
-		marginTop: "20px",
+		marginTop: "30px",
 		border: "1px solid black",
 		fontSize: "10px",
 		fontWeight: "700",

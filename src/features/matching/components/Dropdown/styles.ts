@@ -210,8 +210,8 @@ export const CheckBox = styled("input", {
 		transform: "rotate(-45deg)",
 
 		"&:checked": {
-			borderLeft: "2px solid {colors.secondary.01}",
-			borderBottom: "2px solid {colors.secondary.01}",
+			borderLeft: "2px solid {colors.primary.03}",
+			borderBottom: "2px solid {colors.primary.03}",
 			transform: "rotate(-45deg)",
 		},
 	},
