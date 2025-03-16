@@ -23,6 +23,7 @@ export default defineConfig({
 						"04": { value: "#F9F6F1" },
 						"05": { value: "#4B54DC" },
 						"06": { value: "#50ACD5" },
+						"07": { value: "#616B80" },
 					},
 					secondary: {
 						"01": { value: "#CE7866" },
