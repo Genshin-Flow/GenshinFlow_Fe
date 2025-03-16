@@ -35,24 +35,24 @@ export const Logo = styled("img", {
 export const LoginButton = styled("button", {
 	base: {
 		cursor: "pointer",
-		width: "110px",
-		height: "48px",
 		backgroundColor: "transparent",
 		border: "none",
-		fontSize: "16px",
-		fontWeight: "medium",
+		fontSize: "14px",
+		fontWeight: "400",
+		color: "#fff",
 	},
 });
 
 export const MyPageButton = styled("button", {
 	base: {
 		cursor: "pointer",
-		width: "110px",
-		height: "48px",
-		backgroundColor: "transparent",
-		border: "none",
-		fontSize: "16px",
-		fontWeight: "medium",
+		width: "52px",
+		height: "52px",
+		borderRadius: "50%",
+		backgroundColor: "primary.02",
+		border: "1px solid #696969",
+		boxSizing: "border-box",
+		padding: "5px",
 	},
 });
 
@@ -134,5 +134,92 @@ export const MenuButtonContainer = styled("div", {
 		position: "relative",
 		width: "24px",
 		height: "24px",
+	},
+});
+
+export const HeaderRightBox = styled("div", {
+	base: {
+		display: "flex",
+		justifyContent: "center",
+		alignItems: "center",
+	},
+});
+
+export const LoginIconBox = styled("div", {
+	base: {
+		position: "relative",
+		width: "24px",
+		height: "24px",
+		marginRight: "20px",
+		"&::after": {
+			content: "''",
+			width: "1px",
+			height: "60%",
+			position: "absolute",
+			right: "-10px",
+			top: "50%",
+			transform: "translate(-50%,-50%)",
+			backgroundColor: "#fff",
+		},
+	},
+});
+
+export const LoginBox = styled("div", {
+	base: {
+		"& > a": {
+			display: "flex",
+			justifyContent: "center",
+			alignItems: "center",
+			padding: "12px 14px",
+			backgroundColor: "primary.01",
+			borderRadius: "5px",
+		},
+	},
+});
+
+export const LanguageBox = styled("button", {
+	base: {
+		position: "relative",
+		display: "flex",
+		justifyContent: "center",
+		alignItems: "center",
+		backgroundColor: "primary.01",
+		borderRadius: "5px 5px 0 0",
+		padding: "9px 14px",
+		marginRight: "24px",
+		cursor: "pointer",
+		"& img": {
+			pointerEvents: "none",
+			marginLeft: "10px",
+		},
+	},
+});
+
+export const LanguageBoxSpan = styled("span", {
+	base: {
+		position: "relative",
+		fontSize: "14px",
+		fontWeight: "400",
+		color: "#fff",
+		pointerEvents: "none",
+	},
+});
+
+export const LanguageItemBox = styled("ul", {
+	base: {
+		position: "absolute",
+		top: "100%",
+		left: "0",
+		width: "100%",
+		display: "flex",
+		flexDirection: "column",
+		justifyContent: "center",
+		alignItems: "center",
+		backgroundColor: "primary.07",
+		borderRadius: "0 0 5px 5px",
+		padding: "4px 0",
+		color: "#fff",
+		fontSize: "14px",
+		fontWeight: "400",
 	},
 });
