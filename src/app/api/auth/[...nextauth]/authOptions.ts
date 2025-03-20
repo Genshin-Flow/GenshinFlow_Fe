@@ -102,7 +102,6 @@ const authOptions: NextAuthOptions = {
 						provider: account?.provider,
 					}),
 				});
-				console.log(response);
 				if (response.ok) {
 					user.status = response.status;
 					user.responseOk = true;

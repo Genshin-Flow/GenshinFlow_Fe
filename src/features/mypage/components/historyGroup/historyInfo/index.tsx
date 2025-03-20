@@ -26,42 +26,9 @@ type propsType = {
 	currentHistory?: "mypage";
 };
 
-const data = [
-	{
-		date: "2024-10-01",
-		quest: "비경",
-		desc: "비경ㅇ도와주세요",
-		id: 1,
-	},
-	{
-		date: "2024-10-01",
-		quest: "비경",
-		desc: "비경ㅇ도와주세요",
-		id: 2,
-	},
-	{
-		date: "2024-10-01",
-		quest: "비경",
-		desc: "비경ㅇ도와주세요",
-		id: 3,
-	},
-	{
-		date: "2024-10-01",
-		quest: "비경",
-		desc: "비경ㅇ도와주세요",
-		id: 4,
-	},
-	{
-		date: "2024-10-01",
-		quest: "비경",
-		desc: "비경ㅇ도와주세요",
-		id: 5,
-	},
-];
-
 export default function History(props: propsType) {
 	const [checkboxId, setBoxId] = useState<string[]>([]);
-	const [listData, setListData] = useState<listItemType[]>(data);
+	const [listData, setListData] = useState<listItemType[]>([]);
 
 	return (
 		<HistoryContainer

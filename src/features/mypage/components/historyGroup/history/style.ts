@@ -67,14 +67,22 @@ export const Item = styled("li", {
 export const ItemLeftBox = styled("div", {
 	base: {
 		display: "flex",
+		alignItems: "center",
 		columnGap: "20px",
 		marginRight: "auto",
 	},
 });
 
+export const TextBox = styled("div", {
+	base: {
+		whiteSpace: "nowrap",
+		textStyle: "sm",
+	},
+});
+
 export const ItemRightBox = styled("p", {
 	base: {
-		width: "200px",
+		width: "100px",
 		textAlign: "right",
 		overflow: "hidden",
 		textOverflow: "ellipsis",

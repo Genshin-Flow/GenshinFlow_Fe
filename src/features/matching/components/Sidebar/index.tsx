@@ -7,18 +7,21 @@ import {
 	MenuContainer,
 	SiteStats,
 	StatsTitle,
+	SlideSkeleton,
 } from "./styles";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import Image from "next/image";
+import { EventUrlType } from "@/app/page";
+import { nanoid } from "nanoid";
 
-export default function Sidebar() {
+export default function Sidebar(props: EventUrlType) {
 	return (
 		<Container>
 			<ShortcutMenu />
-			<Slider />
+			<Slider slideData={props.slideData} />
 			<Menu />
 		</Container>
 	);
@@ -81,33 +84,43 @@ function ShortcutMenu() {
 	);
 }
 
-function Slider() {
-	const bannerImages = {
-		banner1: "/images/banner/banner1.png",
-		banner2: "/images/banner/banner1.png",
-		banner3: "/images/banner/banner1.png",
-	};
-
+function Slider(props: EventUrlType) {
 	return (
-		<Swiper
-			modules={[Pagination, Autoplay]}
-			pagination={{
-				clickable: true,
-				type: "bullets",
-			}}
-			autoplay={{
-				delay: 3000,
-				disableOnInteraction: false,
-			}}
-			loop={true}
-			style={{ width: "100%", height: "116px" }}
-		>
-			{Object.entries(bannerImages).map(([key, src]) => (
-				<SwiperSlide key={key} style={{ borderRadius: "10px" }}>
-					<Image src={src} alt={key} width={340} height={116} />
-				</SwiperSlide>
-			))}
-		</Swiper>
+		<>
+			{props.slideData && props.slideData.length > 0 ? (
+				<Swiper
+					modules={[Pagination, Autoplay]}
+					pagination={{
+						clickable: true,
+						type: "bullets",
+					}}
+					autoplay={{
+						delay: 3000,
+						disableOnInteraction: false,
+					}}
+					loop={true}
+					style={{ width: "100%", height: "116px" }}
+				>
+					{props.slideData.map((item) => (
+						<SwiperSlide key={nanoid()} style={{ borderRadius: "10px" }}>
+							<a
+								href="https://www.hoyolab.com/circles/2/27/official?page_type=27&page_sort=events"
+								target="_blank"
+							>
+								<Image
+									src={item}
+									alt={"이벤트 배너"}
+									width={340}
+									height={116}
+								/>
+							</a>
+						</SwiperSlide>
+					))}
+				</Swiper>
+			) : (
+				<SlideSkeleton>Loading...</SlideSkeleton>
+			)}
+		</>
 	);
 }
 

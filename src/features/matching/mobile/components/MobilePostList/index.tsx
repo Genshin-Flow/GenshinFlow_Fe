@@ -83,7 +83,6 @@ export default function MobilePostList({
 	};
 
 	const handleMoreOptionsClick = () => {
-		console.log("werwere");
 		if (type === "write") {
 			setIsMenuOpen(!isMenuOpen);
 		} else {

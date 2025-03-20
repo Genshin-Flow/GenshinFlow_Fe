@@ -34,11 +34,7 @@ export const Container = styled("div", {
 	variants: {
 		isMobile: {
 			true: {
-				height: "100vh",
 				width: "100%",
-				maxWidth: "none",
-				minWidth: "none",
-				minHeight: "none",
 			},
 		},
 	},
@@ -381,7 +377,6 @@ export const EventItem = styled("div", {
 		cursor: "pointer",
 		width: "100%",
 		maxWidth: "500px",
-		aspectRatio: "350 / 308",
 		backgroundColor: "#FFFFFF",
 		borderRadius: "16px",
 		"& > div": {
