@@ -7,6 +7,18 @@ const withPWA = require("@ducanh2912/next-pwa").default({
 
 const nextConfig = {
 	reactStrictMode: false,
+	images: {
+		remotePatterns: [
+			{
+				protocol: "https",
+				hostname: "upload-os-bbs.hoyolab.com",
+			},
+			{
+				protocol: "https",
+				hostname: "www.hoyolab.com",
+			},
+		],
+	},
 };
 
 module.exports = withPWA(nextConfig);

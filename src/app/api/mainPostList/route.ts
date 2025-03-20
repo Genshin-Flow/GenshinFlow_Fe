@@ -38,6 +38,7 @@ async function POST(req: Request) {
 				status: error.response.status,
 			});
 		}
+		console.log(error);
 		return NextResponse.json(
 			"서버에 문제가 발생 하였습니다. 잠시후 다시 시도해 주세요",
 			{ status: 500 },

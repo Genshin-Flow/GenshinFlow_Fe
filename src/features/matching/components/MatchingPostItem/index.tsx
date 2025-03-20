@@ -29,6 +29,7 @@ import { copyClipBoard } from "@/utils/clipBoard/clipBoard";
 import ConfirmModal from "@/features/matching/components/confirm";
 import useLoginStateStore from "@/stores/loginStateStore";
 import { refetchType } from "@/features/matching/components/Tab";
+import { after60Minutes, before60Minutes } from "@/utils/dayJs/day";
 // 퀘스트 종류 이미지
 export const questImage = {
 	domain: "/svgs/quests/domain.svg",
@@ -131,13 +132,10 @@ export default function MatchingPostItem({
 
 	useOutsideClick(menuRef, closeMenu, moreButtonContainerRef);
 
-	const createdAt = new Date(item.createdAt);
-	const now = new Date();
-	const timeDifference = now.getTime() - createdAt.getTime();
-	let minutesAgo = Math.floor(timeDifference / (1000 * 60));
+	let minutesAgo = before60Minutes(item.createdAt);
 	let timeAgo = "";
 	if (minutesAgo > 60) {
-		timeAgo = dayjs(createdAt).format("YYYY-MM-DD HH:mm");
+		timeAgo = after60Minutes(item.createdAt);
 	}
 
 	return (
