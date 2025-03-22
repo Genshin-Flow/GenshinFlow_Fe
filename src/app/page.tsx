@@ -59,6 +59,26 @@ export default function Home() {
 		}
 	}, []);
 
+<<<<<<< Updated upstream
+=======
+	useEffect(() => {
+		const filter: string[] = [];
+		async function scrawlData() {
+			const result = await crawl();
+			const parse = JSON.parse(result);
+			parse.forEach((item: string, index: number) => {
+				if (index < 3) {
+					filter.push(item);
+				} else {
+					return;
+				}
+			});
+			setSlideData(filter);
+		}
+		// scrawlData();
+	}, []);
+
+>>>>>>> Stashed changes
 	if (!mounted) {
 		return null; // 또는 로딩 컴포넌트
 	}

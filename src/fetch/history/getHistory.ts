@@ -39,6 +39,7 @@ export async function getHistory({
 		);
 		if (!response.ok) throw new Error("히스토리 가져오기 실패");
 		const data = await response.json();
+
 		return data;
 	} catch (error) {
 		const err = error as Error;
