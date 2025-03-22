@@ -25,7 +25,9 @@ export function useInfiniteTanStack(
 		staleTime,
 	});
 
-	return { data, isLoading, refetch, ...rest };
+	const mergedData = data?.pages.flatMap((page) => page.content) || [];
+
+	return { data: mergedData, isLoading, refetch, ...rest };
 }
 
 const dataFn = async ({

@@ -30,6 +30,50 @@ export type listItemType = {
 	id: number;
 };
 
+export type writeMyPostContent = {
+	id: number;
+	writerEmail: string;
+	writerName: string;
+	writerProfileImg: string;
+	uid: number;
+	region: string;
+	questCategory: string;
+	wordLevel: 7;
+	content: string;
+	password: string;
+	completed: false;
+	completedAt: string;
+	sortedAt: string;
+	createdAt: string;
+	updatedAt: string;
+};
+
+type writeMyPost = {
+	content: [
+		{
+			id: number;
+			writerEmail: string;
+			writerName: string;
+			writerProfileImg: string;
+			uid: number;
+			region: string;
+			questCategory: string;
+			wordLevel: 7;
+			content: string;
+			password: string;
+			completed: false;
+			completedAt: string;
+			sortedAt: string;
+			createdAt: string;
+			updatedAt: string;
+		},
+	];
+	page: number;
+	size: number;
+	totalElements: number;
+	totalPages: number;
+};
+
 /*
 임시로 props로 받아오는 itemList데이터를 이용하고 있지만 추후 useState의 listItem
 의 기본값을 []로 설정
@@ -70,20 +114,21 @@ export default function History() {
 					}
 				>
 					<ListItemContainer className="scrollbar">
-						{data?.pages.map((page) => {
-							return page.content.map((item: any, index: number) => {
-								let minutesAgo = before60Minutes(item.createdAt);
-								let timeAgo = "";
-								if (minutesAgo > 60) {
-									timeAgo = after60Minutes(item.createdAt);
-								}
-								const quest = filterQuest(item.questCategory);
-								return (
-									<Item key={nanoid()} data-id={item.id}>
+
+						{data.map((page: writeMyPostContent, index: number) => {
+							let minutesAgo = before60Minutes(page.createdAt);
+							let timeAgo = "";
+							if (minutesAgo > 60) {
+								timeAgo = after60Minutes(page.createdAt);
+							}
+							const quest = filterQuest(page.questCategory);
+							return (
+								page.content && (
+									<Item key={nanoid()} data-id={page.id}>
 										<ItemLeftBox>
 											<JellyBox
 												index={index}
-												listId={item.id}
+												listId={page.id}
 												checkboxId={checkId}
 											/>
 											<TextBox>
@@ -91,10 +136,10 @@ export default function History() {
 											</TextBox>
 											<TextBox>{quest.quest}</TextBox>
 										</ItemLeftBox>
-										<ItemRightBox>{item.content}</ItemRightBox>
+										<ItemRightBox>{page.content}</ItemRightBox>
 									</Item>
-								);
-							});
+								)
+							);
 						})}
 						{isLoading && <NextScrollBar />}
 					</ListItemContainer>

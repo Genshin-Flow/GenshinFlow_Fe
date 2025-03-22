@@ -235,9 +235,7 @@ function Matching({ isMobile = false }: MatchingProps) {
 
 	useEffect(() => {
 		if (data) {
-			const contentArray = data.pages.map((items) => items.content);
-			const flatArray = contentArray.flat();
-			setPostData(flatArray);
+			setPostData(data);
 		}
 	}, [data]);
 

@@ -49,3 +49,5 @@ styled-system-studio
 sw.js
 sw.js.map
 workbox*
+
+remove-vercel-env.ps1
