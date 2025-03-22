@@ -2,13 +2,7 @@
 import { nanoid } from "nanoid";
 import HistoryButton from "@/features/mypage/components/historyGroup/historyDeleteButton";
 import JellyBox from "@/features/mypage/components/jellyCheckbox";
-import {
-	Dispatch,
-	FormEvent,
-	SetStateAction,
-	useEffect,
-	useState,
-} from "react";
+import { Dispatch, FormEvent, SetStateAction, useState } from "react";
 import { deleteHistory } from "@/fetch/history/deleteHistory";
 import {
 	HistoryContainer,
@@ -20,10 +14,14 @@ import {
 	ItemLeftBox,
 	ItemRightBox,
 	NextScrollBar,
+	TextBox,
 } from "./style";
 import { useInfiniteTanStack } from "@/hooks/useQueryInfiniteScroll";
 import { QueryFilters } from "@tanstack/react-query";
 import { getHistory } from "@/fetch/history/getHistory";
+import { after60Minutes, before60Minutes } from "@/utils/dayJs/day";
+import { filterQuest } from "@/utils/filterQuest/fiilterQuest";
+import { userDeletePost } from "@/fetch/Main/moreOption/user/userDeletePost";
 
 export type listItemType = {
 	date: string;
@@ -85,7 +83,7 @@ export default function History() {
 	const postKey = "writeMyPost" as QueryFilters;
 	const pagesize = 10;
 	const staleTime = 1000 * 60 * 10;
-	const { data, isLoading, fetchNextPage, hasNextPage } = useInfiniteTanStack(
+	const { data, isLoading, refetch } = useInfiniteTanStack(
 		postKey,
 		pagesize,
 		staleTime,
@@ -116,24 +114,7 @@ export default function History() {
 					}
 				>
 					<ListItemContainer className="scrollbar">
-<<<<<<< Updated upstream
-						{/* {data?.pages.map((page) => {
-							return page.content.map((item: any, index: number) => (
-								<Item key={nanoid()} data-id={index}>
-									<ItemLeftBox>
-										<JellyBox
-											index={index}
-											listId={index}
-											checkboxId={checkId}
-										/>
-										<p>{"none"}</p>
-										<p>{"none"}</p>
-									</ItemLeftBox>
-									<ItemRightBox>{"none"}</ItemRightBox>
-								</Item>
-							));
-						})} */}
-=======
+
 						{data.map((page: writeMyPostContent, index: number) => {
 							let minutesAgo = before60Minutes(page.createdAt);
 							let timeAgo = "";
@@ -160,7 +141,6 @@ export default function History() {
 								)
 							);
 						})}
->>>>>>> Stashed changes
 						{isLoading && <NextScrollBar />}
 					</ListItemContainer>
 				</HistoryContainer>

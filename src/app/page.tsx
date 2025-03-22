@@ -11,9 +11,15 @@ import useLoginStateStore from "@/stores/loginStateStore";
 import { errorToast } from "@/utils/customToast/customToast";
 import userStore from "@/stores/userStore";
 import { getUserInfo } from "@/fetch/User/getUserInfo/getUserInfo";
+import { crawl } from "@/utils/scraping/scraping";
+
+export type EventUrlType = {
+	slideData: string[] | undefined;
+};
 
 export default function Home() {
 	const [mounted, setMounted] = useState(false);
+	const [slideData, setSlideData] = useState<string[]>([]);
 	const mobileWidth = process.env.NEXT_PUBLIC_startMobileWidth;
 	if (!mobileWidth) throw new Error("모바일 너비 설정이 없습니다.");
 	const isMobile = useMediaQuery({
@@ -48,8 +54,6 @@ export default function Home() {
 				}
 			}
 			const result = await userProfileDataResponse.json();
-			console.log(result);
-
 			setUserInfo({ ...result });
 		};
 		// 정보가 갱신되지 않았을때만 fetch 실행
@@ -59,8 +63,6 @@ export default function Home() {
 		}
 	}, []);
 
-<<<<<<< Updated upstream
-=======
 	useEffect(() => {
 		const filter: string[] = [];
 		async function scrawlData() {
@@ -75,10 +77,9 @@ export default function Home() {
 			});
 			setSlideData(filter);
 		}
-		// scrawlData();
+		scrawlData();
 	}, []);
 
->>>>>>> Stashed changes
 	if (!mounted) {
 		return null; // 또는 로딩 컴포넌트
 	}
@@ -86,25 +87,29 @@ export default function Home() {
 	return (
 		<Main className="naviaBg">
 			<Header isMobile={isMobile} />
-			{isMobile ? <Mobile /> : <Pc />}
+			{isMobile ? (
+				<Mobile slideData={slideData} />
+			) : (
+				<Pc slideData={slideData} />
+			)}
 			<Footer isMobile={isMobile} />
 		</Main>
 	);
 }
 
-function Pc() {
+function Pc(props: EventUrlType) {
 	return (
 		<Container>
-			<Tab />
-			<Sidebar />
+			<Tab slideData={props.slideData} />
+			<Sidebar slideData={props.slideData} />
 		</Container>
 	);
 }
 
-function Mobile() {
+function Mobile(props: EventUrlType) {
 	return (
 		<>
-			<Tab isMobile={true} />
+			<Tab slideData={props.slideData} isMobile={true} />
 		</>
 	);
 }

@@ -39,6 +39,7 @@ import {
 import MobilePostList from "@/features/matching/mobile/components/MobilePostList";
 import { nanoid } from "nanoid";
 import PostListFooter from "@/features/matching/components/PostListFooter";
+import { EventUrlType } from "@/app/page";
 
 export type refetchType = (
 	options?: RefetchOptions,
@@ -46,6 +47,7 @@ export type refetchType = (
 
 interface TabProps {
 	isMobile?: boolean;
+	slideData?: string[];
 }
 
 interface MatchingProps {
@@ -88,14 +90,15 @@ export interface OauthSignUpModalProps {
 
 export type LoadingToastType = OauthSignUpModalProps["loadingToast"];
 
-export default function Tab({ isMobile = false }: TabProps) {
+export default function Tab({ isMobile = false, slideData }: TabProps) {
 	const [activeTab, setActiveTab] = useState(0);
+
 	const renderContent = () => {
 		switch (activeTab) {
 			case 0:
 				return <Matching isMobile={isMobile} />;
 			case 1:
-				return <>{isMobile ? <Event /> : <PcAbout />}</>;
+				return <>{isMobile ? <Event slideData={slideData} /> : <PcAbout />}</>;
 			case 2:
 		}
 	};
@@ -315,42 +318,24 @@ function Matching({ isMobile = false }: MatchingProps) {
 	);
 }
 
-function Event() {
+function Event(slideData: EventUrlType | undefined) {
 	return (
 		<EventContainer>
-			<EventItem>
-				<BannerImage src="/images/banner/event1.png" />
-				<div>
-					<EventTitle>[원신] 4.8 버전 내용 미리보기</EventTitle>
-					<EventDesc>여름 나기에 필요한 것들은 다음과 같다.</EventDesc>
-					<div>
-						<EventDate>07/08</EventDate>
-						<EventShortCut>바로가기</EventShortCut>
-					</div>
-				</div>
-			</EventItem>
-			<EventItem>
-				<BannerImage src="/images/banner/event1.png" />
-				<div>
-					<EventTitle>[원신] 4.8 버전 내용 미리보기</EventTitle>
-					<EventDesc>여름 나기에 필요한 것들은 다음과 같다.</EventDesc>
-					<div>
-						<EventDate>07/08</EventDate>
-						<EventShortCut>바로가기</EventShortCut>
-					</div>
-				</div>
-			</EventItem>
-			<EventItem>
-				<BannerImage src="/images/banner/event1.png" />
-				<div>
-					<EventTitle>[원신] 4.8 버전 내용 미리보기</EventTitle>
-					<EventDesc>여름 나기에 필요한 것들은 다음과 같다.</EventDesc>
-					<div>
-						<EventDate>07/08</EventDate>
-						<EventShortCut>바로가기</EventShortCut>
-					</div>
-				</div>
-			</EventItem>
+			{slideData &&
+				slideData.slideData &&
+				slideData.slideData.length > 2 &&
+				slideData.slideData.map((item) => (
+					<EventItem>
+						<a
+							href={
+								"https://www.hoyolab.com/circles/2/27/official?page_type=27&page_sort=events"
+							}
+							target="_blank"
+						>
+							<BannerImage src={item} />
+						</a>
+					</EventItem>
+				))}
 		</EventContainer>
 	);
 }
